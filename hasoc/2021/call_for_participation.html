@@ -148,13 +148,13 @@
 <div>HASOC provides a forum and a data challenge for multilingual research on the identification of problematic content. This year, we offer English, Hindi and Marathi with 2 sub-tasks, alltogether over 10.000 annotated tweets from Twitter.&nbsp;Participants in this year&rsquo;s shared task can choose to participate in one or two of the subtasks.Participants can look at the openly available data of HASOC 2019: <a href="https://hasocfire.github.io/hasoc/2019/dataset.html" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://hasocfire.github.io/hasoc/2019/dataset.html&amp;source=gmail&amp;ust=1595412484421000&amp;usg=AFQjCNExZ6Gob3KzExEQP7KkkteWTnb5wA">https://hasocfire.github.io/<wbr />hasoc/2019/dataset.html</a></div>
 <div>&nbsp;</div>
 
-<strong>Sub-task A: Identifying Hate, offensive and profane content</strong></div>
+<strong>Sub-task 1 A: Identifying Hate, offensive and profane content</strong></div>
 <div><strong><br /> </strong>Sub-task A focus on Hate speech and Offensive language identification offered for English and Hindi. Sub-task A is coarse-grained binary classification in which participating system are required to classify tweets into two class, namely: Hate and Offensive (HOF) and Non- Hate and offensive (NOT).<br />
 <ul>
 <li>(NOT) Non Hate-Offensive - This post does not contain any Hate speech, profane, offensive content.</li>
 <li>(HOF) Hate and Offensive - This post contains Hate, offensive, and profane content.</li>
 </ul>
-<div><strong>Sub-task B :- Discrimination between Hate, profane and offensive posts</strong><br /> This sub-task&nbsp; is a fine-grained classification offered for English and Hindi. Hate-speech and offensive posts from the sub-task A are further classified into three categories.<br />
+<div><strong>Sub-task 1 B :- Discrimination between Hate, profane and offensive posts</strong><br /> This sub-task&nbsp; is a fine-grained classification offered for English and Hindi. Hate-speech and offensive posts from the sub-task A are further classified into three categories.<br />
 <ul>
 <li>(HATE) Hate speech :- Posts under this class contain Hate speech content.</li>
 <li>(OFFN) Offenive :- Posts under this class contain offensive content.</li>
@@ -162,7 +162,20 @@
 </ul>
 <div>&nbsp;</div>
 <div>
+<strong>Sub-task 1 A: Identifying Hate, offensive and profane content</strong></div>
+<div>
+A conversational thread can also contain hate and offensive content it which is not apparent just from the single comment or the reply to comment but can be identified if given the context of the parent content.
+<div id="image1">
+            <img src="example.PNG" alt="HASOC" heigh=50% width=50%>
 
+     </div>
+ 
+
+The parent tweet is expressing hate and profanity towards Muslim countries regarding the controversy happening in Israel at the time. The 2 comments on the tweet have written “Amine” which means "truthfully" in Persian. Which is supporting the hate but with the context of the parent. 
+This sub-task focused on the binary classification of such conversational tweets with tree-structured data into:
+<bullet point> (NOT) Non Hate-Offensive - This tweet, comment, or reply does not contain any Hate speech, profane, offensive content.
+<bullet point> (HOF) Hate and Offensive - This tweet, comment, or reply contains Hate, offensive, and profane content in itself or is supporting hate expressed in the parent. 
+For more info, <a href="introduction.pdf">click here</a>
                </div>
             </div>
         </div>
