@@ -94,28 +94,23 @@
 
 
   <ul class="nav nav-pills nav-stacked ">
+ <ul class="nav nav-pills nav-stacked ">
     <li class="nav-item ">
-        <a class="nav-link active" href="index.html">Overview<span class="sr-only">(current)</span></a>
+        <a class="nav-link active" href="index.html">Overview</a>
       </li>
       <li class="nav-item ">
-        <a class="nav-link " href="call_for_participation.html">Call for Participation</a>
+        <a class="nav-link " href="problem.html">Problem<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="registration.html">Registration</a>
+        <a class="nav-link" href="dataset_collection.html">Dataset Collection</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="important_dates.html">Important dates</a>
+        <a class="nav-link" href="baseline_model.html">Baseline Model</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="organizers.html">Organizers</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="dataset.html">Datasets</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="proceeding.html">Proceedings</a>
-      </li>
-
+     
       <li class="nav-item ">
            <a class="nav-link" href="../../2020/index.html">HASOC 2020</a>
       </li>
@@ -126,6 +121,8 @@
       </li>
       
 
+  </ul>      
+
   </ul>
 </div>
 <div class="col-sm-9">
@@ -135,38 +132,48 @@
             <div class="panel-heading" role="tab" id="tab_148">
               <h3 class="panel-title" style="color:#078186; font-size: 25px;">            
 
-                <b>Overview</b>
+                <b>Problem</b>
 
 
               </h3>
             </div>
                <div class="panel-body">
-<p>The large fraction of hate speech and other offensive and objectionable content online poses a huge
-        challenge
-        to societies. Offensive language such as insulting, hurtful, derogatory or obscene content directed from
-        one
-        person to another person and open for others undermines objective discussions. Such type of language can
-        be more
-        increasingly found on the web and can lead to the radicalization of debates. Public opinion forming
-        requires
-        rational critical discourse
-        (Habermas 1984). Objectionable content can pose a threat to democracy. At the same time, open
-        societies need to find an adequate way to react to such content without imposing rigid censorship
-        regimes. As a
-        consequence, many platforms of social media websites monitor user posts. This leads to a pressing demand
-        for
-        methods to automatically identify suspicious posts. Online communities, social media enterprises and
-        technology
-        companies have been investing heavily in technology and processes to identify offensive language in
-        order to
-        prevent abusive behavior in
-        social media.
-      </p>   
-             </div>
+<p> The problem we’re trying to address here is about identifying such conversational hate speech content that requires the context of the parent tweet in order to be justifiable. </p>   
+
+<div id="image">
+            
+            <img src="image1.png" alt="HASOC" class="center" heigh=50% width=50%>
+
+     </div>
+
+<p> The above screenshot from twitter describes the problem at hand effectively. The parent tweet which was done at 2:30 am on May 11th is expressing hate and profanity towards Muslim countries regarding the controversy happening in Israel at the time. The 2 comments on the tweet have written “Amine” which means Trustworthy or Honest in Arabic. If the 2 comments were to be analyzed for hate or offensive speech without the context of the parent tweet they wouldn’t be classified as hate or offensive content. But if we take the context of the conversation then we can say that the comments are supporting the hate expressed in the parent tweet. So those comments are hate speech as well. </p>
+            
+        <div id="image">
+            
+            <img src="image2.png" alt="HASOC" class="center" heigh=50% width=50%>
+
+     </div>
+
+    Another such example with code mixed text. <br>
+
+The Source Tweet: Modi Ji COVID situation ko solve karne ke liye ideas maang rahe the. Mera idea hai resignation dedo please… [Hate]<br><br>
+
+Translation : Modi ji (PM of India) was asking for ideas to solve the covid situation of India. My idea to him is to resign. [Hate]<br><br>
+
+The Comment: Doctors aur Scientists se manga hai. Chutiyo se nahi. Baith niche. [Hate]<br><br>
+Translation : They have asked Doctors and Scientists. Not fuckers. Sit down. [Hate]<br><br>
+
+The reply: You totally nailed it, can’t stop laughing. [Hate]<br><br>
+The reply has a positive sentiment. But it is positive in favour of the hate expressed towards the author of the source tweet in the comment.
+ Hence, it is supporting the hate expressed in the comment. Hence, it is also hate speech.<br><br>
+
+This is the type of problem we’re aiming to solve via this shared task.<br><br>
+   </div>
             </div>
-        </div>
-    
+
   </div>
+          </div>
+
 </div>
 </div>
 </div>
