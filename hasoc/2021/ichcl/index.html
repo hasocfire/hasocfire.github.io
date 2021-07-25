@@ -120,7 +120,7 @@
     </div>
 
 <div class="panel-body">
-<p> The problem we’re trying to address here is about identifying such conversational hate speech content that requires the context of the parent tweet in order to be justifiable. </p>   
+<p> A conversational thread can also contain hate, offensive, and profane content, which is not apparent from a standalone or single tweet or comment or the reply to a comment, but can be identified if given the context of the parent content. </p>   
 
 <div id="image">
             
@@ -128,7 +128,14 @@
 
      </div>
 
-<p> The above screenshot from twitter describes the problem at hand effectively. The parent tweet which was done at 2:30 am on May 11th is expressing hate and profanity towards Muslim countries regarding the controversy happening in Israel at the time. The 2 comments on the tweet have written “Amine” which means Trustworthy or Honest in Arabic. If the 2 comments were to be analyzed for hate or offensive speech without the context of the parent tweet they wouldn’t be classified as hate or offensive content. But if we take the context of the conversation then we can say that the comments are supporting the hate expressed in the parent tweet. So those comments are hate speech as well. </p>
+<p> The above screenshot from Twitter describes the problem at hand effectively. The parent/source tweet, which was posted at 2:30 am on May 11th, expresses hate and profanity towards Muslim countries regarding the controversy happening during the recent Israel-Palestine conflict. The 2 comments on the tweet have written "Amine", which means trustworthy or honest in Arabic. If the 2 comments were to be analyzed for hate or offensive speech without the context of the parent tweet, they wouldn’t be classified as hate or offensive content. But if we take the context of the conversation, then we can say that the comments support the hate/profanity expressed in the parent tweet. So those comments are labelled as hate/offensive/profane. </p>
+
+This sub-task focused on the binary classification of such conversational tweets with tree-structured data into:
+<ul>
+<li>(NOT) Non Hate-Offensive - This tweet, comment, or reply does not contain any Hate speech, profane, offensive content.</li>
+<li>(HOF) Hate and Offensive - This tweet, comment, or reply contains Hate, offensive, and profane content in itself or supports hate expressed in the parent tweet</li>
+</ul>
+
             
         <div id="image">
             
