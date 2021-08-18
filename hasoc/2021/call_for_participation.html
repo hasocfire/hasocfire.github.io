@@ -1,205 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<title>HASOC</title>
-	<meta charset="utf-8">
-
-	
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon"  type="image/png" sizes="16×16" href="HASOC.PNG">
-
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-	<style>
-		/* Remove the navbar's default margin-bottom and rounded borders */
-		
-		/* Add a gray background color and some padding to the footer */
-		footer {
-			background-color: #f2f2f2;
-			padding: 25px;
-			position: relative;
-			bottom: 0;
-			width: 100%;
-		}
-
-		p {
-			font-size: 16px;
-		}
+    <title>HASOC</title>
+    <meta charset="utf-8">
 
 
-   .nav a.active {
-    background-color:#078186;
-    color: white;
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="16×16" href="HASOC.PNG">
 
-    }
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-    .nav a {
-    color: black;
-    font-size: 16px;
-
-    }
-
-    .nav a:hover{
-      color: #078186;
-
-
-    }
-
-    .nav-test{
+    <style>
+        /* Remove the navbar's default margin-bottom and rounded borders */
+        /* Add a gray background color and some padding to the footer */
+        
+        footer {
+            background-color: #f2f2f2;
+            padding: 25px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        p {
+            font-size: 16px;
+        }
+        
+        .nav a.active {
+            background-color: #078186;
+            color: white;
+        }
+        
+        .nav a {
+            color: black;
+            font-size: 16px;
+        }
+        
+        .nav a:hover {
+            color: #078186;
+        }
+        
+        .nav-test {
             background-color: #f2f2f2;
             padding: 20px
-
-    }
-
-    .panel-group{
+        }
+        
+        .panel-group {
             padding: 5px
-
-    }
-
-	  
-
-    
- .jumbotron {position:relative;}
-#logo {position:absolute; top:1px; left:1px;}
-
-
-  		
-      
-  		
-			
-	</style>
+        }
+        
+        .jumbotron {
+            position: relative;
+        }
+        
+        #logo {
+            position: absolute;
+            top: 1px;
+            left: 1px;
+        }
+    </style>
 </head>
+
 <body>
 
 
-  <div class="jumbotron">
+    <div class="jumbotron">
         <div id="logo">
             <img src="HASOC_Design_01.PNG" alt="HASOC" heigh=20% width=20%>
 
-     </div>
-  
-  <div class="container text-center">
-     <h1>HASOC (2021)</h1>
-    <p>Hate Speech and Offensive Content Identification in English and Indo-Aryan Languages</p>
-  </div>
-</div>
-
-
-
-
-
-  <div class="container-fluid bg-2">
-
-  <div class="row ">
-
-    <div class="col-sm-2 nav-test">
-
-
-  <ul class="nav nav-pills nav-stacked ">
-    <li class="nav-item ">
-        <a class="nav-link" href="index.html">Overview<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item ">
-        <a class="nav-link active" href="call_for_participation.html">Call for Participation</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="registration.html">Registration</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="important_dates.html">Important dates</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="organizers.html">Organizers</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="dataset.html">Datasets</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="proceeding.html">Proceedings</a>
-      </li>
-
-      <li class="nav-item ">
-           <a class="nav-link" href="../2020/index.html">HASOC 2020</a>
-      </li>
-
-
-      <li class="nav-item ">
-           <a class="nav-link" href="../2019/index.html">HASOC 2019</a>
-      </li>
-      
-
-  </ul>
-</div>
-<div class="col-sm-9">
-  <div class="panel-group" role="tablist" aria-multiselectable="true">
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="tab_148">
-              <h3 class="panel-title" style="color:#078186; font-size: 25px;">            
-
-                <b>Call for Participation</b>
-
-
-              </h3>
-            </div>
-               <div class="panel-body">
-<div><strong>Task Description:</strong><br />
-<div>&nbsp;</div>
-<div>HASOC provides a forum and a data challenge for multilingual research on the identification of problematic content. This year, we offer 2 subtasks and a separate dataset for both the subatsks. Subtask 2 is a brand new problem offered this year. Both datasets are sampled from Twitter. Subtask-1 offers in English, Hindi with 2 problems, and Marathi with 1 problem. The subtasks-2 dataset contains English, Hindi and code-mixed Hindi tweets. Participants in this year’s shared task can choose to participate in one or two of the subtasks.Participants can look at the openly available data for HASOC 2019 & 2020. The data is accessible at  <a href="https://hasocfire.github.io/hasoc/2021/dataset.html" target="_blank" >https://hasocfire.github.io/hasoc/2021/dataset.html</a></div>
-<div>&nbsp;</div>
-
-<strong>Subtask 1A: Identifying Hate, offensive and profane content from the post.</strong></div>
-<div><strong><br /> </strong>Sub-task A focus on Hate speech and Offensive language identification offered for English and Hindi. Sub-task A is coarse-grained binary classification in which participating system are required to classify tweets into two class, namely: Hate and Offensive (HOF) and Non- Hate and offensive (NOT).<br />
-<ul>
-<li>(NOT) Non Hate-Offensive - This post does not contain any Hate speech, profane, offensive content.</li>
-<li>(HOF) Hate and Offensive - This post contains Hate, offensive, and profane content.</li>
-</ul>
-<div><strong>Subtask 1B :- Discrimination between Hate, profane and offensive posts</strong><br /> This sub-task&nbsp; is a fine-grained classification offered for English and Hindi. Hate-speech and offensive posts from the sub-task A are further classified into three categories.<br />
-<ul>
-<li>(HATE) Hate speech :- Posts under this class contain Hate speech content.</li>
-<li>(OFFN) Offenive :- Posts under this class contain offensive content.</li>
-<li>(PRFN) Profane :- These posts contain profane words.</li>
-</ul>
-<div>&nbsp;</div>
-<div>
-<strong>Subtask 2: Identification of Conversational Hate-Speech in Code-Mixed Languages (ICHCL)</strong></div>
-<div>
-A conversational thread can also contain hate and offensive content it which is not apparent just from the single comment or the reply to comment but can be identified if given the context of the parent content.
-<div id="image1">
-            
-            <img src="example.png" alt="HASOC" class="center" heigh=35% width=35%>
-
-     </div>
- 
-
-The parent tweet is expressing hate and profanity towards Muslim countries regarding the controversy happening in Israel at the time. The 2 comments on the tweet have written “Amine” which means "truthfully" in Persian. Which is supporting the hate but with the context of the parent. 
-This sub-task focused on the binary classification of such conversational tweets with tree-structured data into:
-
-<ul>
-<li>(NOT) Non Hate-Offensive - This tweet, comment, or reply does not contain any Hate speech, profane, offensive content.</li>
-<li>(HOF) Hate and Offensive - This tweet, comment, or reply contains Hate, offensive, and profane content in itself or is supporting hate expressed in the parent.</li>
-</ul>
-
- 
-For more info, <a href="ichcl/index.html">click here</a>
-               </div>
-            </div>
         </div>
-  
-</div>
-</div>
-</div>
-<br>
-</br>
-<footer class="sticky-footer">
-	<div class="container my-auto">
-		<div class="copyright text-center my-auto">
-			<span>Copyright © HASOC 2019</span>
-		</div>
-	</div>
-</footer>
+
+        <div class="container text-center">
+            <h1>HASOC (2021)</h1>
+            <p>Hate Speech and Offensive Content Identification in English and Indo-Aryan Languages</p>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="container-fluid bg-2">
+
+        <div class="row ">
+
+            <div class="col-sm-2 nav-test">
+
+
+                <ul class="nav nav-pills nav-stacked ">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="index.html">Overview<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link active" href="call_for_participation.html">Call for Participation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="registration.html">Registration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="important_dates.html">Important dates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="organizers.html">Organizers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dataset.html">Datasets</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../submission/index.html">Run submission</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="proceeding.html">Proceedings</a>
+                    </li>
+
+                    <li class="nav-item ">
+                        <a class="nav-link" href="../2020/index.html">HASOC 2020</a>
+                    </li>
+
+
+                    <li class="nav-item ">
+                        <a class="nav-link" href="../2019/index.html">HASOC 2019</a>
+                    </li>
+
+
+                </ul>
+            </div>
+            <div class="col-sm-9">
+                <div class="panel-group" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="tab_148">
+                            <h3 class="panel-title" style="color:#078186; font-size: 25px;">
+
+                                <b>Call for Participation</b>
+
+
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <div><strong>Task Description:</strong><br />
+                                <div>&nbsp;</div>
+                                <div>HASOC provides a forum and a data challenge for multilingual research on the identification of problematic content. This year, we offer 2 subtasks and a separate dataset for both the subatsks. Subtask 2 is a brand new problem
+                                    offered this year. Both datasets are sampled from Twitter. Subtask-1 offers in English, Hindi with 2 problems, and Marathi with 1 problem. The subtasks-2 dataset contains English, Hindi and code-mixed Hindi tweets. Participants
+                                    in this year’s shared task can choose to participate in one or two of the subtasks.Participants can look at the openly available data for HASOC 2019 & 2020. The data is accessible at  <a href="https://hasocfire.github.io/hasoc/2021/dataset.html"
+                                        target="_blank">https://hasocfire.github.io/hasoc/2021/dataset.html</a></div>
+                                <div>&nbsp;</div>
+
+                                <strong>Subtask 1A: Identifying Hate, offensive and profane content from the post.</strong></div>
+                            <div><strong><br /> </strong>Sub-task A focus on Hate speech and Offensive language identification offered for English and Hindi. Sub-task A is coarse-grained binary classification in which participating system are required to classify
+                                tweets into two class, namely: Hate and Offensive (HOF) and Non- Hate and offensive (NOT).<br />
+                                <ul>
+                                    <li>(NOT) Non Hate-Offensive - This post does not contain any Hate speech, profane, offensive content.</li>
+                                    <li>(HOF) Hate and Offensive - This post contains Hate, offensive, and profane content.</li>
+                                </ul>
+                                <div><strong>Subtask 1B :- Discrimination between Hate, profane and offensive posts</strong><br /> This sub-task&nbsp; is a fine-grained classification offered for English and Hindi. Hate-speech and offensive posts from the
+                                    sub-task A are further classified into three categories.<br />
+                                    <ul>
+                                        <li>(HATE) Hate speech :- Posts under this class contain Hate speech content.</li>
+                                        <li>(OFFN) Offenive :- Posts under this class contain offensive content.</li>
+                                        <li>(PRFN) Profane :- These posts contain profane words.</li>
+                                    </ul>
+                                    <div>&nbsp;</div>
+                                    <div>
+                                        <strong>Subtask 2: Identification of Conversational Hate-Speech in Code-Mixed Languages (ICHCL)</strong></div>
+                                    <div>
+                                        A conversational thread can also contain hate and offensive content it which is not apparent just from the single comment or the reply to comment but can be identified if given the context of the parent content.
+                                        <div id="image1">
+
+                                            <img src="example.png" alt="HASOC" class="center" heigh=35% width=35%>
+
+                                        </div>
+
+
+                                        The parent tweet is expressing hate and profanity towards Muslim countries regarding the controversy happening in Israel at the time. The 2 comments on the tweet have written “Amine” which means "truthfully" in Persian. Which is supporting the hate but
+                                        with the context of the parent. This sub-task focused on the binary classification of such conversational tweets with tree-structured data into:
+
+                                        <ul>
+                                            <li>(NOT) Non Hate-Offensive - This tweet, comment, or reply does not contain any Hate speech, profane, offensive content.</li>
+                                            <li>(HOF) Hate and Offensive - This tweet, comment, or reply contains Hate, offensive, and profane content in itself or is supporting hate expressed in the parent.</li>
+                                        </ul>
+
+
+                                        For more info, <a href="ichcl/index.html">click here</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <br>
+                </br>
+                <footer class="sticky-footer">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright © HASOC 2019</span>
+                        </div>
+                    </div>
+                </footer>
 
 
 </body>
+
 </html>
