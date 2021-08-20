@@ -1,5 +1,4 @@
 proxy = `https://hasocsubmission.el.r.appspot.com`
-    //proxy = `http://192.168.43.246:5000`
 
 var task_titles = {
     "1A_English": "English Subtask A",
@@ -37,10 +36,10 @@ async function submission() {
     let desc = `<textarea id="Desc" placeholder="Enter submission description(optional)" class="swal2-input mb-3" style="width:70%;height:30%" maxlength="256"></textarea>`
     let select_box_html = `<select id="subtask_name" class="swal2-input" style="width:70%;">
     <option value="" selected hidden>Select Subtask</option>
-    <option value="1A_English" disabled>English Subtask A</option>
-    <option value="1B_English" disabled>English Subtask B</option>
-    <option value="1A_Hindi" disabled>Hindi Subtask A</option>
-    <option value="1B_Hindi" disabled>Hindi Subtask B</option>
+    <option value="1A_English">English Subtask A</option>
+    <option value="1B_English">English Subtask B</option>
+    <option value="1A_Hindi">Hindi Subtask A</option>
+    <option value="1B_Hindi">Hindi Subtask B</option>
     <option value="1A_Marathi">Marathi Subtask A</option>
     <option value="2_ICHCL">Subtask 2</option></select>`
     Swal.fire({

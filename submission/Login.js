@@ -1,5 +1,4 @@
-proxy = "https://hasocsubmission.el.r.appspot.com"
-    //proxy = "http://192.168.43.246:5000"
+proxy = `https://hasocsubmission.el.r.appspot.com`
 
 function validate() {
     var email = document.getElementById("username");
@@ -71,7 +70,7 @@ function login() {
             success: function(result) {
                 var token = result.token;
                 setCookie("token", token, 7);
-                setCookie("user", email, 7);
+                setCookie("user", email.toLowerCase(), 7);
                 setCookie("team", result.team, 7)
                 window.location = "index.html";
             },

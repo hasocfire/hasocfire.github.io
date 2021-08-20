@@ -1,5 +1,4 @@
-proxy = 'https://hasocsubmission.el.r.appspot.com'
-    //proxy = 'http://192.168.43.246:5000'
+proxy = `https://hasocsubmission.el.r.appspot.com`
 
 function logout() {
     document.cookie = "token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
