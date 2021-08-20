@@ -1,4 +1,4 @@
-proxy = "http://192.168.0.104:5000"
+proxy = `https://hasocsubmission.el.r.appspot.com`
 var task_titles = {
     "1A_English": "English Subtask A",
     "1B_English": "English Subtask B",
