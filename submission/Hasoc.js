@@ -1,5 +1,4 @@
-proxy = `https://hasocsubmission.el.r.appspot.com`
-
+proxy = "http://192.168.0.104:5000"
 var task_titles = {
     "1A_English": "English Subtask A",
     "1B_English": "English Subtask B",
@@ -9,6 +8,14 @@ var task_titles = {
     "2_ICHCL": "Subtask 2"
 }
 
+var task_counts = {
+    "1A_English": 0,
+    "1B_English": 0,
+    "1A_Hindi": 0,
+    "1B_Hindi": 0,
+    "1A_Marathi": 0,
+    "2_ICHCL": 0
+}
 
 function getCookie(name) {
     var cookieArr = document.cookie.split(";");
@@ -35,15 +42,40 @@ async function submission() {
     let submission_name = `</span><input type=text id="Subname" class="swal2-input mb-2" placeholder="Enter submission name" style="width:70%;" maxlength="40"></input>`
     let desc = `<textarea id="Desc" placeholder="Enter submission description(optional)" class="swal2-input mb-3" style="width:70%;height:30%" maxlength="256"></textarea>`
     let select_box_html = `<select id="subtask_name" class="swal2-input" style="width:70%;">
-    <option value="" selected hidden>Select Subtask</option>
-    <option value="1A_English">English Subtask A</option>
-    <option value="1B_English">English Subtask B</option>
-    <option value="1A_Hindi">Hindi Subtask A</option>
-    <option value="1B_Hindi">Hindi Subtask B</option>
-    <option value="1A_Marathi">Marathi Subtask A</option>
-    <option value="2_ICHCL">Subtask 2</option></select>`
+    <option value="" selected hidden>Select Subtask</option>`
+    tab_select = ``
+    if (task_counts['1A_English'] < 5) {
+        tab_select += `<option value="1A_English">English Subtask A</option>`
+    } else {
+        tab_select += `<option value="1A_English" disabled>English Subtask A</option>`
+    }
+    if (task_counts['1B_English'] < 5) {
+        tab_select += `<option value="1B_English">English Subtask B</option>`
+    } else {
+        tab_select += `<option value="1B_English" disabled>English Subtask B</option>`
+    }
+    if (task_counts['1A_Hindi'] < 5) {
+        tab_select += `<option value="1A_Hindi">HIndi Subtask A</option>`
+    } else {
+        tab_select += `<option value="1A_Hindi" disabled>Hindi Subtask A</option>`
+    }
+    if (task_counts['1B_Hindi'] < 5) {
+        tab_select += `<option value="1B_Hindi">Hindi Subtask B</option>`
+    } else {
+        tab_select += `<option value="1B_Hindi" disabled>Hindi Subtask B</option>`
+    }
+    if (task_counts['1A_Marathi'] < 5) {
+        tab_select += `<option value="1A_Marathi">Marathi Subtask A</option>`
+    } else {
+        tab_select += `<option value="1A_Marathi" disabled>Marathi Subtask B</option>`
+    }
+    if (task_counts['2_ICHCL'] < 5) {
+        tab_select += `<option value="2_ICHCL">Subtask 2</option>`
+    } else {
+        tab_select += `<option value="2_ICHCL" disabled>Subtask 2</option>`
+    }
     Swal.fire({
-        html: `${select_box_html}${submission_name}${desc}<input type="file" id="file" placeholder="Submission File">`,
+        html: `${select_box_html}${tab_select}${submission_name}${desc}<input type="file" id="file" placeholder="Submission File">`,
         confirmButtonText: 'SUBMIT',
         focusConfirm: false,
         customClass: 'swal-height-submission',
@@ -252,6 +284,14 @@ async function details(_id) {
 }
 
 async function team_data_new() {
+    task_counts = {
+        "1A_English": 0,
+        "1B_English": 0,
+        "1A_Hindi": 0,
+        "1B_Hindi": 0,
+        "1A_Marathi": 0,
+        "2_ICHCL": 0
+    }
     var sort_param = "task_name";
     sort_param = document.getElementById("sort_param").value;
     document.getElementById("navbarDropdownMenuLink").innerHTML = `Welcome, Team ${getCookie('team')} 🤗`
@@ -279,6 +319,7 @@ async function team_data_new() {
             var tab = ``;
 
             for (var i = 0; i < result.length; i++) {
+                task_counts[result[i].task_name] += 1;
                 tab += `<tr class="text-center">
                     <td class="text-left align-middle">${result[i].timestamp}</td>
                     <td class="text-center align-middle">${result[i].submission_name}</td>
@@ -292,6 +333,7 @@ async function team_data_new() {
                 document.getElementById("zero_submission_div").setAttribute("hidden", true);
                 document.getElementById("body_content").removeAttribute("hidden");
             }
+            console.log(task_counts)
         },
         error: function(jqXHR, textStatus, errorThrown) {
             if (jqXHR.status == 404) {
