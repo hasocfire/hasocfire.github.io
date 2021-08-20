@@ -333,7 +333,6 @@ async function team_data_new() {
                 document.getElementById("zero_submission_div").setAttribute("hidden", true);
                 document.getElementById("body_content").removeAttribute("hidden");
             }
-            console.log(task_counts)
         },
         error: function(jqXHR, textStatus, errorThrown) {
             if (jqXHR.status == 404) {
