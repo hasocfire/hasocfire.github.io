@@ -113,14 +113,7 @@ function leaderboard_table() {
             "task_name": task_name
         }),
         success: function(result) {
-            if (result.length <= 2) {
-                document.getElementById("footer_div").classList.add("position-fixed")
-            }
-            if (result.length >= 2) {
-                if (document.getElementsByClassName('footer position-fixed bg-dark').length > 0) {
-                    document.getElementById("footer_div").classList.remove("position-fixed")
-                }
-            }
+            
             console.log(result)
             for (var i = 0; i < result.length; i++) {
                 if (result[i].team_name == team_name) {
