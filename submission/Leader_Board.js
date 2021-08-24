@@ -151,6 +151,9 @@ function leaderboard_table() {
                 document.getElementById("zero_submission_div").removeAttribute("hidden");
                 document.getElementById("loading").setAttribute("hidden", true);
             }
+            else{
+                alert("this category is currently under maintainence. Sorry for inconvinence.")
+            }
         }
     });
 }
