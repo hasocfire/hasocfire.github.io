@@ -414,6 +414,12 @@
     <script type='text/javascript'>
         const formElm = document.querySelector("#wrapped")
         formElm.addEventListener("submit", postData)
+        function isNumberKey(evt){
+			var charCode = (evt.which) ? evt.which : event.keyCode
+			if (charCode > 31 && (charCode < 48 || charCode > 57))
+				return false;
+    		return true;
+        }
         function addFields() {
             // Generate a dynamic number of inputs
             var number = document.getElementById("totalmembers").value;
