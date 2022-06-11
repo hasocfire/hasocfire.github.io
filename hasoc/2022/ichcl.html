@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>HASOC</title>
+  <meta charset="utf-8">
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" sizes="16×16" href="HASOC.PNG">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */
+    /* Add a gray background color and some padding to the footer */
+
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+      position: relative;
+      bottom: 0;
+      width: 100%;
+    }
+
+    p {
+      font-size: 16px;
+    }
+
+    .nav a.active {
+      background-color: #078186;
+      color: white;
+    }
+
+    .nav a {
+      color: black;
+      font-size: 16px;
+    }
+
+    .nav a:hover {
+      color: #078186;
+    }
+
+    .nav-test {
+      background-color: #f2f2f2;
+      padding: 20px
+    }
+
+    .panel-group {
+      padding: 5px
+    }
+
+    .jumbotron {
+      position: relative;
+    }
+
+    #logo {
+      position: absolute;
+      top: 1px;
+      left: 1px;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <div class="jumbotron">
+    <div id="logo">
+      <img src="HASOC_Design_01.PNG" alt="HASOC" heigh=20% width=20%>
+    </div>
+
+    <div class="container text-center">
+      <h1>HASOC (2022)</h1>
+      <p>Hate Speech and Offensive Content Identification in English and Indo-Aryan Languages</p>
+    </div>
+  </div>
+  <div class="container-fluid bg-2">
+    <div class="row ">
+      <!-- <div class="col-sm-2 nav-test">
+        <ul class="nav nav-pills nav-stacked ">
+          <li class="nav-item ">
+            <a class="nav-link" href="index.html">Overview</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link active" href="call_for_participation.html">Call for Participation<span
+                class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="registration.html">Registration</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="important_dates.html">Important dates</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="organizers.html">Organizers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="dataset.html">Datasets and Baseline Model</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../2021/results.html">Results(HASOC2021)</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="proceeding.html">Proceedings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="reference.html">Acknowledgment and Reference</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="../2021/index.html" target="_blank" rel="noopener noreferrer">HASOC 2021</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="../2020/index.html" target="_blank" rel="noopener noreferrer">HASOC 2020</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="../2019/index.html" target="_blank" rel="noopener noreferrer">HASOC 2019</a>
+          </li>
+
+
+        </ul>
+      </div> -->
+      <div class="col-sm-12">
+        <div class="panel-group" role="tablist" aria-multiselectable="true">
+          <div class="panel panel-default">
+
+            <div class="panel-heading" role="tab" id="tab_148">
+              <h3 class="panel-title" style="color:#078186; font-size: 25px;">
+
+                <b>Problem</b>
+
+
+              </h3>
+            </div>
+
+            <div class="panel-body">
+              <p> A conversational thread can also contain hate, offensive, and profane content, which is not apparent
+                from a standalone or single tweet or comment or the reply to a comment, but can be identified if given
+                the
+                context of the parent content. </p>
+
+              <div id="image">
+                <img src="example-1.png" alt="example-1" class="center" height=35% width=35%>
+                <p style="text-align: center; height:35%; width: 35%;"><small><b>Example-1</b></small></p>
+              </div>
+
+              <p> The above screenshot from Twitter describes the problem at hand effectively. The parent/source tweet,
+                which was posted at 2:30 am on May 11th, expresses hate and profanity towards Muslim countries regarding
+                the controversy happening during the recent Israel-Palestine conflict. The 2 comments on the tweet have
+                written "Amine", which means trustworthy or honest in Arabic. If the 2 comments were to be analyzed for
+                hate or offensive speech without the context of the parent tweet, they wouldn’t be classified as hate or
+                offensive content. But if we take the context of the conversation, then we can say that the comments
+                support the hate/profanity expressed in the parent tweet. So those comments are labelled as
+                hate/offensive/profane. </p>
+
+              This sub-task focused on the <em>binary classification (task 2)</em> of such conversational tweets with
+              tree-structured data
+              into:
+              <ul>
+                <li><b>(NOT) Non Hate-Offensive -</b> This tweet, comment, or reply does not contain any Hate speech,
+                  profane,
+                  offensive content.</li>
+                <li><b>(HOF) Hate and Offensive -</b> This tweet, comment, or reply contains Hate, offensive, and
+                  profane
+                  content
+                  in itself or supports hate expressed in the parent tweet</li>
+              </ul>
+
+              Furthermore, this year for the Hinglish language, we’re introducing a <em>multiclass task (task 3)</em>
+              that
+              further divides the HOF tweets into 3 subclasses:
+              <ul>
+                <li><b>(SHOF) Standalone Hate -</b> This tweet, comment, or reply contains Hate, offensive, and profane
+                  content in itself.</li>
+                <li><b>(CHOF) Contextual Hate -</b> Comment or reply is supporting the hate, offense and profanity
+                  expressed in its parent. This includes affirming the hate with positive
+                  sentiment <a href="#example-2">(example-2).</a> and having apparent hate <a
+                    href="#example-3">(example-3).</a></li>
+                <li><b>(NONE) Non-Hate -</b> This tweet, comment, or reply does not contains Hate, offensive, and profane content in itself.</li>
+              </ul>
+
+
+              <div id="example-2">
+                <img src="example-2.png" alt="example-2" class="center" height=35% width=35%>
+                <p style="text-align: center; height:35%; width: 35%;"><small><b>Example-2</b></small></p>
+              </div>
+
+              Another such example with code mixed text. <br>
+
+              <ul>
+                <li class="li"><b>The Source Tweet:</b> Modi Ji COVID situation ko solve karne ke liye ideas maang rahe
+                  the. Mera idea hai resignation dedo please… </li>
+
+                <li class="li"><b>Translation :</b> Modi ji (PM of India) was asking for ideas to solve the covid
+                  situation of India. My idea to him is to resign. </li>
+
+                <li class="li"><b>The Comment:</b> Doctors aur Scientists se manga hai. Chutiyo se nahi. Baith niche.
+                  [HOF/SHOF]
+                </li>
+                <li class="li"><b>Translation:</b> They have asked Doctors and Scientists. Not fuckers. Sit down.
+                  [HOF/SHOF]
+                </li>
+                <li class="li"><b>The reply:</b> You totally nailed it, can’t stop laughing. [HOF/CHOF]</li>
+              </ul>
+              The reply has a positive sentiment. But it is positive in favour of the hate expressed towards the author
+              of
+              the source tweet in the comment.
+              Hence, it is supporting the hate expressed in the comment. Hence, it is also hate speech.<br><br>
+
+              This is the type of problem we’re aiming to solve via this shared task.<br><br>
+
+              <div id="example-3">
+                <img src="example-3.png" alt="example-3" class="center" height=35% width=35%>
+                <p style="text-align: center; height:35%; width: 35%;"><small><b>Example-3</b></small></p>
+              </div>
+
+              <div id="example-4">
+                <img src="example-4.png" alt="example-4" class="center" height=35% width=35%>
+                <p style="text-align: center; height:35%; width: 35%;"><small><b>Example-4</b></small></p>
+                <p>In the above <a href="#example-4">example-4</a>, the main tweet portrays hate against a religion.
+                  Meanwhile, the comment is hateful against the author of the tweet. And not supporting the hate that
+                  was expressed in the main tweet. This is an example of 2 levels having standalone hate.
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="tab_148">
+            <h3 class="panel-title" style="color:#078186; font-size: 25px;">
+              <b>Contact us</b>
+            </h3>
+          </div>
+          <div class="panel-body">
+            <p>Subscribe to our <a href="https://groups.google.com/g/hasoc2019">mailing list</a> for the latest announcements and discussions. </p>
+            <p>For any queries write to us at hasoc2019@googlegroups.com</p>
+            <ul>
+              <li class="li">hirenmadhu16@gmail.com - Hiren Madhu :- Indian Institute of Science, Bangalore, India</li>
+              <br>
+              <li class="li">shreysatapara@gmail.com - Shrey Satapara :- Indian Institute of Technology, Hyderabad, India
+              </li>
+              <br>
+            </ul>
+          </div>
+        </div>
+        <footer class="sticky-footer">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>Copyright © HASOC 2022</span>
+            </div>
+          </div>
+        </footer>
+
+
+</body>
+
+</html>
