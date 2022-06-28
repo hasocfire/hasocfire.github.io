@@ -224,12 +224,32 @@
                                 </div><br>
                                 <strong>Task 3: Offensive Language Identification in Marathi</strong></div>
                             <div><strong> </strong>A task focused on hate speech and offensive language identification is offered for Marathi which follows <a href="https://scholar.harvard.edu/malmasi/olid">OLID</a> texonomy that contains collection of annoted
-                                tweets that encompasses following three levels. <br />
-                                <ul>
-                                    <li><b>A:</b> Offensive Language Detection</li>
-                                    <li><b>B:</b> Categorization of Offensive Language</li>
-                                    <li><b>C:</b> Offensive Language Target Identification</li>
-                                </ul>
+                                tweets that encompasses following three levels. <br /><br>
+                                <ol>
+                                    <li><b>Subtask-3A: Offensive Language Detection</b><br> In this subtask, the goal is to discriminate between offensive and non-offensive posts. Offensive posts include insults, threats, and posts containing any form of
+                                        untargeted profanity. Each instance is assigned one of the following two labels
+                                        <ul>
+                                            <li><b>OFF</b> - Posts containing any form of non-acceptable language (profanity) or a targeted offence, which can be veiled or direct.</li>
+                                            <li><b>NOT</b> - Posts that do not contain offence or profanity.</li>
+                                        </ul>
+                                    </li><br>
+                                    <li><b>Subtask-3B: Categorisation of Offensive Language</b><br> In subtask B, the goal is to predict the type of offence. Only posts labelled as Offensive (OFF) in subtask A are included in subtask B. The two categories
+                                        in subtask B are the following:
+                                        <ul>
+                                            <li><b>Targeted Insult (TIN)</b> - Posts containing an insult/threat to an individual, group, or others.</li>
+                                            <li><b>Untargeted (UNT)</b> - Posts containing nontargeted profanity and swearing.</li>
+                                        </ul>
+                                    </li><br>
+                                    <li><b>Subtask-3C:  Offense Target Identification</b><br>Subtask C focuses on the target of offences. Only posts that are either insults or threats (TIN) are considered in this third layer of annotation. The three labels
+                                        in subtask C are the following:
+                                        <ul>
+                                            <li><b>Individual (IND):</b> - Posts targeting an individual.</li>
+                                            <li><b>Group (GRP)</b> - The target of these offensive posts is a group of people considered as a unity due to the same ethnicity, gender or sexual orientation, political affiliation, religious belief, or other
+                                                common characteristics.</li>
+                                            <li><b>Other (OTH)</b> - The target of these offensive posts does not belong to any of the previous two categories.</li>
+                                        </ul>
+                                    </li>
+                                </ol>
                                 <div><br>
 
                                 </div>
