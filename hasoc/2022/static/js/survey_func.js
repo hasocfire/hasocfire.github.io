@@ -3,33 +3,37 @@ const url = "https://hasocgermanannotation.el.r.appspot.com/register";
 
 function postData(e) {
   e.preventDefault();
+  var submitBtn = document.getElementById("submitBtn");
+  var loadingBtn = document.getElementById("loading");
+  submitBtn.classList.add("hide");
+  loadingBtn.classList.remove("hide");
 
   let team_name = document.getElementById("teamname").value;
   let email = document.getElementById("email").value;
   let total_members = document.getElementById("totalmembers").value;
   let heard_about = document.querySelector('input[name="question_1"]:checked').value;
 
-  var team_details = {}  
-  for (var i = 0; i < total_members; i++) { 
+  var team_details = {}
+  for (var i = 0; i < total_members; i++) {
     var k = document.getElementsByName("membername" + i)[0].value
     var v = document.getElementsByName("affiliation" + i)[0].value
     // console.log(k, v)
-    team_details[k]=v; 
+    team_details[k] = v;
   }
   console.log(team_details)
 
 
   let additional_message = document.getElementById("additional_message").value;
-  
+
   var checkboxes = document.getElementsByName("question_2[]");
   var interested_task = "";
   for (var i = 0, n = checkboxes.length; i < n; i++) {
-    if (checkboxes[i].checked) { interested_task += "," + checkboxes[i].value;}
+    if (checkboxes[i].checked) { interested_task += "," + checkboxes[i].value; }
   }
   if (interested_task) interested_task = interested_task.substring(1);
-  
+
   let myfile = document.getElementById("formFile").files[0];
-  
+
   let formData = new FormData();
   formData.append('team_name', team_name)
   formData.append('email', email)
@@ -37,17 +41,19 @@ function postData(e) {
   formData.append('team_details', JSON.stringify(team_details))
   formData.append('heard_about', heard_about)
   formData.append('additional_message', additional_message)
-  formData.append('interested_task', interested_task) 
+  formData.append('interested_task', interested_task)
   formData.append('myfile', myfile)
-  
+
   console.log(team_name, email, total_members, heard_about, additional_message, interested_task, myfile);
 
   filetype = myfile.name.split(".").pop();
   if (filetype != "pdf") {
-    setTimeout(function(){Swal.fire({
-      icon: "error",
-      title: "Please upload only pdf file",
-    });},5)()
+    setTimeout(function () {
+      Swal.fire({
+        icon: "error",
+        title: "Please upload only pdf file",
+      });
+    }, 5)()
     formElm.reset();
     window.location.reload();
   }
@@ -56,29 +62,31 @@ function postData(e) {
     body: formData
   })
     .then((res) => {
-        console.log(res)
-        return res.json()
-      })
-      .then((data) => {
-      if (data['message'] == 'Team created successfully'){
+      console.log(res)
+      return res.json()
+    })
+    .then((data) => {
+      loadingBtn.classList.add("hide");
+      submitBtn.classList.remove("hide");
+      if (data['message'] == 'Team created successfully') {
         Swal.fire(
           'Good job!',
           data['message'],
           'success'
-        ).then(function() {
+        ).then(function () {
           window.location.reload();
         });
-      } else{
+      } else {
         Swal.fire(
           'Error',
           data['message'],
           'error'
-        )  
+        )
       }
-        // document.getElementById("add").innerHTML = ""
-        // formElm.reset();
-        console.log(data)
-      })
+      // document.getElementById("add").innerHTML = ""
+      // formElm.reset();
+      console.log(data)
+    })
     .catch((err) => console.log(err));
 }
 

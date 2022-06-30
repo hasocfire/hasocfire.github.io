@@ -20,7 +20,7 @@
     <style>
         /* Remove the navbar's default margin-bottom and rounded borders */
         /* Add a gray background color and some padding to the footer */
-        
+
         footer {
             background-color: #f2f2f2;
             padding: 25px;
@@ -28,38 +28,38 @@
             bottom: 0;
             width: 100%;
         }
-        
+
         p {
             font-size: 16px;
         }
-        
+
         .nav a.active {
             background-color: #078186;
             color: white;
         }
-        
+
         .nav a {
             color: black;
             font-size: 16px;
         }
-        
+
         .nav a:hover {
             color: #078186;
         }
-        
+
         .nav-test {
             background-color: #f2f2f2;
             padding: 20px
         }
-        
+
         .panel-group {
             padding: 5px
         }
-        
+
         .jumbotron {
             position: relative;
         }
-        
+
         #logo {
             position: absolute;
             top: 1px;
@@ -158,14 +158,38 @@
                                                 <!-- Leave for security protection, read docs for details -->
                                                 <div id="middle-wizard">
                                                     <div class="step">
-                                                        <h3 class="main_question"><strong>1/5</strong>Please fill with your details</h3>
+                                                        <h3 class="main_question"><strong>1/5</strong>Upload the Consent
+                                                            File.</h3>
                                                         <div class="form-group">
-                                                            <input type="text" name="teamname" class="form-control required" placeholder="Team Name" id="teamname" oninput="myFunction(this.value);">
-                                                            <span style="color:red; font-size: 14px;">*Same Team Name should be used in the paper.</span>
+                                                            <label class="form-check-label">Download the agreement from
+                                                                the
+                                                                link</label>
+                                                            <a href="https://drive.google.com/file/d/1XVbxKmeld_8EmatplVoiceDgFon8zqr4/view?usp=sharing"
+                                                                target="_blank">Consent Form</a>
+                                                        </div>
+                                                        <br>
+                                                        <div class="form-group">
+                                                            <label for="formFile" class="form-label">File input:</label>
+                                                            <input class="form-control required" type="file"
+                                                                name="myfile" id="formFile" accept="application/pdf" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="step">
+                                                        <h3 class="main_question"><strong>2/5</strong>Please fill with
+                                                            your details</h3>
+                                                        <div class="form-group">
+                                                            <input type="text" name="teamname"
+                                                                class="form-control required" placeholder="Team Name"
+                                                                id="teamname" oninput="myFunction(this.value);">
+                                                            <span style="color:red; font-size: 14px;">*Same Team Name
+                                                                should be used in the paper.</span>
                                                         </div>
                                                         <div class="form-group">
-                                                            <input type="email" name="email" class="form-control required" placeholder="Email" id="email" oninput="myFunction2(this.value);">
-                                                            <span style="color:red; font-size: 14px;">*All communication must be done through this email id only.</span>
+                                                            <input type="email" name="email"
+                                                                class="form-control required" placeholder="Email"
+                                                                id="email" oninput="myFunction2(this.value);">
+                                                            <span style="color:red; font-size: 14px;">*All communication
+                                                                must be done through this email id only.</span>
                                                         </div>
                                                         <!-- /row -->
                                                         <!-- <div class="form-group terms">
@@ -180,10 +204,16 @@
                                                     </div>
                                                     <!-- /step-->
                                                     <div class="step">
-                                                        <h3 class="main_question"><strong>2/5</strong>Enter Team Member Details.
+                                                        <h3 class="main_question"><strong>3/5</strong>Enter Team Member
+                                                            Details.
                                                         </h3>
                                                         <div class="form-group">
-                                                            <input type="text" name="totalmembers" class="form-control required" placeholder="Total Members" id="totalmembers" onchange="addFields();" oninput="myFunction3(this.value);" onkeypress="return isNumberKey(event)" />
+                                                            <input type="text" name="totalmembers"
+                                                                class="form-control required"
+                                                                placeholder="Total Members" id="totalmembers"
+                                                                onchange="addFields();"
+                                                                oninput="myFunction3(this.value);"
+                                                                onkeypress="return isNumberKey(event)" />
                                                         </div>
                                                         <div class="form-group" id="Names" />
                                                     </div>
@@ -192,7 +222,8 @@
                                         </div>
                                         <!-- /step-->
                                         <div class="step">
-                                            <h3 class="main_question"><strong>3/5</strong>From where did you hear about HASOC?
+                                            <h3 class="main_question"><strong>4/5</strong>From where did you hear about
+                                                HASOC?
                                             </h3>
                                             <div class="form-group">
                                                 <label class="container_radio version_2">Linkedin
@@ -244,23 +275,28 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>If Other, please describe.</label>
-                                                <textarea name="additional_message" id="additional_message" class="form-control" style="height:100px;" placeholder="Type here additional info..." onkeyup="getVals(this, 'additional_message');"></textarea>
+                                                <textarea name="additional_message" id="additional_message"
+                                                    class="form-control" style="height:100px;"
+                                                    placeholder="Type here additional info..."
+                                                    onkeyup="getVals(this, 'additional_message');"></textarea>
                                             </div>
                                         </div>
                                         <!-- /step-->
                                         <div class="step">
-                                            <h3 class="main_question"><strong>4/5</strong>Task you are interestesd in?
+                                            <h3 class="main_question"><strong>5/5</strong>Task you are interestesd in?
                                             </h3>
                                             <div class="form-group">
-                                                <label class="container_check version_2">Task-1: ICHCL contextual binary classification (Hinglish and German)
+                                                <label class="container_check version_2">Task-1: ICHCL contextual binary
+                                                    classification (Hinglish and German)
                                                     <input type="checkbox" name="question_2[]"
-                                                        value="Task-1: ICHCL contextual binary classification (Hinglish and German)" class="required"
-                                                        onchange="getVals(this, 'question_2');">
+                                                        value="Task-1: ICHCL contextual binary classification (Hinglish and German)"
+                                                        class="required" onchange="getVals(this, 'question_2');">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
                                             <div class="form-group">
-                                                <label class="container_check version_2">Task-2: ICHCL contextual multiclass classification
+                                                <label class="container_check version_2">Task-2: ICHCL contextual
+                                                    multiclass classification
                                                     <input type="checkbox" name="question_2[]"
                                                         value="Task-2: ICHCL contextual multiclass classification"
                                                         class="required" onchange="getVals(this, 'question_2');">
@@ -269,7 +305,8 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="container_check version_2">Task-3: Offensive Language Identification in Marathi
+                                                <label class="container_check version_2">Task-3: Offensive Language
+                                                    Identification in Marathi
                                                     <input type="checkbox" name="question_2[]"
                                                         value="Task-3: Offensive Language Identification in Marathi"
                                                         class="required" onchange="getVals(this, 'question_2');">
@@ -278,19 +315,7 @@
                                             </div>
                                         </div>
                                         <!-- /step-->
-                                        <div class="step">
-                                            <h3 class="main_question"><strong>5/5</strong>Upload the Consent File.</h3>
-                                            <div class="form-group">
-                                                <label class="form-check-label">Download the agreement from the
-                                                    link</label>
-                                                <a href="https://drive.google.com/file/d/1XVbxKmeld_8EmatplVoiceDgFon8zqr4/view?usp=sharing" target="_blank">Consent Form</a>
-                                            </div>
-                                            <br>
-                                            <div class="form-group">
-                                                <label for="formFile" class="form-label">File input:</label>
-                                                <input class="form-control required" type="file" name="myfile" id="formFile" accept="application/pdf" />
-                                            </div>
-                                        </div>
+
                                         <!-- /step-->
                                         <div class="submit step">
                                             <h3 class="main_question"><strong>5/5</strong>Summary</h3>
@@ -322,7 +347,10 @@
                                     <div id="bottom-wizard">
                                         <button type="button" name="backward" class="backward">Prev</button>
                                         <button type="button" name="forward" class="forward">Next</button>
-                                        <button type="submit" name="process" class="submit">Submit</button>
+                                        <button type="submit" name="process" class="submit">
+                                            <span id="submitBtn">Submit</span>
+                                            <span class="hide" id="loading">Loading...</span>
+                                        </button>
                                     </div>
                                     <!-- /bottom-wizard -->
                                     </form>
@@ -336,19 +364,28 @@
                     <!-- /container-fluid -->
 
                     <!-- Modal terms -->
-                    <div class="modal fade" id="terms-txt" tabindex="-1" role="dialog" aria-labelledby="termsLabel" aria-hidden="true">
+                    <div class="modal fade" id="terms-txt" tabindex="-1" role="dialog" aria-labelledby="termsLabel"
+                        aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h4 class="modal-title" id="termsLabel">Terms and conditions</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                        aria-hidden="true">&times;</button>
                                 </div>
                                 <div class="modal-body">
                                     <p>Lorem ipsum dolor sit amet, in porro albucius qui, in <strong>nec quod novum
-                                            accumsan</strong>, mei ludus tamquam dolores id. No sit debitis meliore postulant, per ex prompta alterum sanctus, pro ne quod dicunt sensibus.</p>
-                                    <p>Lorem ipsum dolor sit amet, in porro albucius qui, in nec quod novum accumsan, mei ludus tamquam dolores id. No sit debitis meliore postulant, per ex prompta alterum sanctus, pro ne quod dicunt sensibus. Lorem ipsum
-                                        dolor sit amet, <strong>in porro albucius qui</strong>, in nec quod novum accumsan, mei ludus tamquam dolores id. No sit debitis meliore postulant, per ex prompta alterum sanctus, pro ne quod dicunt sensibus.</p>
-                                    <p>Lorem ipsum dolor sit amet, in porro albucius qui, in nec quod novum accumsan, mei ludus tamquam dolores id. No sit debitis meliore postulant, per ex prompta alterum sanctus, pro ne quod dicunt sensibus.
+                                            accumsan</strong>, mei ludus tamquam dolores id. No sit debitis meliore
+                                        postulant, per ex prompta alterum sanctus, pro ne quod dicunt sensibus.</p>
+                                    <p>Lorem ipsum dolor sit amet, in porro albucius qui, in nec quod novum accumsan,
+                                        mei ludus tamquam dolores id. No sit debitis meliore postulant, per ex prompta
+                                        alterum sanctus, pro ne quod dicunt sensibus. Lorem ipsum
+                                        dolor sit amet, <strong>in porro albucius qui</strong>, in nec quod novum
+                                        accumsan, mei ludus tamquam dolores id. No sit debitis meliore postulant, per ex
+                                        prompta alterum sanctus, pro ne quod dicunt sensibus.</p>
+                                    <p>Lorem ipsum dolor sit amet, in porro albucius qui, in nec quod novum accumsan,
+                                        mei ludus tamquam dolores id. No sit debitis meliore postulant, per ex prompta
+                                        alterum sanctus, pro ne quod dicunt sensibus.
                                     </p>
                                 </div>
                                 <div class="modal-footer">

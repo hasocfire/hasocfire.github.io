@@ -1157,3 +1157,7 @@ input[type=file]::-webkit-file-upload-button:focus, input[type=file].invalid::-w
   outline: none;
 }
 
+.hide{
+  visibility: hidden;
+  display: none;
+}
