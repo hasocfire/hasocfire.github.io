@@ -16,7 +16,9 @@ function postData(e) {
   var team_details = {}
   for (var i = 0; i < total_members; i++) {
     var k = document.getElementsByName("membername" + i)[0].value
+    k = k.replace(/[.,\/#!$%\^&\*;:{}=\-_`'~()]/g, "").replace(/\s{2,}/g, " ").replace(/\s/g, '_');
     var v = document.getElementsByName("affiliation" + i)[0].value
+    v = v.replace(/[.,\/#!$%\^&\*;:{}=\-_`'~()]/g, "").replace(/\s{2,}/g, " ").replace(/\s/g, '_');
     // console.log(k, v)
     team_details[k] = v;
   }
