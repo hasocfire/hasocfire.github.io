@@ -288,26 +288,29 @@
                 <div class="modal-body">
                     <div class="p-3">
                         <ul>
-                            <li class="text-danger">For every subtask, maximum 5 submissions are allowed.</li>
-                            <li>The submission should be in CSV format.</li>
-                            <li>The submission file should contain 2 columns.
+                            <li>For every subtask, maximum 5 submissions per task are allowed.</li>
+                            <li>the submission should be in CSV format.</li>
+                            <li>The submission file should contain two columns.
                                 <ul class="ml-4">
-                                    <li>id : the id of the tweets</li>
-                                    <li>label: the label you have predicted for a given id</li>
-                                    <li><b>Note</b>: everything in submission file case sensitive</li>
+                                    <li>id: id of the tweet.</li>
+                                    <li>label: predicted label for given id.</li>
+                                    <li><strong>Note: </strong>column names case sensitive.</li>
                                 </ul>
                             </li>
-                            <li>All ids should be included in submission.</li>
-                            <li>There should be no missing labels in the label column.</li>
-                            <li>Give your run/submission a unique name in limit of 40 characters. This name will be displayed on leaderboard as well. </li>
-                            <li>write a small description of techniques, algorithms and hyper-parameters you used in your model within a limit of 256 characters.
-                                <li>The submission name for 2 different submissions for the same subtask must not be the same.</li>
-                                <li>Check the <a href="sample_submission.csv">sample submission file </a>before making a submission.</li>
+                            <li>All ids must be included in submission.</li>
+
+                            <li>For task 1 and task 2 and 3a, there should be no missing label in label column.</li>
+                            <li>For subtask 3b, 3c please leave those spaces empty if labels for those are not applicable (predicted label of subtask 3a for that id is NOT in such case labels for subtask 3a and 3b will not be available).</li>
+                            <li>Please note that we are penalising wrong labels for subtask 3b,3c for which labels are not available (Actual label is NOT but there is some predicted lable, in such case panelty will be there)</li>
+
+                            <li>Give your run/submission a unique name in limit of 40 characters.</li>
+                            <li>Write a small description of techniques, algorithm and hyper-parameters you used in your model within a limit of 256 characters. Note that this field is optional.</li>
+                            <li>The submission name for 2 different submissions for same subtask must not be the same.</li>
+                            <li>please take a look at attached <a href="https://hasocfire.github.io/submission/sample_submission.csv">sample submission file</a> before making a submission.</li>
                         </ul><br>
                         <p class="text-info">FAQ: Error: Unknown or missing tweet IDS while submitting subtask2.</p>
-                        <p class="text-info">-->Subtask 2 contains integer values as id. so if you tried opening it in excel or sheets for any purpose it converts integer values of id into exponent format. so avoid opening it in excel instade of that you can use anything
-                            like vs code,notepad etc. </p>
-                        <p>Note: use tweet_id as id column while submitting run for Hindi Subtask A and Hindi Subtask B</p>
+                        <p class="text-info">-->Task 1,2 contains integer values as id. so if you tried opening it in excel or sheets for any purpose it converts integer values of id into exponent format. so avoid opening it in excel instade of that you can use anything like
+                            vs code,notepad etc. </p>
                     </div>
                 </div>
                 <div class="modal-footer">

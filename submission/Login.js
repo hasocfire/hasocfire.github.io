@@ -48,6 +48,7 @@ function deleteAllCookies() {
 }
 
 function login() {
+    document.getElementById("login_button").value = "Loading...";
     var email = document.getElementById("username").value;
     var password = document.getElementById("password").value;
     if (email == "") {
@@ -77,6 +78,7 @@ function login() {
                 window.location = "index.html";
             },
             error: function(jqXHR, textStatus, errorThrown) {
+                document.getElementById("login_button").value = "Log In";
                 if (jqXHR.status == 402) {
                     Swal.fire({
                         icon: "error",
