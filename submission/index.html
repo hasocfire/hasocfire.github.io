@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+    <link rel="icon" type="image/png" sizes="16×16" href="HASOC.png">
+    <link href="style.scss" rel="stylesheet/scss" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <title>HASOC 2021 Submission</title>
+    <style>
+        html {
+            min-height: 100%;
+        }
+        
+        body {
+            min-height: max-content;
+        }
+        
+        .footer {
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            color: white;
+            text-align: center;
+        }
+        
+        .swal-height-submission {
+            height: 100%;
+        }
+        
+        .nav-link {
+            color: gainsboro;
+        }
+        
+        .nav-item a:hover {
+            color: cadetblue;
+        }
+        
+        ul {
+            margin: 0px;
+            padding: 0px;
+        }
+        
+        .single-cta i {
+            color: cyan;
+            font-size: 30px;
+            float: left;
+            margin-top: 8px;
+        }
+        
+        .cta-text {
+            padding-left: 15px;
+            display: inline-block;
+        }
+        
+        .cta-text h4 {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .cta-text span {
+            color: #757575;
+            font-size: 15px;
+        }
+        
+        .facebook-bg {
+            background: #3B5998;
+        }
+        
+        .twitter-bg {
+            background: #55ACEE;
+        }
+        
+        .google-bg {
+            background: #DD4B39;
+        }
+        
+        .footer-widget-heading h3 {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .switch {
+            background-color: #17A2B8;
+            width: 80%;
+            display: inline-block;
+            border-radius: 8px;
+            height: 40px;
+            padding: 5px;
+            position: relative;
+            zoom: 1;
+        }
+        
+        .switch:before,
+        .switch:after {
+            content: " ";
+            /* 1 */
+            display: table;
+            /* 2 */
+        }
+        
+        .switch:after {
+            clear: both;
+        }
+        
+        .switch label {
+            float: left;
+            width: 50%;
+            position: relative;
+            z-index: 2;
+            line-height: 40px;
+            cursor: pointer;
+            color: #fff;
+        }
+        
+        .switch input[type="radio"] {
+            display: none;
+        }
+        
+        .switch input[type="radio"]:checked+label {
+            color: #141241;
+            font-weight: bold;
+        }
+        
+        .switch span {
+            position: relative;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            display: block;
+            border-radius: 5px 0 0 5px;
+            background-color: #ffffff;
+            transition: all 200ms ease;
+        }
+        
+        .switch span.right {
+            left: 50%;
+            border-radius: 0 5px 5px 0;
+            transition: all 200ms ease;
+        }
+    </style>
+</head>
+
+<body onload="check_token()">
+
+    <div class="class=container-fluid bg-white p-1 text-center">
+        <img src="HASOC_Design_01.png" width="600" height="200" alt="">
+    </div>
+    <!--navbvar-->
+    <nav class="navbar navbar-light bg-dark sticky-top" role="navigation">
+        <ul class="nav">
+            <li class="nav-item" style="font-size:large;">
+                <a class="nav-link active" href="index.html" style="color: #fff;"><b>Home</b></a>
+            </li>
+            <li class="nav-item" style="font-size:large;">
+                <a class="nav-link" href="leaderboard.html">Leaderboard</a>
+            </li>
+        </ul>
+        <div class="row">
+            <div class="col-md-6">
+            </div>
+            <ul class="nav">
+                <li class="nav-item dropdown" style="font-size:large;">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Welcome User
+                            </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" onclick="logout()">Logout <i class="fas fa-sign-out-alt"></i></a>
+                        <a class="dropdown-item" data-toggle="modal" data-target="#myModal4">Change Password</a>
+                    </div>
+                </li>
+        </div>
+    </nav>
+    <!--body content-->
+    <div id="body_content" class="body_content" hidden>
+
+        <div class="py-3" style="display:flex;flex-direction:row;justify-content: space-between;" id="navbarText">
+            <div style="display:flex;flex-direction:row;align-items: center;">
+                <div style="margin-left: 20px;text-align: center;">Sort By</div>
+                <select class="form-control" id="sort_param" onchange="team_data_new();">
+                        <option selected value="task_name">Subtask</option>    
+                        <option value="timestamp_desc">Submission Time &#x1F817</option>
+                        <option value="timestamp_asc">Submission Time &#x1F815</option>
+                        <option value="f1_desc">Macro F1 &#x1F817</option>
+                        <option value="f1_asc">Macro F1 &#x1F815</option>
+                    </select>
+            </div>
+            <div style="display:flex;flex-direction:row;justify-content: space-around;">
+                <button class="btn btn-info" data-toggle="modal" data-target="#myModal2">Submision Guidelines</button>
+                <button class="btn btn-info mx-3" onclick="submission()">Submit Another Run</button>
+            </div>
+        </div>
+
+        <!--team data table-->
+        <div class="container-fluid" style="margin-bottom:30px;">
+            <table class="table table-hover" id="team_data">
+                <thead style="color:cadetblue">
+                    <tr>
+                        <th class="text-left col-md-3">TIME OF SUBMISSION</th>
+                        <th scope="col" class="text-center">SUBMISSION NAME</th>
+                        <th scope="col" class="text-center">SUBTASK</th>
+                        <th scope="col" class="text-center">MACRO F1</th>
+                        <th scope="col" class="text-center">DETAILS</th>
+                        <th scope="col" class="text-center">RANK</th>
+                    </tr>
+                </thead>
+                <tbody id="team_data_table_body">
+                    <!-- Table Body will be displayed here -->
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <!--modal for change password-->
+    <div id="myModal4" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="Password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">New Password</label>
+                        <input type="password" class="form-control" id="NewPassword">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="ConfirmPassword">
+                        <span id="passworderr" style="color: red;"></span>
+                    </div>
+                    <button type="button" class="btn btn-info" onclick="changepassword()">Submit</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="close_modal" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--modal for details-->
+    <div id="myModal3" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div id="modal_submission_time"></div><button type="button" class="close" data-dismiss="modal">&times;</button> Details
+                </div>
+                <div class="modal-body" id="details_modal_body">
+                    <div id="loading_details" class="container-fluid text-center">
+                        <img src="images/loading_coffee.gif" width="450" height="450" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--modal for submission guidelines-->
+    <div id="myModal2" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Submission Guidelines</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="p-3">
+                        <ul>
+                            <li class="text-danger">For every subtask, maximum 5 submissions are allowed.</li>
+                            <li>The submission should be in CSV format.</li>
+                            <li>The submission file should contain 2 columns.
+                                <ul class="ml-4">
+                                    <li>id : the id of the tweets</li>
+                                    <li>label: the label you have predicted for a given id</li>
+                                    <li><b>Note</b>: everything in submission file case sensitive</li>
+                                </ul>
+                            </li>
+                            <li>All ids should be included in submission.</li>
+                            <li>There should be no missing labels in the label column.</li>
+                            <li>Give your run/submission a unique name in limit of 40 characters. This name will be displayed on leaderboard as well. </li>
+                            <li>write a small description of techniques, algorithms and hyper-parameters you used in your model within a limit of 256 characters.
+                                <li>The submission name for 2 different submissions for the same subtask must not be the same.</li>
+                                <li>Check the <a href="sample_submission.csv">sample submission file </a>before making a submission.</li>
+                        </ul><br>
+                        <p class="text-info">FAQ: Error: Unknown or missing tweet IDS while submitting subtask2.</p>
+                        <p class="text-info">-->Subtask 2 contains integer values as id. so if you tried opening it in excel or sheets for any purpose it converts integer values of id into exponent format. so avoid opening it in excel instade of that you can use anything
+                            like vs code,notepad etc. </p>
+                        <p>Note: use tweet_id as id column while submitting run for Hindi Subtask A and Hindi Subtask B</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="submit" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#myModal">Got it</button> -->
+                    <button type="submit" class="btn btn-info" data-dismiss="modal" onclick="submission()">Submit Run</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="zero_submission_div" class="py-4" hidden>
+        <div class="text-center my-5 p-4">
+            <button type="button" class="px-4 py-4 my-5 btn btn-lg btn-outline-success" data-toggle="modal" data-target="#myModal2"><b>SUBMIT YOUR FIRST RUN </b></button>
+        </div>
+    </div>
+
+    <div id="loading" class="container-fluid text-center">
+        <img src="images/loading_coffee.gif" width="450" height="450" />
+    </div>
+
+    <div id="footer_div" class="footer bg-dark" style="width:100%;position:relative;">
+        <div class="p-2">Subscribe to our <a href="https://groups.google.com/g/hasoc2019">mailing list</a> for the latest announcements and discussions.</div>
+        <div class="text-center p-2">
+            <div class="h4">
+                For any queries write us at
+            </div>
+            <div>
+                hasoc2019@googlegroups.com <br> shreysatapara@gmail.com
+                <br> hirenmadhu16@gmail.com
+            </div>
+        </div>
+        <div class="p-2 h4"><i class="far fa-copyright mr-2"></i>Team Hasoc
+        </div>
+    </div>
+</body>
+<script src="Hasoc.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    $('.switch label').on('click', function() {
+        var indicator = $(this).parent('.switch').find('span');
+        if ($(this).hasClass('right')) {
+            $(indicator).addClass('right');
+        } else {
+            $(indicator).removeClass('right');
+        }
+    });
+
+    $('sort_param').on('change', function() {
+        team_data_new();
+    })
+    $('textarea').keyup(function() {
+
+        var characterCount = $(this).val().length,
+            current = $('#current'),
+            maximum = $('#maximum'),
+            theCount = $('#the-count');
+
+        current.text(characterCount);
+
+
+        /*This isn't entirely necessary, just playin around*/
+        if (characterCount < 70) {
+            current.css('color', '#666');
+        }
+        if (characterCount > 70 && characterCount < 90) {
+            current.css('color', '#6d5555');
+        }
+        if (characterCount > 90 && characterCount < 100) {
+            current.css('color', '#793535');
+        }
+        if (characterCount > 100 && characterCount < 120) {
+            current.css('color', '#841c1c');
+        }
+        if (characterCount > 120 && characterCount < 139) {
+            current.css('color', '#8f0001');
+        }
+
+        if (characterCount >= 140) {
+            maximum.css('color', '#8f0001');
+            current.css('color', '#8f0001');
+            theCount.css('font-weight', 'bold');
+        } else {
+            maximum.css('color', '#666');
+            theCount.css('font-weight', 'normal');
+        }
+
+
+    });
+    $('#Password').on('change keyup paste', function() {
+        var pass = document.getElementById('Password').value;
+        var new_pass = document.getElementById('NewPassword').value;
+        var passerr = document.getElementById('passworderr');
+        if (pass == new_pass) {
+            passerr.innerHTML = "Current Password and New Password Can't be Same"
+            passerr.removeAttribute("hidden")
+        } else {
+            passerr.setAttribute("hidden", true);
+        }
+    })
+    $('#NewPassword').on('change keyup paste', function() {
+        var pass = document.getElementById('Password').value;
+        var new_pass = document.getElementById('NewPassword').value;
+        var passerr = document.getElementById('passworderr');
+        if (pass == new_pass) {
+            passerr.innerHTML = "Current Password and New Password Can't be Same"
+            passerr.removeAttribute("hidden")
+        } else {
+            passerr.setAttribute("hidden", true);
+        }
+    })
+    $('#ConfirmPassword').on('change keyup paste', function() {
+        var new_pass = document.getElementById('NewPassword').value;
+        var conf_pass = document.getElementById('ConfirmPassword').value;
+        var passerr = document.getElementById('passworderr');
+        if (conf_pass != new_pass) {
+            passerr.innerHTML = "Password and Confirm Password Must be Same"
+            passerr.removeAttribute("hidden")
+        } else {
+            passerr.setAttribute("hidden", true);
+        }
+    })
+</script>
+
+</html>
