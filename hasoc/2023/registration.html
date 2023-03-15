@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>HASOC</title>
+    <meta charset="utf-8">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" sizes="16×16" href="HASOC.PNG">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- BASE CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="static/css/style.css" rel="stylesheet">
+
+    <style>
+        /* Remove the navbar's default margin-bottom and rounded borders */
+        /* Add a gray background color and some padding to the footer */
+
+        footer {
+            background-color: #f2f2f2;
+            padding: 25px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        p {
+            font-size: 16px;
+        }
+
+        .nav a.active {
+            background-color: #078186;
+            color: white;
+        }
+
+        .nav a {
+            color: black;
+            font-size: 16px;
+        }
+
+        .nav a:hover {
+            color: #078186;
+        }
+
+        .nav-test {
+            background-color: #f2f2f2;
+            padding: 20px
+        }
+
+        .panel-group {
+            padding: 5px
+        }
+
+        .jumbotron {
+            position: relative;
+        }
+
+        #logo {
+            position: absolute;
+            top: 1px;
+            left: 1px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="jumbotron">
+        <div id="logo">
+            <img src="HASOC_Design_01.jpg" alt="HASOC" heigh=20% width=20%>
+
+        </div>
+
+        <div class="container text-center">
+            <h1>HASOC (2023)</h1>
+            <p>Hate Speech and Offensive Content Identification in English and Indo-Aryan Languages</p>
+
+        </div>
+    </div>
+
+    <div class="container-fluid bg-2">
+
+        <div class="row ">
+
+            <div class="col-sm-2 nav-test">
+
+
+                <ul class="nav nav-pills nav-stacked ">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="index.html">Overview<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link " href="call_for_participation.html">Call for Participation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="registration.html">Registration<span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="important_dates.html">Important dates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="organizers.html">Organizers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dataset.html">Datasets and Baseline Model</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="results.html">Results</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../2021/results.html">Results(HASOC2021)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="proceeding.html">Proceedings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reference.html">Acknowledgment and Reference</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="../2022/index.html" target="_blank" rel="noopener noreferrer">HASOC
+                            2022</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="../2021/index.html" target="_blank" rel="noopener noreferrer">HASOC
+                            2021</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="../2020/index.html" target="_blank" rel="noopener noreferrer">HASOC
+                            2020</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="../2019/index.html" target="_blank" rel="noopener noreferrer">HASOC
+                            2019</a>
+                    </li>
+
+
+                </ul>
+            </div>
+            <div class="col-sm-10">
+                <div aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="tab_148">
+                            <h3 class="panel-title" style="color:#078186; font-size: 25px;">
+                                <b>Registration</b>
+                            </h3>
+                            </div>
+                        </div>    
+                            <div align="center">
+                                <img src="ComingSoon.jpg" alt="ComingSoon" height="500px" width="500px"/>
+                            </div>  
+                        </div>
+                        <!--<div class="panel-body">
+                            <h4><b>Note:</b> Since manual varification of data access form is required you'll receive dataset passwords within 1-2 days, if you dont receive passwords in this duration please write us at hasocfire@gmail.com mentioning your
+                                Team Name.
+                                <a></a>
+                            </h4>
+                            <div class="container-fluid full-height">
+                                <div class="row row-height">
+                                    <div class="col-sm-12 content-right" id="start">
+                                        <div id="wizard_container">
+                                            <div id="top-wizard">
+                                                <div id="progressbar"></div>
+                                            </div>
+                                        /top-wizard 
+                                            <form id="wrapped" method="post" enctype="multipart/form-data">
+                                                <input id="website" name="website" type="text" value="">
+                                             Leave for security protection, read docs for details 
+                                                <div id="middle-wizard">
+                                                    <div class="step">
+                                                        <h3 class="main_question"><strong>1/5</strong>Upload the Consent File.
+                                                        </h3>
+                                                        <div class="form-group">
+                                                            <label class="form-check-label">Download the agreement from
+                                                                the
+                                                                link</label>
+                                                            <a href="https://drive.google.com/file/d/1XVbxKmeld_8EmatplVoiceDgFon8zqr4/view?usp=sharing" target="_blank">Consent Form</a>
+                                                        </div>
+                                                        <br>
+                                                        <div class="form-group">
+                                                            <label for="formFile" class="form-label">File input:</label>
+                                                            <input class="form-control required" type="file" name="myfile" id="formFile" accept="application/pdf" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="step">
+                                                        <h3 class="main_question"><strong>2/5</strong>Please fill with your details</h3>
+                                                        <div class="form-group">
+                                                            <input type="text" name="teamname" class="form-control required" placeholder="Team Name" id="teamname" oninput="myFunction(this.value);">
+                                                            <span style="color:red; font-size: 14px;">*Same Team Name
+                                                                should be used in the paper.</span>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="email" name="email" class="form-control required" placeholder="Email" id="email" oninput="myFunction2(this.value);">
+                                                            <span style="color:red; font-size: 14px;">*All communication
+                                                                must be done through this email id only.</span>
+                                                        </div>
+                                                         /row
+                                                        /<div class="form-group terms">
+                                                            <label class="container_check">Please accept our <a href="#"
+                                                                    data-toggle="modal" data-target="#terms-txt">Terms
+                                                                    and conditions</a>
+                                                                <input type="checkbox" name="terms" value="Yes"
+                                                                    class="required">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    /step
+                                                    <div class="step">
+                                                        <h3 class="main_question"><strong>3/5</strong>Enter Team Member Details.
+                                                        </h3>
+                                                        <div class="form-group">
+                                                            <input type="text" name="totalmembers" class="form-control required" placeholder="Total Members" id="totalmembers" onchange="addFields();" oninput="myFunction3(this.value);" onkeypress="return isNumberKey(event)" />
+                                                        </div>
+                                                        <div class="form-group" id="Names" />
+                                                    </div>
+                                                    <div class="form-group" id="Affiliation" />
+                                                </div>
+                                        </div>
+                                         /step
+                                        <div class="step">
+                                            <h3 class="main_question"><strong>4/5</strong>From where did you hear about HASOC?
+                                            </h3>
+                                            <div class="form-group">
+                                                <label class="container_radio version_2">Linkedin
+                                                    <input type="radio" name="question_1" value="Linkedin"
+                                                        class="required" onchange="getVals(this, 'question_1');"
+                                                        oninput="addRequired();">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="container_radio version_2">Facebook
+                                                    <input type="radio" name="question_1" value="Facebook"
+                                                        class="required" onchange="getVals(this, 'question_1');"
+                                                        oninput="addRequired();">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="container_radio version_2">Twitter
+                                                    <input type="radio" name="question_1" value="Twitter"
+                                                        class="required" onchange="getVals(this, 'question_1');"
+                                                        oninput="addRequired();">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="container_radio version_2">Friends
+                                                    <input type="radio" name="question_1" value="Friends"
+                                                        class="required" onchange="getVals(this, 'question_1');"
+                                                        oninput="addRequired();">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="container_radio version_2">College
+                                                    <input type="radio" name="question_1" value="College"
+                                                        class="required" onchange="getVals(this, 'question_1');"
+                                                        oninput="addRequired();">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="container_radio version_2">Other
+                                                    <input type="radio" name="question_1" id="Other" value="Other"
+                                                        class="required" onchange="getVals(this, 'question_1');"
+                                                        oninput="addRequired();">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>If Other, please describe.</label>
+                                                <textarea name="additional_message" id="additional_message" class="form-control" style="height:100px;" placeholder="Type here additional info..." onkeyup="getVals(this, 'additional_message');"></textarea>
+                                            </div>
+                                        </div>
+                                     /step
+                                        <div class="step">
+                                            <h3 class="main_question"><strong>5/5</strong>Task you are interestesd in?
+                                            </h3>
+                                            <div class="form-group">
+                                                <label class="container_check version_2">Task-1: ICHCL contextual binary
+                                                    classification (Hinglish and German)
+                                                    <input type="checkbox" name="question_2[]"
+                                                        value="Task-1: ICHCL contextual binary classification (Hinglish and German)"
+                                                        class="required" onchange="getVals(this, 'question_2');">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="container_check version_2">Task-2: ICHCL contextual
+                                                    multiclass classification
+                                                    <input type="checkbox" name="question_2[]"
+                                                        value="Task-2: ICHCL contextual multiclass classification"
+                                                        class="required" onchange="getVals(this, 'question_2');">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="container_check version_2">Task-3: Offensive Language
+                                                    Identification in Marathi
+                                                    <input type="checkbox" name="question_2[]"
+                                                        value="Task-3: Offensive Language Identification in Marathi"
+                                                        class="required" onchange="getVals(this, 'question_2');">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        !-- /step--
+
+                                        !-- /step--
+                                        <div class="submit step">
+                                            <h3 class="main_question"><strong>5/5</strong>Summary</h3>
+                                            <div class="summary">
+                                                <ul>
+                                                    <li><strong>1</strong>
+                                                        <h5>Team Name</h5>
+                                                        <p id="getteamname"></p>
+                                                        <h5>Email</h5>
+                                                        <p id="getemail"></p>
+                                                        <h5>Total Members</h5>
+                                                        <p id="gettotalmembers"></p>
+                                                    </li>
+                                                    <li><strong>2</strong>
+                                                        <h5>From where did you hear about HASOC?</h5>
+                                                        <p id="question_1"></p>
+                                                        <p id="additional_message"></p>
+                                                    </li>
+                                                    <li><strong>3</strong>
+                                                        <h5>Task you are interestesd in?</h5>
+                                                        <p id="question_2"></p>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        !-- /step--
+                                    </div>
+                                    !-- /middle-wizard --
+                                    <div id="bottom-wizard">
+                                        <button type="button" name="backward" class="backward">Prev</button>
+                                        <button type="button" name="forward" class="forward">Next</button>
+                                        <button type="submit" name="process" class="submit">
+                                            <span id="submitBtn">Submit</span>
+                                            <span class="hide" id="loading">Loading...</span>
+                                        </button>
+                                    </div>
+                                    !-- /bottom-wizard --
+                                    </form>
+                                </div>
+                                !-- /Wizard container --
+                            </div>
+                            !-- /content-right-->
+                    </div>
+                    <!-- /row-->
+                </div>
+                <!-- /container-fluid -->
+
+                <!-- Modal terms -->
+                <div class="modal fade" id="terms-txt" tabindex="-1" role="dialog" aria-labelledby="termsLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="termsLabel">Terms and conditions</h4>
+                                <button type="button" class="close" data-dismiss="modal"
+                                    aria-hidden="true">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Lorem ipsum dolor sit amet, in porro albucius qui, in <strong>nec quod novum
+                                        accumsan</strong>, mei ludus tamquam dolores id. No sit debitis meliore
+                                    postulant, per ex prompta alterum sanctus, pro ne quod dicunt sensibus.</p>
+                                <p>Lorem ipsum dolor sit amet, in porro albucius qui, in nec quod novum accumsan, mei
+                                    ludus tamquam dolores id. No sit debitis meliore postulant, per ex prompta alterum
+                                    sanctus, pro ne quod dicunt sensibus. Lorem ipsum dolor
+                                    sit amet, <strong>in porro albucius qui</strong>, in nec quod novum accumsan, mei
+                                    ludus tamquam dolores id. No sit debitis meliore postulant, per ex prompta alterum
+                                    sanctus, pro ne quod dicunt sensibus.</p>
+                                <p>Lorem ipsum dolor sit amet, in porro albucius qui, in nec quod novum accumsan, mei
+                                    ludus tamquam dolores id. No sit debitis meliore postulant, per ex prompta alterum
+                                    sanctus, pro ne quod dicunt sensibus.
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn_1" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    </div>
+    </div>
+    </div>
+    <br>
+    </br>
+    <footer class="sticky-footer ">
+        <div class="container my-auto ">
+            <div class="copyright text-center my-auto ">
+                <span>Copyright © HASOC 2023</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="static/js/jquery-3.2.1.min.js"></script>
+    <script src="static/js/common_scripts.min.js"></script>
+    <script src="static/js/functions.js"></script>
+
+    <!-- Wizard script -->
+    <script src="static/js/survey_func.js"></script>
+    <script type='text/javascript'>
+        const formElm = document.querySelector("#wrapped")
+        formElm.addEventListener("submit", postData)
+
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+
+        function addFields() {
+            // Generate a dynamic number of inputs
+            var number = document.getElementById("totalmembers").value;
+            // Get the element where the inputs will be added to
+            var container = document.getElementById("Names");
+            var container2 = document.getElementById("Affiliation");
+
+            // Remove every children it had before
+            while (container.hasChildNodes()) {
+                container.removeChild(container.lastChild);
+            }
+            for (i = 0; i < number; i++) {
+                // Append a node with a random text
+                container.appendChild(document.createTextNode("Member Name - " + (i + 1) + " "));
+                // Create an <input> element, set its type and name attributes
+                var input = document.createElement("input");
+                input.type = "text";
+                input.required = "True"
+                input.name = "membername" + i;
+                container.appendChild(input);
+                container.appendChild(document.createElement("br"));
+                container.appendChild(document.createElement("br"));
+                container.appendChild(document.createTextNode("Affiliation - " + (i + 1) + " "));
+                var input = document.createElement("input");
+                input.type = "text";
+                input.required = "True"
+                input.name = "affiliation" + i;
+                container.appendChild(input);
+                container.appendChild(document.createElement("br"));
+                container.appendChild(document.createElement("hr"));
+            }
+        }
+
+        function myFunction(val) {
+            document.getElementById("getteamname").innerHTML = val;
+        }
+
+        function myFunction2(val) {
+            document.getElementById("getemail").innerHTML = val;
+        }
+
+        function myFunction3(val) {
+            document.getElementById("gettotalmembers").innerHTML = val;
+        }
+    </script>
+
+</body>
+
+</html>
