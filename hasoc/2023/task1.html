@@ -26,13 +26,13 @@
 				})()"
 					class="block md:hidden h-14 text-center py-4 text-[#078186] text-xl font-bold border-2 border-[#078186] rounded-lg cursor-pointer"
 				>
-					Important Dates
+					Call for Participation
 				</p>
 				<div id="submenu" class="scale-y-0 md:scale-y-100 absolute top-16 md:top-0 border-2 border-[#078186] md:border-none md:relative shadow-xl md:shadow-none rounded-xl w-full flex flex-col px-[20px] md:py-[16px] gap-2 bg-[#f2f2f2] overflow-hidden transition-all origin-top">
 					<a href="/" class="cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Overview</a>
-					<a href="/call_for_participation.html" class="cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Call for Participation</a>
+					<a href="/call_for_participation.html" class="bg-[#078186] text-white cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Call for Participation</a>
 					<a href="/registration.html" class="cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Registration</a>
-					<a href="/important_dates.html" class="bg-[#078186] text-white cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Important dates</a>
+					<a href="/important_dates.html" class="cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Important dates</a>
 					<a href="/organizers.html" class="cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Organizers</a>
 					<a href="/dataset.html" class="cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Datasets and Baseline Model</a>
 					<a href="/results.html" class="cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Results</a>
@@ -44,28 +44,24 @@
 					<a target="_blank" href="https://hasocfire.github.io/hasoc/2019/index.html" class="cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">HASOC 2019</a>
 				</div>
 			</div>
-			<div class="w-[85%] h-fit">
-				<div class="h-full w-[80%] rounded-xl border border-gray-200 shadow-lg overflow-hidden">
-					<p class="bg-[#f2f2f2] p-[15px] text-xl text-[#078186] font-bold">Important Dates</p>
-					<p class="py-[15px] px-4 font-[16px] text-[#333] font-bold">Timeline:</p>
-					<p class="font-[10px] px-4 text-[#333]">All subtracks have an independent timeline for training/test data release and run submission which will be available on respective websites. Here are the common timelines:</p>
-					<div class="w-full px-[15px] py-5">
-						<div class="flex bg-white group rounded-t-lg">
-							<p class="w-48 border-[#078186] border-2 border-b-0 px-2 p-1 bg-[#078186BB] group-hover:bg-[#078186DD] text-white rounded-tl-lg">15th August</p>
-							<p class="px-2 p-1 border-2 border-b-0 w-[50%] group-hover:bg-[#f2f2f2] rounded-tr-lg">Result Declaration for all sub-tracks</p>
-						</div>
-						<div class="flex bg-white group">
-							<p class="w-48 border-[#078186] border-2 border-b-0 px-2 p-1 bg-[#078186BB] group-hover:bg-[#078186DD] text-white">15th September</p>
-							<p class="px-2 p-1 border-2 border-b-0 w-[50%] group-hover:bg-[#f2f2f2]">Working Notes Due</p>
-						</div>
-						<div class="flex bg-white group">
-							<p class="w-48 border-[#078186] border-2 px-2 p-1 bg-[#078186BB] group-hover:bg-[#078186DD] text-white rounded-bl-lg">15th October</p>
-							<p class="px-2 p-1 border-2 w-[50%] group-hover:bg-[#f2f2f2] rounded-br-lg">Camera Ready Paper</p>
-						</div>
+			<div class="w-full md:w-[85%] h-fit">
+				<div class="h-full w-full md:w-[95%] rounded-xl border border-gray-200 shadow-lg overflow-hidden">
+					<p class="bg-[#f2f2f2] p-[15px] text-xl text-[#078186] font-bold">Task 1: Identifying Hate, offensive and profane content</p>
+					<div  class="px-[15px] taskDetail">
+						<p class="py-[15px] font-[16px] text-[#333] font-bold">Task 1A: Identifying Hate, offensive and profane content in Sinhala</p>
+						<p class="font-[10px] text-[#333] mb-2">This task focuses on Hate speech and Offensive language identification for Sinhala. Sinhala is a low-resource Indo-Aryan language spoken by over 17 million people in Sri Lanka and one of the two official languages in Sri Lanka. HASOC 2023 brings the first-ever shared task for Sinhala natural language processing.</p>
+						<p class="font-[10px] text-[#333] mb-2">This is a coarse-grained binary classification in which participating systems are required to classify tweets into two classes, namely: Hate and Offensive (HOF) and Non- Hate and offensive (NOT).</p>
+						<p class="font-[10px] text-[#333] mb-2">(NOT) Non Hate-Offensive - This post does not contain any Hate speech, profane, offensive content. (HOF) Hate and Offensive - This post contains Hate, offensive, and profane content.</p>
+						<p class="font-[10px] text-[#333] mb-2">The train/ test sets are based on the recently released SOLD: Sinhala Offensive Language Detection dataset [1].</p>
+						<p class="font-[10px] text-[#333] mb-2">[1] Ranasinghe, T., Anuradha, I., Premasiri, D., Silva, K., Hettiarachchi, H., Uyangodage, L. and Zampieri, M., 2022. SOLD: Sinhala Offensive Language Dataset. arXiv preprint <a target="_blank" href="https://arxiv.org/abs/2212.00851" class="text-[#078186] border-b-2 border-[#078186] italic">arXiv:2212.00851</a>.</p>
+						<p class="py-[15px] font-[16px] text-[#333] font-bold">Task 1B: Identifying Hate, offensive and profane content in Gujarati</p>
+						<p class="font-[10px] text-[#333] mb-2">This task focuses on Hate speech and Offensive language identification for Gujarati. Gujarati is a low-resource Indo-Aryan language with around 50M native speakers which is one among 22 official languages in India.</p>
+						<p class="font-[10px] text-[#333] mb-2">This is a coarse-grained binary classification in a few shot setting, in which participating systems are required to classify tweets into two classes, namely: Hate and Offensive (HOF) and Non- Hate and offensive (NOT).</p>
+						<p class="font-[10px] text-[#333] mb-2">(NOT) Non Hate-Offensive - This post does not contain any Hate speech, profane, offensive content. (HOF) Hate and Offensive - This post contains Hate, offensive, and profane content.</p>
+						<p class="font-[10px] text-[#333] mb-2">The train set contains ~200 tweets, and participants can explore various techniques to improve the system in a few short settings.</p>
 					</div>
-					<p class="pb-[15px] px-4 font-[16px] text-[#333] font-bold">NOTE: All dates are in AoE timezone</p>
 				</div>
-				<div class="h-full w-[80%] rounded-xl border border-gray-200 shadow-lg overflow-hidden mt-4">
+				<div class="h-full w-full md:w-[95%] rounded-xl border border-gray-200 shadow-lg overflow-hidden mt-4">
 					<p class="bg-[#f2f2f2] p-[15px] text-xl text-[#078186] font-bold">Contact us</p>
 					<div class="px-[15px]">
 						<p class="font-[10px] text-[#333] mb-2">Subscribe to our <a target="_blank" href="https://groups.google.com/g/hasoc" class="text-[#078186] border-b-2 border-[#078186] italic">mailing list</a> for the latest announcements and discussions.</p>

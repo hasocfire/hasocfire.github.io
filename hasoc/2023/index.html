@@ -1,200 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <title>HASOC</title>
-    <meta charset="utf-8">
-
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" sizes="16×16" href="HASOC.PNG">
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-    <style>
-        /* Remove the navbar's default margin-bottom and rounded borders */
-        /* Add a gray background color and some padding to the footer */
-
-        footer {
-            background-color: #f2f2f2;
-            padding: 25px;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
-
-        p {
-            font-size: 16px;
-        }
-
-        .nav a.active {
-            background-color: #078186;
-            color: white;
-        }
-
-        .nav a {
-            color: black;
-            font-size: 16px;
-        }
-
-        .nav a:hover {
-            color: #078186;
-        }
-
-        .nav-test {
-            background-color: #f2f2f2;
-            padding: 20px
-        }
-
-        .panel-group {
-            padding: 5px
-        }
-
-        .jumbotron {
-            position: relative;
-        }
-
-        #logo {
-            position: absolute;
-            top: 1px;
-            left: 1px;
-        }
-    </style>
-</head>
-
-<body>
-
-
-    <div class="jumbotron">
-        <div id="logo">
-            <img src="HASOC_Design_01.jpg" alt="HASOC" heigh=20% width=20%>
-
-        </div>
-        <div class="container text-center">
-            <h1>HASOC (2023)</h1>
-            <p>Hate Speech and Offensive Content Identification in English and Indo-Aryan Languages</p>
-        </div>
-    </div>
-
-
-
-
-
-    <div class="container-fluid bg-2">
-
-        <div class="row ">
-
-            <div class="col-sm-2 nav-test">
-                <ul class="nav nav-pills nav-stacked ">
-                    <li class="nav-item ">
-                        <a class="nav-link active" href="index.html">Overview<span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link " href="call_for_participation.html">Call for Participation</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="registration.html">Registration</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="important_dates.html">Important dates</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="organizers.html">Organizers</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="dataset.html">Datasets and Baseline Model</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="results.html">Results</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../2021/results.html">Results(HASOC2021)</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="proceeding.html">Proceedings</a>
-                    </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="reference.html">Acknowledgment and Reference</a>
-                    </li> -->
-                    <li class="nav-item ">
-                        <a class="nav-link" href="../2022/index.html" target="_blank" rel="noopener noreferrer">HASOC
-                            2022</a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="../2021/index.html" target="_blank" rel="noopener noreferrer">HASOC
-                            2021</a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="../2020/index.html" target="_blank" rel="noopener noreferrer">HASOC
-                            2020</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" href="../2019/index.html" target="_blank" rel="noopener noreferrer">HASOC
-                            2019</a>
-                    </li>
-
-                </ul>
-            </div>
-            <div class="col-sm-9">
-
-                <div class="panel-group" role="tablist" aria-multiselectable="true">
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="tab_148">
-                            <h3 class="panel-title" style="color:#078186; font-size: 25px;">
-
-                                <b>Overview</b>
-
-
-                            </h3>
-                        </div>
-                        <div class="panel-body">
-                            <p>Social media sites like Twitter and Facebook, being user-friendly and accessible sources,
-                                provide opportunities for people to air their voices. People, irrespective of age group,
-                                use these sites to share every moment of their lives, making these sites flooded with
-                                data. Apart from these commendable features of social media, they also have downsides.
-                                The large fraction of hate speech and other offensive and objectionable content online
-                                poses a vast challenge to societies. Offensive language such as insulting, hurtful,
-                                derogatory, or obscene content directed from one person to another and open to others
-                                undermines objective discussions. Such a type of language can be increasingly found on
-                                the web and lead to the radicalization of debates. Public opinion-forming requires
-                                rational critical discourse (Habermas 1984). Objectionable content can pose a threat to
-                                democracy. At the same time, open societies need to find an acceptable way to react to
-                                such content without imposing rigid censorship regimes.
-                            </p>
-                            <p>
-                                As a consequence, many platforms of social media websites monitor user posts. This leads
-                                to a pressing demand for methods to automatically identify suspicious posts. Online
-                                communities, social media enterprises, and technology companies have been investing
-                                heavily in technology and processes to identify offensive language to prevent abusive
-                                behavior on social media. Furthermore, a conversational thread can contain hate and
-                                offensive content, which is not apparent just from a single comment or the reply to a
-                                comment but can be identified if given the context of the parent content. Moreover, the
-                                contents on such social media are spread in many different languages, including
-                                code-mixed languages such as Hinglish(Hindi+English), German-English code mixed, and
-                                many more. So it becomes a huge responsibility for these sites to identify such hate
-                                content before it disseminates to the masses.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    </div>
-    <br>
-    </br>
-    <footer class="sticky-footer">
-        <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-                <span>Copyright © HASOC 2023</span>
-            </div>
-        </div>
-    </footer>
-
-
-</body>
-
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/x-icon" href="/images/HASOC.png" />
+		<title>HASOC</title>
+		<script src="./tailwindCSS.js"></script>
+	</head>
+	<body style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">
+		<header class="h-[13rem] relative bg-[#eeeeee] group text-[#333333] flex flex-col items-center justify-center p-[48px] shadow-inner z-40 md:z-50 transition-all overflow-hidden">
+			<img class="hidden md:block absolute top-0 left-0 w-[230px] h-auto mix-blend-multiply opacity-80" src="./images/HASOC_Design_01.jpg" />
+			<h1 class="text-[30px] md:text-[63px] transition-all duration-300">HASOC (2023)</h1>
+			<p class="text-[10px] md:text-[21px] text-center transition-all duration-300">Hate Speech and Offensive Content Identification in English and Indo-Aryan Languages</p>
+		</header>
+		<div class="flex flex-col md:flex-row justify-between w-full p-5 gap-5 bg-white mb-0 md:mb-14">
+			<div class="w-full md:w-[15%] sticky top-3 h-14 md:h-fit bg-[#f2f2f2] shadow-xl rounded-xl border border-gray-200 z-50 md:z-40">
+				<p
+					onclick="(()=>{
+					const submenu = document.getElementById('submenu');
+					if(submenu.classList.contains('scale-y-0')){
+						submenu.classList.remove('scale-y-0');
+					}else{
+						submenu.classList.add('scale-y-0');
+					}
+				})()"
+					class="block md:hidden h-14 text-center py-4 text-[#078186] text-xl font-bold border-2 border-[#078186] rounded-lg cursor-pointer"
+				>
+					Overview
+				</p>
+				<div id="submenu" class="scale-y-0 md:scale-y-100 absolute top-16 md:top-0 border-2 border-[#078186] md:border-none md:relative shadow-xl md:shadow-none rounded-xl w-full flex flex-col px-[20px] md:py-[16px] gap-2 bg-[#f2f2f2] overflow-hidden transition-all origin-top">
+					<a href="/" class="bg-[#078186] text-white cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Overview</a>
+					<a href="/call_for_participation.html" class="cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Call for Participation</a>
+					<a href="/registration.html" class="cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Registration</a>
+					<a href="/important_dates.html" class="cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Important dates</a>
+					<a href="/organizers.html" class="cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Organizers</a>
+					<a href="/dataset.html" class="cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Datasets and Baseline Model</a>
+					<a href="/results.html" class="cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Results</a>
+					<a href="/proceeding.html" class="cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Proceedings</a>
+					<!--a href="/reference.html" class="cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Acknowledgment and Reference</a-->
+					<a target="_blank" href="https://hasocfire.github.io/hasoc/2022/index.html" class="cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">HASOC 2022</a>
+					<a target="_blank" href="https://hasocfire.github.io/hasoc/2021/index.html" class="cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">HASOC 2021</a>
+					<a target="_blank" href="https://hasocfire.github.io/hasoc/2020/index.html" class="cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">HASOC 2020</a>
+					<a target="_blank" href="https://hasocfire.github.io/hasoc/2019/index.html" class="cursor-pointer text-[16px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">HASOC 2019</a>
+				</div>
+			</div>
+			<div class="w-full md:w-[85%] h-fit">
+				<div class="h-full w-full rounded-xl border border-gray-200 shadow-lg overflow-hidden">
+					<p class="bg-[#f2f2f2] p-[15px] text-xl text-[#078186] font-bold">Overview</p>
+					<p class="p-[15px] font-[16px] text-[#333]">
+						Social media sites like Twitter and Facebook, being user-friendly and accessible sources, provide opportunities for people to air their voices. People, irrespective of age group, use these sites to share every moment of their lives, making these sites flooded with data. Apart from these commendable features of social media, they also have downsides. The large fraction of hate speech and other offensive and objectionable content online poses a vast challenge to societies. Offensive language such as insulting, hurtful, derogatory, or obscene content directed from one person to another and open to others undermines objective discussions. Such a type of language can be increasingly found on the web and lead to the radicalization of debates. Public opinion-forming
+						requires rational critical discourse (Habermas 1984). Objectionable content can pose a threat to democracy. At the same time, open societies need to find an acceptable way to react to such content without imposing rigid censorship regimes. <br />As a consequence, many platforms of social media websites monitor user posts. This leads to a pressing demand for methods to automatically identify suspicious posts. Online communities, social media enterprises, and technology companies have been investing heavily in technology and processes to identify offensive language to prevent abusive behavior on social media. Furthermore, a conversational thread can contain hate and offensive content, which is not apparent just from a single comment or the reply to a comment but can
+						be identified if given the context of the parent content. Moreover, the contents on such social media are spread in many different languages, including code-mixed languages such as Hinglish(Hindi+English), German-English code mixed, and many more. So it becomes a huge responsibility for these sites to identify such hate content before it disseminates to the masses.
+					</p>
+				</div>
+			</div>
+		</div>
+		<footer class="fixed bottom-0 left-0 w-full -z-50 bg-[#eeeeee] flex justify-center items-center p-5">
+			<p class="text-[14px] text-[#333333]">Copyright © HASOC 2023</p>
+		</footer>
+	</body>
 </html>
