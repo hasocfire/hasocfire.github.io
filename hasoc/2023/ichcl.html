@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" type="image/x-icon" href="https://hasocfire.github.io/hasoc/2023/images/HASOC.png" />
-		<title>ICHCL : HASOC</title>
-		<script src="./tailwindCSS.js"></script>
-	</head>
-	<body style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;scroll-behavior: smooth;">
-		<header class="h-[13rem] relative bg-[#eeeeee] group text-[#333333] flex flex-col items-center justify-center p-[48px] shadow-inner z-40 md:z-50 transition-all overflow-hidden">
-			<img class="hidden md:block absolute top-0 left-0 w-[230px] h-auto mix-blend-multiply opacity-80"src="https://hasocfire.github.io/hasoc/2023/images/HASOC_Design_01.jpg" />
-			<h1 class="text-[30px] md:text-[63px] transition-all duration-300">HASOC (2023)</h1>
-			<p class="text-[14px] md:text-[21px] text-center transition-all duration-300">Hate Speech and Offensive Content Identification in English and Indo-Aryan Languages</p>
-		</header>
-		<div class="flex flex-col md:flex-row justify-between w-full p-5 gap-5 bg-white mb-0 md:mb-14">
-			<div class="w-full md:w-[15%] sticky top-3 h-14 md:h-fit bg-[#f2f2f2] shadow-xl rounded-xl border border-gray-200 z-50 md:z-40">
-				<p
-					onclick="(()=>{
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="https://hasocfire.github.io/hasoc/2023/images/HASOC.png" />
+    <title>ICHCL : HASOC</title>
+    <script src="./tailwindCSS.js"></script>
+</head>
+
+<body style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;scroll-behavior: smooth;">
+    <header class="h-[13rem] relative bg-[#eeeeee] group text-[#333333] flex flex-col items-center justify-center p-[48px] shadow-inner z-40 md:z-50 transition-all overflow-hidden">
+        <img class="hidden md:block absolute top-0 left-0 w-[230px] h-auto mix-blend-multiply opacity-80" src="https://hasocfire.github.io/hasoc/2023/images/HASOC_Design_01.jpg" />
+        <h1 class="text-[30px] md:text-[63px] transition-all duration-300">HASOC (2023)</h1>
+        <p class="text-[14px] md:text-[21px] text-center transition-all duration-300">Hate Speech and Offensive Content Identification in English and Indo-Aryan Languages</p>
+    </header>
+    <div class="flex flex-col md:flex-row justify-between w-full p-5 gap-5 bg-white mb-0 md:mb-14">
+        <div class="w-full md:w-[15%] sticky top-3 h-14 md:h-fit bg-[#f2f2f2] shadow-xl rounded-xl border border-gray-200 z-50 md:z-40">
+            <p onclick="(()=>{
 					const submenu = document.getElementById('submenu');
 					if(submenu.classList.contains('scale-y-0')){
 						submenu.classList.remove('scale-y-0');
