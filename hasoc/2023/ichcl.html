@@ -24,132 +24,157 @@
 					}else{
 						submenu.classList.add('scale-y-0');
 					}
-				})()"
-					class="block md:hidden h-14 text-center py-4 text-[#078186] text-xl font-bold border-2 border-[#078186] rounded-lg cursor-pointer"
-				>
-					Call for Participation
-				</p>
-				<div id="submenu" class="scale-y-0 md:scale-y-100 absolute top-16 md:top-0 border-2 border-[#078186] md:border-none md:relative shadow-xl md:shadow-none rounded-xl w-full flex flex-col px-[20px] md:py-[16px] gap-2 bg-[#f2f2f2] overflow-hidden transition-all origin-top">
-					<a href="https://hasocfire.github.io/hasoc/2023/" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Overview</a>
-					<a href="https://hasocfire.github.io/hasoc/2023/call_for_participation.html" class="bg-[#078186] text-white cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Call for Participation</a>
-					<a href="https://hasocfire.github.io/hasoc/2023/registration.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Registration</a>
-					<a href="https://hasocfire.github.io/hasoc/2023/important_dates.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Important dates</a>
-					<a href="https://hasocfire.github.io/hasoc/2023/organizers.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Organizers</a>
-					<a href="https://hasocfire.github.io/hasoc/2023/dataset.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Datasets and Baseline Model</a>
-					<!--a href="https://hasocfire.github.io/hasoc/2023/results.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Results</a-->
-					<a href="https://hasocfire.github.io/hasoc/2023/proceeding.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Proceedings</a>
-					<!--a href="https://hasocfire.github.io/hasoc/2023/reference.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Acknowledgment and Reference</a-->
-					<a target="_blank" href="https://hasocfire.github.io/hasoc/2022/index.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">HASOC 2022</a>
-					<a target="_blank" href="https://hasocfire.github.io/hasoc/2021/index.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">HASOC 2021</a>
-					<a target="_blank" href="https://hasocfire.github.io/hasoc/2020/index.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">HASOC 2020</a>
-					<a target="_blank" href="https://hasocfire.github.io/hasoc/2019/index.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">HASOC 2019</a>
-				</div>
-			</div>
-			<div class="w-full md:w-[85%] h-fit">
-				<div class="h-full w-full md:w-[95%] rounded-xl border border-gray-200 shadow-lg overflow-hidden">
-					<p class="bg-[#f2f2f2] p-[15px] text-xl text-[#078186] font-bold">Task 2: Identification of Conversational Hate-Speech in Code-Mixed Languages (ICHCL)</p>
-					<div class="px-[15px]">
-						<p class="text-[14px] text-[#333] my-2">A conversational thread can also contain hate, offensive, and profane content, which is not apparent from a standalone or single tweet or comment or the reply to a comment, but can be identified if given the context of the parent content.</p>
-						<img id="example-1" class="w-full lg:w-[40%] h-auto" src="https://hasocfire.github.io/hasoc/2023/images/example-1.png" />
-						<p class="text-[14px] text-[#333] mb-2">The above screenshot from Twitter describes the problem at hand effectively. The parent/source tweet, which was posted at 2:30 am on May 11th, expresses hate and profanity towards Muslim countries regarding the controversy happening during the recent Israel-Palestine conflict. The 2 comments on the tweet have written "Amine", which means trustworthy or honest in Arabic. If the 2 comments were to be analyzed for hate or offensive speech without the context of the parent tweet, they wouldn’t be classified as hate or offensive content. But if we take the context of the conversation, then we can say that the comments support the hate/profanity expressed in the parent tweet. So those comments are labelled as hate/offensive/profane.</p>
-						<p class="py-[15px] font-[16px] text-[#333] font-bold">This sub-task focused on the binary classification (task 2) of such conversational tweets with tree-structured data into:</p>
-						<p class="text-[13px] text-[#333] mb-2 pl-5">&#x2022; <b>(NOT) Non Hate-Offensive</b> - This tweet, comment, or reply does not contain any Hate speech, profane, offensive content.</p>
-						<p class="text-[13px] text-[#333] mb-2 pl-5">&#x2022; <b>(HOF) Hate and Offensive</b> - This tweet, comment, or reply contains Hate, offensive, and profane content in itself or supports hate expressed in the parent tweet</p>
-						<p class="py-[15px] font-[16px] text-[#333] font-bold">Furthermore, this year for the Hinglish language, we’re introducing a multiclass task (task 3) that further divides the HOF tweets into 3 subclasses:</p>
-						<p class="text-[13px] text-[#333] mb-2 pl-5">&#x2022; <b>(SHOF) Standalone Hate</b> - This tweet, comment, or reply contains Hate, offensive, and profane content in itself.</p>
-						<p class="text-[13px] text-[#333] mb-2 pl-5">&#x2022; <b>(CHOF) Contextual Hate</b> - Comment or reply is supporting the hate, offense and profanity expressed in its parent. This includes affirming the hate with positive sentiment <a href="#example-2" class="text-[#078186] pl-1 italic font-semibold">(example-2)</a>. and having apparent hate <a href="#example-3" class="text-[#078186] pl-1 italic font-semibold">(example-3)</a>.</p>
-						<p class="text-[13px] text-[#333] mb-2 pl-5">&#x2022; <b>(NONE) Non-Hate</b> -This tweet, comment, or reply does not contains Hate, offensive, and profane content in itself.</p>
-						<img id="example-2" class="w-full lg:w-[40%] h-auto" src="https://hasocfire.github.io/hasoc/2023/images/example-2.png" />
-						<p class="py-[15px] font-[16px] text-[#333] font-bold">Another such example with code mixed text.</p>
-						<p class="text-[13px] text-[#333] mb-2 pl-5">&#x2022; <b>The Source Tweet</b>: Modi Ji COVID situation ko solve karne ke liye ideas maang rahe the. Mera idea hai resignation dedo please...</p>
-						<p class="text-[13px] text-[#333] mb-2 pl-5">&#x2022; <b>Translation</b>: Modi ji (PM of India) was asking for ideas to solve the covid situation of India. My idea to him is to resign.</p>
-						<p class="text-[13px] text-[#333] mb-2 pl-5">&#x2022; <b>The Comment</b>: Doctors aur Scientists se manga hai. Chutiyo se nahi. Baith niche. [HOF/SHOF]</p>
-						<p class="text-[13px] text-[#333] mb-2 pl-5">&#x2022; <b>Translation</b>: They have asked Doctors and Scientists. Not fuckers. Sit down. [HOF/SHOF]</p>
-						<p class="text-[13px] text-[#333] mb-2 pl-5">&#x2022; <b>The reply</b>: You totally nailed it, can’t stop laughing. [HOF/CHOF]</p>
-						<p class="text-[14px] text-[#333] mb-2">The reply has a positive sentiment. But it is positive in favour of the hate expressed towards the author of the source tweet in the comment. Hence, it is supporting the hate expressed in the comment. Hence, it is also hate speech.</p>
-						<p class="text-[14px] text-[#333] mb-2">This is the type of problem we’re aiming to solve via this shared task.</p>
-						<img id="example-3" class="w-full lg:w-[40%] h-auto" src="https://hasocfire.github.io/hasoc/2023/images/example-3.png" />
-						<img id="example-4" class="w-full lg:w-[40%] h-auto" src="https://hasocfire.github.io/hasoc/2023/images/example-4.png" />
-						<p class="text-[14px] text-[#333] mb-2 mt-2">In the above <a href="#example-4" class="text-[#078186] pl-1 italic font-semibold">(example-4)</a>, the main tweet portrays hate against a religion. Meanwhile, the comment is hateful against the author of the tweet. And not supporting the hate that was expressed in the main tweet. This is an example of 2 levels having standalone hate.</p>
-					</div>
-				</div>
-				<div class="h-full w-full md:w-[95%] rounded-xl border border-gray-200 shadow-lg overflow-hidden mt-4">
-					<p class="bg-[#f2f2f2] p-4 text-xl text-[#078186] font-bold">ICHCL Dataset</p>
-					<div class="px-4 pt-4 flex items-center justify-center">
-						<img src="https://hasocfire.github.io/hasoc/2023/images/ComingSoon.jpg" alt="Results" class="w-full md:w-[50%]" />
-					</div>
-				</div>
-				<div class="h-full w-full md:w-[95%] rounded-xl border border-gray-200 shadow-lg overflow-hidden mt-4">
-					<p class="bg-[#f2f2f2] p-[15px] text-xl text-[#078186] font-bold">Important Dates</p>
-					<p class="py-[15px] px-4 font-[16px] text-[#333] font-bold">Timeline:</p>
-					<p class="text-[14px] px-4 text-[#333]">All subtracks have an independent timeline for training/test data release and run submission which will be available on respective websites. Here are the common timelines:</p>
-					<div class="w-full px-[15px] py-5">
-						<div class="flex bg-white group rounded-t-lg">
-							<p class="w-48 border-[#078186] border-2 border-b-0 px-2 p-1 bg-[#078186BB] group-hover:bg-[#078186DD] text-white rounded-tl-lg">15th July</p>
-							<p class="px-2 p-1 border-2 border-b-0 w-[50%] group-hover:bg-[#f2f2f2] rounded-tr-lg">Training data release</p>
-						</div>
-						<div class="flex bg-white group">
-							<p class="w-48 border-[#078186] border-2 border-b-0 px-2 p-1 bg-[#078186BB] group-hover:bg-[#078186DD] text-white">15th August</p>
-							<p class="px-2 p-1 border-2 border-b-0 w-[50%] group-hover:bg-[#f2f2f2]">Test set release and run submissions start</p>
-						</div>
-						<div class="flex bg-white group">
-							<p class="w-48 border-[#078186] border-2 border-b-0 px-2 p-1 bg-[#078186BB] group-hover:bg-[#078186DD] text-white">25th August</p>
-							<p class="px-2 p-1 border-2 w-[50%] group-hover:bg-[#f2f2f2] rounded-br-lg">Registration deadline</p>
-						</div>
-						<div class="flex bg-white group">
-							<p class="w-48 border-[#078186] border-2 border-b-0 px-2 p-1 bg-[#078186BB] group-hover:bg-[#078186DD] text-white">29th August</p>
-							<p class="px-2 p-1 border-2 w-[50%] group-hover:bg-[#f2f2f2] rounded-br-lg">Deadline for run submissions</p>
-						</div>
-						<div class="flex bg-white group rounded-t-lg">
-							<p class="w-48 border-[#078186] border-2 border-b-0 px-2 p-1 bg-[#078186BB] group-hover:bg-[#078186DD] text-white">31st August</p>
-							<p class="px-2 p-1 border-2 border-b-0 w-[50%] group-hover:bg-[#f2f2f2] rounded-tr-lg">Results announcement</p>
-						</div>
-						<div class="flex bg-white group">
-							<p class="w-48 border-[#078186] border-2 border-b-0 px-2 p-1 bg-[#078186BB] group-hover:bg-[#078186DD] text-white">20th September</p>
-							<p class="px-2 p-1 border-2 border-b-0 w-[50%] group-hover:bg-[#f2f2f2]">Paper submission deadline</p>
-						</div>
-						<div class="flex bg-white group">
-							<p class="w-48 border-[#078186] border-2 border-b-0 px-2 p-1 bg-[#078186BB] group-hover:bg-[#078186DD] text-white">5th October</p>
-							<p class="px-2 p-1 border-2 w-[50%] group-hover:bg-[#f2f2f2] rounded-br-lg">Review distribution</p>
-						</div>
-						<div class="flex bg-white group">
-							<p class="w-48 border-[#078186] border-2 px-2 p-1 bg-[#078186BB] group-hover:bg-[#078186DD] text-white rounded-bl-lg">15th October</p>
-							<p class="px-2 p-1 border-2 w-[50%] group-hover:bg-[#f2f2f2] rounded-br-lg">Revised paper submission</p>
-						</div>
-					</div>
-					<p class="pb-[15px] px-4 font-[16px] text-[#333] font-bold">NOTE: All dates are in AoE timezone</p>
-				</div>
-				<div class="h-full w-full md:w-[95%] rounded-xl border border-gray-200 shadow-lg overflow-hidden mt-4">
-					<p class="bg-[#f2f2f2] p-[15px] text-xl text-[#078186] font-bold">Organisers</p>
-					<ul class="w-full px-[30px] py-5">
-						<li class="list-disc text-[#333333] py-1">Thomas Mandl :- University of Hildesheim, Germany</li>
-						<li class="list-disc text-[#333333] py-1">Sandip Modha :- DA-IICT &amp; LDRP-ITR, Gandhinagar, India</li>
-						<li class="list-disc text-[#333333] py-1">Shrey Satapara :- IIT Hyderabad, Hyderabad , India</li>
-						<li class="list-disc text-[#333333] py-1">Hiren Madhu :- IISC Banglore, Banglore, India</li>
-						<li class="list-disc text-[#333333] py-1">Prasenjit majumder :- DA-IICT, Gandhinagar, India</li>
-						<li class="list-disc text-[#333333] py-1">Tharindu Ranasinghe :- University of Wolverhampton, UK</li>
-						<li class="list-disc text-[#333333] py-1">Marcos Zampieri :- Rochester Institute of Technology, USA</li>
-						<li class="list-disc text-[#333333] py-1">Alphaeus Eric Dmonte :- George Mason University, USA</li>
-						<li class="list-disc text-[#333333] py-1">Pavan Pandya :- LDRP-ITR, Gandhinagar, India</li>
-					</ul>
-					<p class="bg-[#f2f2f2] p-[15px] text-xl text-[#078186] font-bold">Student Coordinator</p>
-					<ul class="w-full px-[30px] py-5">
-						<li class="list-disc text-[#333333] py-1">Nisarg Shah :- VSITR, Gandhinagar, India</li>
-						<li class="list-disc text-[#333333] py-1">Jagrat Patel :- LDRP-ITR, Gandhinagar, India</li>
-						<li class="list-disc text-[#333333] py-1">Jaivin Barot :- LDRP-ITR, Gandhinagar, India</li>
-					</ul>
-				</div>
-				<div class="h-full w-full md:w-[95%] rounded-xl border border-gray-200 shadow-lg overflow-hidden mt-4">
-					<p class="bg-[#f2f2f2] p-[15px] text-xl text-[#078186] font-bold">Contact us</p>
-					<div class="px-[15px]">
-						<p class="text-[14px] text-[#333] mb-2">Subscribe to our <a target="_blank" href="https://groups.google.com/g/hasoc" class="text-[#078186] border-b-2 border-[#078186] italic">mailing list</a> for the latest announcements and discussions.</p>
-						<p class="text-[14px] text-[#333] mb-2">For any queries write to us at hasoc@googlegroups.com</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<footer class="fixed bottom-0 left-0 w-full -z-50 bg-[#eeeeee] flex justify-center items-center p-5">
-			<p class="text-[14px] text-[#333333]">Copyright © HASOC 2023</p>
-		</footer>
-	</body>
+				})()" class="block md:hidden h-14 text-center py-4 text-[#078186] text-xl font-bold border-2 border-[#078186] rounded-lg cursor-pointer">
+                Call for Participation
+            </p>
+            <div id="submenu" class="scale-y-0 md:scale-y-100 absolute top-16 md:top-0 border-2 border-[#078186] md:border-none md:relative shadow-xl md:shadow-none rounded-xl w-full flex flex-col px-[20px] md:py-[16px] gap-2 bg-[#f2f2f2] overflow-hidden transition-all origin-top">
+                <a href="https://hasocfire.github.io/hasoc/2023/" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Overview</a>
+                <a href="https://hasocfire.github.io/hasoc/2023/call_for_participation.html" class="bg-[#078186] text-white cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Call for Participation</a>
+                <a href="https://hasocfire.github.io/hasoc/2023/registration.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Registration</a>
+                <a href="https://hasocfire.github.io/hasoc/2023/important_dates.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Important dates</a>
+                <a href="https://hasocfire.github.io/hasoc/2023/organizers.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Organizers</a>
+                <a href="https://hasocfire.github.io/hasoc/2023/dataset.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Datasets and Baseline Model</a>
+                <!--a href="https://hasocfire.github.io/hasoc/2023/results.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Results</a-->
+                <a href="https://hasocfire.github.io/hasoc/2023/proceeding.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Proceedings</a>
+                <!--a href="https://hasocfire.github.io/hasoc/2023/reference.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Acknowledgment and Reference</a-->
+                <a target="_blank" href="https://hasocfire.github.io/hasoc/2022/index.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">HASOC 2022</a>
+                <a target="_blank" href="https://hasocfire.github.io/hasoc/2021/index.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">HASOC 2021</a>
+                <a target="_blank" href="https://hasocfire.github.io/hasoc/2020/index.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">HASOC 2020</a>
+                <a target="_blank" href="https://hasocfire.github.io/hasoc/2019/index.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">HASOC 2019</a>
+            </div>
+        </div>
+        <div class="w-full md:w-[85%] h-fit">
+            <div class="h-full w-full md:w-[95%] rounded-xl border border-gray-200 shadow-lg overflow-hidden">
+                <p class="bg-[#f2f2f2] p-[15px] text-xl text-[#078186] font-bold">Task 2: Identification of Conversational Hate-Speech in Code-Mixed Languages (ICHCL)</p>
+                <div class="px-[15px]">
+                    <p class="text-[14px] text-[#333] my-2">A conversational thread can also contain hate, offensive, and profane content, which is not apparent from a standalone or single tweet or comment or the reply to a comment, but can be identified if given the context of the parent content.</p>
+                    <img id="example-1" class="w-full lg:w-[40%] h-auto" src="https://hasocfire.github.io/hasoc/2023/images/example-1.png" />
+                    <p class="text-[14px] text-[#333] mb-2">The above screenshot from Twitter describes the problem at hand effectively. The parent/source tweet, which was posted at 2:30 am on May 11th, expresses hate and profanity towards Muslim countries regarding the controversy happening
+                        during the recent Israel-Palestine conflict. The 2 comments on the tweet have written "Amine", which means trustworthy or honest in Arabic. If the 2 comments were to be analyzed for hate or offensive speech without the context
+                        of the parent tweet, they wouldn’t be classified as hate or offensive content. But if we take the context of the conversation, then we can say that the comments support the hate/profanity expressed in the parent tweet. So those
+                        comments are labelled as hate/offensive/profane.</p>
+                    <p class="py-[15px] font-[16px] text-[#333] font-bold">This sub-task focused on the binary classification (task 2) of such conversational tweets with tree-structured data into:</p>
+                    <p class="text-[13px] text-[#333] mb-2 pl-5">&#x2022; <b>(NOT) Non Hate-Offensive</b> - This tweet, comment, or reply does not contain any Hate speech, profane, offensive content.</p>
+                    <p class="text-[13px] text-[#333] mb-2 pl-5">&#x2022; <b>(HOF) Hate and Offensive</b> - This tweet, comment, or reply contains Hate, offensive, and profane content in itself or supports hate expressed in the parent tweet</p>
+                    <p class="py-[15px] font-[16px] text-[#333] font-bold">Furthermore, this year for the Hinglish language, we’re introducing a multiclass task (task 3) that further divides the HOF tweets into 3 subclasses:</p>
+                    <p class="text-[13px] text-[#333] mb-2 pl-5">&#x2022; <b>(SHOF) Standalone Hate</b> - This tweet, comment, or reply contains Hate, offensive, and profane content in itself.</p>
+                    <p class="text-[13px] text-[#333] mb-2 pl-5">&#x2022; <b>(CHOF) Contextual Hate</b> - Comment or reply is supporting the hate, offense and profanity expressed in its parent. This includes affirming the hate with positive sentiment <a href="#example-2" class="text-[#078186] pl-1 italic font-semibold">(example-2)</a>.
+                        and having apparent hate <a href="#example-3" class="text-[#078186] pl-1 italic font-semibold">(example-3)</a>.</p>
+                    <p class="text-[13px] text-[#333] mb-2 pl-5">&#x2022; <b>(NONE) Non-Hate</b> -This tweet, comment, or reply does not contains Hate, offensive, and profane content in itself.</p>
+                    <img id="example-2" class="w-full lg:w-[40%] h-auto" src="https://hasocfire.github.io/hasoc/2023/images/example-2.png" />
+                    <p class="py-[15px] font-[16px] text-[#333] font-bold">Another such example with code mixed text.</p>
+                    <p class="text-[13px] text-[#333] mb-2 pl-5">&#x2022; <b>The Source Tweet</b>: Modi Ji COVID situation ko solve karne ke liye ideas maang rahe the. Mera idea hai resignation dedo please...</p>
+                    <p class="text-[13px] text-[#333] mb-2 pl-5">&#x2022; <b>Translation</b>: Modi ji (PM of India) was asking for ideas to solve the covid situation of India. My idea to him is to resign.</p>
+                    <p class="text-[13px] text-[#333] mb-2 pl-5">&#x2022; <b>The Comment</b>: Doctors aur Scientists se manga hai. Chutiyo se nahi. Baith niche. [HOF/SHOF]</p>
+                    <p class="text-[13px] text-[#333] mb-2 pl-5">&#x2022; <b>Translation</b>: They have asked Doctors and Scientists. Not fuckers. Sit down. [HOF/SHOF]</p>
+                    <p class="text-[13px] text-[#333] mb-2 pl-5">&#x2022; <b>The reply</b>: You totally nailed it, can’t stop laughing. [HOF/CHOF]</p>
+                    <p class="text-[14px] text-[#333] mb-2">The reply has a positive sentiment. But it is positive in favour of the hate expressed towards the author of the source tweet in the comment. Hence, it is supporting the hate expressed in the comment. Hence, it is also hate speech.</p>
+                    <p class="text-[14px] text-[#333] mb-2">This is the type of problem we’re aiming to solve via this shared task.</p>
+                    <img id="example-3" class="w-full lg:w-[40%] h-auto" src="https://hasocfire.github.io/hasoc/2023/images/example-3.png" />
+                    <img id="example-4" class="w-full lg:w-[40%] h-auto" src="https://hasocfire.github.io/hasoc/2023/images/example-4.png" />
+                    <p class="text-[14px] text-[#333] mb-2 mt-2">In the above <a href="#example-4" class="text-[#078186] pl-1 italic font-semibold">(example-4)</a>, the main tweet portrays hate against a religion. Meanwhile, the comment is hateful against the author of the tweet. And not supporting
+                        the hate that was expressed in the main tweet. This is an example of 2 levels having standalone hate.</p>
+                </div>
+            </div>
+            <div class="h-full w-full md:w-[95%] rounded-xl border border-gray-200 shadow-lg overflow-hidden mt-4">
+                <p class="bg-[#f2f2f2] p-4 text-xl text-[#078186] font-bold">ICHCL Dataset & Baseline</p>
+                <p>We understand that FIRE hosts so many beginner friendly workshops every year and this problem might not seem like beginner friendly. So, we’ve decided to provide participants with a baseline model which will provide participants with a
+                    template for steps like importing data, preprocessing, featuring and classification. And the participants can make changes in the code and experiment with various settings.<u><a href="https://github.com/hasocfire/ICHCL_2023_baseline"
+							style="color: blue;">This baseline uses a pseudo labelling.</a></u> approach.</p>
+                <br><br>
+                <p><b>Note: </b>Datasets are password protected, please register to get access to passwords, once register you'll receive passwords from noreply.hasoc@gmail.com, in case if you have not received passwords after registration please check your
+                    spam, please reachout to us via hasocfire@googlegroups.com in case if any queries</p>
+
+                <div class="px-4 pt-4 flex items-center justify-center">
+                    <div class="px-4 pt-4 flex items-center justify-center">
+                        <div class="m-3 w-full font-[16px] text-[#333]">
+                            <div class="flex flex-nowarp w-full">
+                                <p class="w-[60%] border-[#078186] border-2 border-r-0 px-2 p-1 bg-[#078186BB] text-white rounded-tl-lg">Task</p>
+                                <p class="w-[20%] border-[#078186] border-2 border-r-0 px-2 p-1 bg-[#078186BB] text-white">Training Data</p>
+                                <p class="w-[15%] border-[#078186] border-2 px-2 p-1 bg-[#078186BB] text-white rounded-tr-lg">Test Data</p>
+                            </div>
+                            <div class="flex flex-nowarp w-full group text-sm">
+                                <p class="w-[60%] border-2 border-r-0 border-b-0 p-2 group-hover:bg-[#f2f2f2]">Task 2: Identification of Conversational Hate-Speech in Code-Mixed Languages (ICHCL)</p>
+                                <p class="w-[20%] border-2 border-r-0 border-b-0 p-2 group-hover:bg-[#f2f2f2]"><a target="_blank" href="./data/Task2.rar" class="text-[#078186] border-b-2 border-[#078186] italic">Download</a></p>
+                                <p class="w-[15%] border-2 p-2 border-b-0 group-hover:bg-[#f2f2f2]"><a target="_blank" href="" class="text-[#078186] border-b-2 border-[#078186] italic">Coming Soon...</a></p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="h-full w-full md:w-[95%] rounded-xl border border-gray-200 shadow-lg overflow-hidden mt-4">
+                <p class="bg-[#f2f2f2] p-[15px] text-xl text-[#078186] font-bold">Important Dates</p>
+                <p class="py-[15px] px-4 font-[16px] text-[#333] font-bold">Timeline:</p>
+                <p class="text-[14px] px-4 text-[#333]">All subtracks have an independent timeline for training/test data release and run submission which will be available on respective websites. Here are the common timelines:</p>
+                <div class="w-full px-[15px] py-5">
+                    <div class="flex bg-white group rounded-t-lg">
+                        <p class="w-48 border-[#078186] border-2 border-b-0 px-2 p-1 bg-[#078186BB] group-hover:bg-[#078186DD] text-white rounded-tl-lg">15th July</p>
+                        <p class="px-2 p-1 border-2 border-b-0 w-[50%] group-hover:bg-[#f2f2f2] rounded-tr-lg">Training data release</p>
+                    </div>
+                    <div class="flex bg-white group">
+                        <p class="w-48 border-[#078186] border-2 border-b-0 px-2 p-1 bg-[#078186BB] group-hover:bg-[#078186DD] text-white">15th August</p>
+                        <p class="px-2 p-1 border-2 border-b-0 w-[50%] group-hover:bg-[#f2f2f2]">Test set release and run submissions start</p>
+                    </div>
+                    <div class="flex bg-white group">
+                        <p class="w-48 border-[#078186] border-2 border-b-0 px-2 p-1 bg-[#078186BB] group-hover:bg-[#078186DD] text-white">25th August</p>
+                        <p class="px-2 p-1 border-2 w-[50%] group-hover:bg-[#f2f2f2] rounded-br-lg">Registration deadline</p>
+                    </div>
+                    <div class="flex bg-white group">
+                        <p class="w-48 border-[#078186] border-2 border-b-0 px-2 p-1 bg-[#078186BB] group-hover:bg-[#078186DD] text-white">29th August</p>
+                        <p class="px-2 p-1 border-2 w-[50%] group-hover:bg-[#f2f2f2] rounded-br-lg">Deadline for run submissions</p>
+                    </div>
+                    <div class="flex bg-white group rounded-t-lg">
+                        <p class="w-48 border-[#078186] border-2 border-b-0 px-2 p-1 bg-[#078186BB] group-hover:bg-[#078186DD] text-white">31st August</p>
+                        <p class="px-2 p-1 border-2 border-b-0 w-[50%] group-hover:bg-[#f2f2f2] rounded-tr-lg">Results announcement</p>
+                    </div>
+                    <div class="flex bg-white group">
+                        <p class="w-48 border-[#078186] border-2 border-b-0 px-2 p-1 bg-[#078186BB] group-hover:bg-[#078186DD] text-white">20th September</p>
+                        <p class="px-2 p-1 border-2 border-b-0 w-[50%] group-hover:bg-[#f2f2f2]">Paper submission deadline</p>
+                    </div>
+                    <div class="flex bg-white group">
+                        <p class="w-48 border-[#078186] border-2 border-b-0 px-2 p-1 bg-[#078186BB] group-hover:bg-[#078186DD] text-white">5th October</p>
+                        <p class="px-2 p-1 border-2 w-[50%] group-hover:bg-[#f2f2f2] rounded-br-lg">Review distribution</p>
+                    </div>
+                    <div class="flex bg-white group">
+                        <p class="w-48 border-[#078186] border-2 px-2 p-1 bg-[#078186BB] group-hover:bg-[#078186DD] text-white rounded-bl-lg">15th October</p>
+                        <p class="px-2 p-1 border-2 w-[50%] group-hover:bg-[#f2f2f2] rounded-br-lg">Revised paper submission</p>
+                    </div>
+                </div>
+                <p class="pb-[15px] px-4 font-[16px] text-[#333] font-bold">NOTE: All dates are in AoE timezone</p>
+            </div>
+            <div class="h-full w-full md:w-[95%] rounded-xl border border-gray-200 shadow-lg overflow-hidden mt-4">
+                <p class="bg-[#f2f2f2] p-[15px] text-xl text-[#078186] font-bold">Organisers</p>
+                <ul class="w-full px-[30px] py-5">
+                    <li class="list-disc text-[#333333] py-1">Thomas Mandl :- University of Hildesheim, Germany</li>
+                    <li class="list-disc text-[#333333] py-1">Sandip Modha :- DA-IICT &amp; LDRP-ITR, Gandhinagar, India</li>
+                    <li class="list-disc text-[#333333] py-1">Shrey Satapara :- IIT Hyderabad, Hyderabad , India</li>
+                    <li class="list-disc text-[#333333] py-1">Hiren Madhu :- IISC Banglore, Banglore, India</li>
+                    <li class="list-disc text-[#333333] py-1">Prasenjit majumder :- DA-IICT, Gandhinagar, India</li>
+                    <li class="list-disc text-[#333333] py-1">Tharindu Ranasinghe :- University of Wolverhampton, UK</li>
+                    <li class="list-disc text-[#333333] py-1">Marcos Zampieri :- Rochester Institute of Technology, USA</li>
+                    <li class="list-disc text-[#333333] py-1">Alphaeus Eric Dmonte :- George Mason University, USA</li>
+                    <li class="list-disc text-[#333333] py-1">Pavan Pandya :- LDRP-ITR, Gandhinagar, India</li>
+                </ul>
+                <p class="bg-[#f2f2f2] p-[15px] text-xl text-[#078186] font-bold">Student Coordinator</p>
+                <ul class="w-full px-[30px] py-5">
+                    <li class="list-disc text-[#333333] py-1">Nisarg Shah :- VSITR, Gandhinagar, India</li>
+                    <li class="list-disc text-[#333333] py-1">Jagrat Patel :- LDRP-ITR, Gandhinagar, India</li>
+                    <li class="list-disc text-[#333333] py-1">Jaivin Barot :- LDRP-ITR, Gandhinagar, India</li>
+                </ul>
+            </div>
+            <div class="h-full w-full md:w-[95%] rounded-xl border border-gray-200 shadow-lg overflow-hidden mt-4">
+                <p class="bg-[#f2f2f2] p-[15px] text-xl text-[#078186] font-bold">Contact us</p>
+                <div class="px-[15px]">
+                    <p class="text-[14px] text-[#333] mb-2">Subscribe to our <a target="_blank" href="https://groups.google.com/g/hasoc" class="text-[#078186] border-b-2 border-[#078186] italic">mailing list</a> for the latest announcements and discussions.</p>
+                    <p class="text-[14px] text-[#333] mb-2">For any queries write to us at hasoc@googlegroups.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="fixed bottom-0 left-0 w-full -z-50 bg-[#eeeeee] flex justify-center items-center p-5">
+        <p class="text-[14px] text-[#333333]">Copyright © HASOC 2023</p>
+    </footer>
+</body>
+
 </html>
