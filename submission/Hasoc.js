@@ -1,6 +1,12 @@
 //proxy = `http://127.0.0.1:5000`
-proxy = `https://hasocsubmission-361621.el.r.appspot.com`
+proxy = `https://hasocsubmission-396610.el.r.appspot.com`
 
+{
+    /* <option selected value="1A_sinhala">Task 1A Sinhala Binary</option>
+    <option value="1B_gujarati">Task 1B Gujarati Binary</option>
+    <option value="2A_ICHCL">Task 2A ICHCL Binary</option>
+    <option value="2B_ICHCL">Task 2B ICHCL Multiclass</option> */
+}
 var task_titles = {
     '1_ICHCL': "Task 1 ICHCL Binary",
     '2_ICHCL': "Task 2 ICHCL Multiclass",
@@ -8,20 +14,28 @@ var task_titles = {
 }
 
 var task_titles_display = {
-    '1_ICHCL': "Task 1 ICHCL Binary",
-    '2_ICHCL': "Task 2 ICHCL Multiclass",
-    '3A_Marathi': "Task 3A Marathi",
-    '3B_Marathi': "Task 3B Marathi",
-    '3C_Marathi': "Task 3C Marathi"
+    "1A_sinhala": "Task 1A Sinhala Binary",
+    "1B_gujarati": "Task 1B Gujarati Binary",
+    "2A_ICHCL": "Task 2A ICHCL Binary",
+    "2B_ICHCL": "Task 2B ICHCL Multiclass"
+        // '1_ICHCL': "Task 1 ICHCL Binary",
+        // '2_ICHCL': "Task 2 ICHCL Multiclass",
+        // '3A_Marathi': "Task 3A Marathi",
+        // '3B_Marathi': "Task 3B Marathi",
+        // '3C_Marathi': "Task 3C Marathi"
 }
 
 
 var task_counts = {
-    "1_ICHCL": 0,
-    "2_ICHCL": 1,
-    "3A_Marathi": 2,
-    "3B_Marathi": 3,
-    "3C_Marathi": 4
+    "1A_sinhala": 0,
+    "1B_gujarati": 1,
+    "2A_ICHCL": 2,
+    "2B_ICHCL": 3
+        // "1_ICHCL": 0,
+        // "2_ICHCL": 1,
+        // "3A_Marathi": 2,
+        // "3B_Marathi": 3,
+        // "3C_Marathi": 4
 }
 
 function getCookie(name) {
@@ -51,31 +65,31 @@ async function submission() {
     let select_box_html = `<select id="subtask_name" class="swal2-input" style="width:70%;">
     <option value="" selected hidden>Select Subtask</option>`
     tab_select = ``
-    if (task_counts['1_ICHCL'] < 5) {
-        tab_select += `<option value="1_ICHCL">Task 1 ICHCL Binary</option>`
+    if (task_counts['1A_sinhala'] < 5) {
+        tab_select += `<option value="1A_sinhala">Task 1A Sinhala Binary</option>`
     } else {
-        tab_select += `<option value="1_ICHCL" disabled>Task 1 ICHCL Binary</option>`
+        tab_select += `<option value="1A_sinhala" disabled>Task 1 Sinhala Binary</option>`
     }
-    if (task_counts['2_ICHCL'] < 5) {
-        tab_select += `<option value="2_ICHCL">Task 2 ICHCL Multiclass</option>`
+    if (task_counts['1B_gujarati'] < 5) {
+        tab_select += `<option value="2_ICHCL">Task 1B Gujarati Binary</option>`
     } else {
-        tab_select += `<option value="2_ICHCL" disabled>Task 2 ICHCL Multiclass</option>`
+        tab_select += `<option value="1B_gujarati" disabled>Task 1B Gujarati Binary</option>`
     }
-    if (task_counts['3A_Marathi'] < 5) {
-        tab_select += `<option value="3A_Marathi">Task 3A Marathi</option>`
+    if (task_counts['2A_ICHCL'] < 5) {
+        tab_select += `<option value="2A_ICHCL">Task 2A ICHCL Binary</option>`
     } else {
-        tab_select += `<option value="3A_Marathi" disabled>Task 3A Marathi</option>`
+        tab_select += `<option value="2A_ICHCL" disabled>Task 2A ICHCL Binary</option>`
     }
-    if (task_counts['3B_Marathi'] < 5) {
-        tab_select += `<option value="3B_Marathi">Task 3B Marathi</option>`
+    if (task_counts['2B_ICHCL'] < 5) {
+        tab_select += `<option value="2B_ICHCL">Task 2B ICHCL Multiclass</option>`
     } else {
-        tab_select += `<option value="3B_Marathi" disabled>Task 3B Marathi</option>`
+        tab_select += `<option value="2B_ICHCL" disabled>Task 2B ICHCL Multiclass</option>`
     }
-    if (task_counts['3A_Marathi'] < 5) {
-        tab_select += `<option value="3C_Marathi">Task 3C Marathi</option>`
-    } else {
-        tab_select += `<option value="3C_Marathi" disabled>Task 3C Marathi</option>`
-    }
+    // if (task_counts['3A_Marathi'] < 5) {
+    //     tab_select += `<option value="3C_Marathi">Task 3C Marathi</option>`
+    // } else {
+    //     tab_select += `<option value="3C_Marathi" disabled>Task 3C Marathi</option>`
+    // }
     Swal.fire({
         html: `${select_box_html}${tab_select}${submission_name}${desc}<input type="file" id="file" placeholder="Submission File">`,
         confirmButtonText: 'SUBMIT',
@@ -283,11 +297,15 @@ async function details(_id) {
 
 async function team_data_new() {
     task_counts = {
-        "1_ICHCL": 0,
-        "2_ICHCL": 0,
-        "3A_Marathi": 0,
-        "3B_Marathi": 0,
-        "3C_Marathi": 0
+        "1A_sinhala": 0,
+        "1B_gujarati": 0,
+        "2A_ICHCL": 0,
+        "2B_ICHCL": 0
+            // "1_ICHCL": 0,
+            // "2_ICHCL": 0,
+            // "3A_Marathi": 0,
+            // "3B_Marathi": 0,
+            // "3C_Marathi": 0
     }
     var sort_param = "task_name";
     sort_param = document.getElementById("sort_param").value;

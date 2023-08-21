@@ -1,5 +1,5 @@
 //proxy = `http://127.0.0.1:5000`
-proxy = `https://hasocsubmission-361621.el.r.appspot.com`
+proxy = `https://hasocsubmission-396610.el.r.appspot.com`
 
 
 function logout() {
@@ -89,11 +89,15 @@ function leaderboard_table() {
         var task_name = document.getElementById("leaderboard_task").value
     } else {
         var selectionIndex = {
-            "1_ICHCL": 0,
-            "2_ICHCL": 1,
-            "3A_Marathi": 2,
-            "3B_Marathi": 3,
-            "3C_Marathi": 4
+            "1A_sinhala": 0,
+            "1B_gujarati": 1,
+            "2A_ICHCL": 2,
+            "2B_ICHCL": 3
+                // "1_ICHCL": 0,
+                // "2_ICHCL": 1,
+                // "3A_Marathi": 2,
+                // "3B_Marathi": 3,
+                // "3C_Marathi": 4
 
         }
         document.getElementById("leaderboard_task").selectedIndex = selectionIndex[task_name]

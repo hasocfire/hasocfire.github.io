@@ -1,5 +1,5 @@
 //proxy = `http://127.0.0.1:5000`
-proxy = `https://hasocsubmission-361621.el.r.appspot.com`
+proxy = `https://hasocsubmission-396610.el.r.appspot.com`
 
 
 function validate() {
