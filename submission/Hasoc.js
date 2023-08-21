@@ -71,7 +71,7 @@ async function submission() {
         tab_select += `<option value="1A_sinhala" disabled>Task 1 Sinhala Binary</option>`
     }
     if (task_counts['1B_gujarati'] < 5) {
-        tab_select += `<option value="2_ICHCL">Task 1B Gujarati Binary</option>`
+        tab_select += `<option value="1B_gujarati">Task 1B Gujarati Binary</option>`
     } else {
         tab_select += `<option value="1B_gujarati" disabled>Task 1B Gujarati Binary</option>`
     }
