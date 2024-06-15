@@ -37,6 +37,7 @@
                 <!--a href="https://hasocfire.github.io/hasoc/2023/results.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Results</a-->
                 <a href="https://hasocfire.github.io/hasoc/2023/proceeding.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Proceedings</a>
                 <!--a href="https://hasocfire.github.io/hasoc/2023/reference.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Acknowledgment and Reference</a-->
+                <a target="_blank" href="https://hasocfire.github.io/hasoc/2023/index.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">HASOC 2023</a>
                 <a target="_blank" href="https://hasocfire.github.io/hasoc/2022/index.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">HASOC 2022</a>
                 <a target="_blank" href="https://hasocfire.github.io/hasoc/2021/index.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">HASOC 2021</a>
                 <a target="_blank" href="https://hasocfire.github.io/hasoc/2020/index.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">HASOC 2020</a>
@@ -45,7 +46,7 @@
         </div>
         <div class="w-[85%] h-fit">
             <div class="h-full w-[80%] rounded-xl border border-gray-200 shadow-lg overflow-hidden">
-                <p class="bg-[#f2f2f2] p-[15px] text-xl text-[#078186] font-bold">HASOC 2024 registrations are will be starting soon </p>
+                <p class="bg-[#f2f2f2] p-[15px] text-xl text-[#078186] font-bold">HASOC 2023 registrations are over </p>
                 <!-- <iframe class="h-[600px] w-full" src="https://docs.google.com/forms/d/e/1FAIpQLSfk6kbQgtzCnoFyBLoCzbhJqRZ559i7UpyNoFOXvN7EX3SPrA/viewform?embedded=true"></iframe> -->
 
             </div>
