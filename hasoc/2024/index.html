@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HASOC 2023</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <header
+      class="h-[13rem] relative bg-[#eeeeee] group text-[#333333] flex flex-col items-center justify-center p-[48px] shadow-inner z-40 md:z-50 transition-all overflow-hidden"
+    >
+      <img src="/images/HASOC.png" alt="Logo" class="logo" />
+      <div class="header-content">
+        <h1>HASOC (2024)</h1>
+        <h2>
+          Hate Speech and Offensive Content Identification in English and
+          Indo-Aryan Languages
+        </h2>
+      </div>
+    </header>
+    <div class="m-4">
+      <button
+        id="dropdown-btn"
+        class="dropdown-btn w-full rounded-lg rounded-lg md:hidden"
+      >
+        Overview
+      </button>
+      <div id="dropdown-content" class="dropdown-content rounded-lg md:hidden">
+        <button class="dropdown-item rounded-lg active" data-content="overview">
+          Overview
+        </button>
+        <button
+          class="dropdown-item rounded-lg"
+          data-content="call-for-participation"
+        >
+          Call for Participation
+        </button>
+        <button class="dropdown-item rounded-lg" data-content="registration">
+          Registration
+        </button>
+        <button class="dropdown-item rounded-lg" data-content="important-dates">
+          Important Dates
+        </button>
+        <button class="dropdown-item rounded-lg" data-content="organizers">
+          Organizers
+        </button>
+        <button
+          class="dropdown-item rounded-lg"
+          data-content="datasets-baseline-model"
+        >
+          Datasets and Baseline Model
+        </button>
+        <button class="dropdown-item rounded-lg" data-content="proceedings">
+          Proceedings
+        </button>
+        <button
+          class="dropdown-item rounded-lg"
+          data-url="https://hasocfire.github.io/hasoc/2022/index.html"
+        >
+          HASOC 2022
+        </button>
+        <button
+          class="dropdown-item rounded-lg"
+          data-url="https://hasocfire.github.io/hasoc/2021/index.html"
+        >
+          HASOC 2021
+        </button>
+        <button
+          class="dropdown-item rounded-lg"
+          data-url="https://hasocfire.github.io/hasoc/2020/index.html"
+        >
+          HASOC 2020
+        </button>
+        <button
+          class="dropdown-item rounded-lg"
+          data-url="https://hasocfire.github.io/hasoc/2019/index.html"
+        >
+          HASOC 2019
+        </button>
+      </div>
+    </div>
+
+    <div class="flex min-h-screen">
+      <aside
+        id="sidebar"
+        class="sidebar rounded-lg bg-white shadow-md p-4 md:block"
+      >
+        <nav>
+          <ul>
+            <li>
+              <button
+                class="sidebar-btn active rounded-lg"
+                data-content="overview"
+              >
+                Overview
+              </button>
+            </li>
+            <li>
+              <button
+                class="sidebar-btn rounded-lg"
+                data-content="call-for-participation"
+              >
+                Call for Participation
+              </button>
+            </li>
+            <li>
+              <button
+                class="sidebar-btn rounded-lg"
+                data-content="registration"
+              >
+                Registration
+              </button>
+            </li>
+            <li>
+              <button
+                class="sidebar-btn rounded-lg"
+                data-content="important-dates"
+              >
+                Important Dates
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-btn rounded-lg" data-content="organizers">
+                Organizers
+              </button>
+            </li>
+            <li>
+              <button
+                class="sidebar-btn rounded-lg"
+                data-content="datasets-baseline-model"
+              >
+                Datasets and Baseline Model
+              </button>
+            </li>
+            <li>
+              <button class="sidebar-btn rounded-lg" data-content="proceedings">
+                Proceedings
+              </button>
+            </li>
+            <li>
+              <button
+                class="sidebar-btn rounded-lg"
+                data-url="https://hasocfire.github.io/hasoc/2022/index.html"
+              >
+                HASOC 2022
+              </button>
+            </li>
+            <li>
+              <button
+                class="sidebar-btn rounded-lg"
+                data-url="https://hasocfire.github.io/hasoc/2021/index.html"
+              >
+                HASOC 2021
+              </button>
+            </li>
+            <li>
+              <button
+                class="sidebar-btn rounded-lg"
+                data-url="https://hasocfire.github.io/hasoc/2020/index.html"
+              >
+                HASOC 2020
+              </button>
+            </li>
+            <li>
+              <button
+                class="sidebar-btn rounded-lg"
+                data-url="https://hasocfire.github.io/hasoc/2019/index.html"
+              >
+                HASOC 2019
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      <main class="main-content bg-white shadow-md p-8 m-4 rounded-lg">
+        <div id="content">
+          <!-- Dynamic content will be loaded here -->
+          <h2 class="text-2xl font-bold mb-4 bg-gray-200 p-5 rounded-lg">
+            Overview
+          </h2>
+          <p>
+            Social media sites like Twitter and Facebook, being user-friendly
+            and accessible sources, provide opportunities for people to air
+            their voices. People, irrespective of age group, use these sites to
+            share every moment of their lives, making these sites flooded with
+            data. Apart from these commendable features of social media, they
+            also have downsides...
+          </p>
+        </div>
+      </main>
+    </div>
+    <script src="/js/main.js"></script>
+  </body>
+</html>
