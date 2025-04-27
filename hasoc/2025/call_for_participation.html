@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/x-icon" href="https://hasocfire.github.io/hasoc/2024/images/HASOC.png" />
+		<title>HASOC</title>
+		<script src="./tailwindCSS.js"></script>
+	</head>
+	<body style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">
+		<header class="h-[13rem] relative bg-[#eeeeee] group text-[#333333] flex flex-col items-center justify-center p-[48px] shadow-inner z-40 md:z-50 transition-all overflow-hidden">
+			<img class="hidden md:block absolute top-0 left-0 w-[230px] h-auto mix-blend-multiply opacity-80"src="https://hasocfire.github.io/hasoc/2024/images/Hasoc2024.jpg" />
+			<h1 class="text-[30px] md:text-[63px] transition-all duration-300">HASOC (2025)</h1>
+			<p class="text-[14px] md:text-[21px] text-center transition-all duration-300">Hate Speech and Offensive Content Identification in English and Bangla</p>
+		</header>
+		<div class="flex flex-col md:flex-row justify-between w-full p-5 gap-5 bg-white mb-0 md:mb-14">
+			<div class="w-full md:w-[15%] sticky top-3 h-14 md:h-fit bg-[#f2f2f2] shadow-xl rounded-xl border border-gray-200 z-50 md:z-40">
+				<p
+					onclick="(()=>{
+					const submenu = document.getElementById('submenu');
+					if(submenu.classList.contains('scale-y-0')){
+						submenu.classList.remove('scale-y-0');
+					}else{
+						submenu.classList.add('scale-y-0');
+					}
+				})()"
+					class="block md:hidden h-14 text-center py-4 text-[#078186] text-xl font-bold border-2 border-[#078186] rounded-lg cursor-pointer"
+				>
+					Call for Participation
+				</p>
+				<div id="submenu" class="scale-y-0 md:scale-y-100 absolute top-16 md:top-0 border-2 border-[#078186] md:border-none md:relative shadow-xl md:shadow-none rounded-xl w-full flex flex-col px-[20px] md:py-[16px] gap-2 bg-[#f2f2f2] overflow-hidden transition-all origin-top">
+					<a href="https://hasocfire.github.io/hasoc/2024/" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Overview</a>
+					<a href="https://hasocfire.github.io/hasoc/2024/call_for_participation.html" class="bg-[#078186] text-white cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Call for Participation</a>
+					<a href="https://hasocfire.github.io/hasoc/2024/registration.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Registration</a>
+					<a href="https://hasocfire.github.io/hasoc/2024/important_dates.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Important dates</a>
+					<a href="https://hasocfire.github.io/hasoc/2024/organizers.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Organizers</a>
+					<a href="https://hasocfire.github.io/hasoc/2024/dataset.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Datasets</a>
+					<!--a href="https://hasocfire.github.io/hasoc/2023/results.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Results</a-->
+					<a href="https://hasocfire.github.io/hasoc/2024/proceeding.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Proceedings</a>
+					<!--a href="https://hasocfire.github.io/hasoc/2023/reference.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">Acknowledgment and Reference</a-->
+					<a target="_blank" href="https://hasocfire.github.io/hasoc/2023/index.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">HASOC 2023</a>
+          <a target="_blank" href="https://hasocfire.github.io/hasoc/2022/index.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">HASOC 2022</a>
+					<a target="_blank" href="https://hasocfire.github.io/hasoc/2021/index.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">HASOC 2021</a>
+					<a target="_blank" href="https://hasocfire.github.io/hasoc/2020/index.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">HASOC 2020</a>
+					<a target="_blank" href="https://hasocfire.github.io/hasoc/2019/index.html" class="cursor-pointer text-[14px] hover:text-[#078186] w-full hover:bg-[#eeeeee] py-[9px] px-[15px] rounded-lg transition-all duration-300">HASOC 2019</a>
+				</div>
+			</div>
+			<div class="w-full md:w-[85%] h-fit">
+				<div class="h-full w-full md:w-[95%] rounded-xl border border-gray-200 shadow-lg overflow-hidden">
+					<p class="bg-[#f2f2f2] p-[15px] text-xl text-[#078186] font-bold">Call for Participation</p>
+					<div class="px-[15px]">
+						<p class="pt-5 text-[14px] text-[#333] mb-2">This is the seventh edition of the HASOC shared task. HASOC 2025 will offer meme for abuse, sentiment, sarcasm detection.</p>
+						<p class="text-[14px] text-[#333] mb-2">Track Description: This task involves analyzing multimodal data (image and text) to detect abuse, identify targeted communities, assess vulgarity and sarcasm, and assign sentiment labels. There shall be a context paragraph of the meme too. So, the task will be in five parts.</p>
+						<p class="pb-[15px] font-[16px] text-[#333] font-bold">Sentiment: A task focused on hate speech and offensive language identification is offered for Hinglish. It is a coarse-grained binary classification in which participants are required to classify tweets into two classes, namely: hate and offensive (HOF) and non- hate and offensive (NOT).</p>
+						<p class="text-[14px] text-[#333] mb-2 pl-5">&#x2022; (NOT) Non Hate-Offensive - This post does not contain any Hate speech, profane, offensive content.</p>
+						<p class="text-[14px] text-[#333] mb-2 pl-5">&#x2022; (HOF) Hate and Offensive - This post contains Hate, offensive, and profane content.</p>
+						<!-- <p>For more details please visit <a target="_blank" href="https://hasocfire.github.io/hasoc/2024/task1.html" class="text-white p-1 px-2 ml-1 border-b-2 border-[#078186] italic bg-[#078186] rounded-md">Task 1</a></p> -->
+						<p class="py-[15px] font-[16px] text-[#333] font-bold">Task-2 Code-mixed classification in Bangla:</p>
+						<p class="text-[14px] text-[#333] mb-2">OLID’s taxonomy considers whether an instance is offensive (level A), whether an offensive post is targeted or untargeted (level B), and what is the target of an offensive post (level C). As the second level of the TB-OLID annotation we consider OLID level A as follows:</p>	
+						<p class="text-[14px] text-[#333] mb-2 pl-5">&#x2022; Offensive(O): Comments that contain any form of non-acceptable language or a targeted offense, including insults, threats, and posts containing profane language</p>
+						<p class="text-[14px] text-[#333] mb-2 pl-5">&#x2022; Non-offensive(N): Comments that do not contain any offensive language </p>
+						<p class="text-[14px] text-[#333] mb-2">Finally, the third level of the TB-OLID annotation merges OLIDs level B and C. We label whether a post is untargeted or, when targeted, whether it is labeled at an individual or a group as follows:</p>
+						<p class="text-[14px] text-[#333] mb-2 pl-5">&#x2022; Individual(I): Comments targeting any individual, such as mentioning a person with his/her name, unnamed participants, or famous personality.</p>
+						<p class="text-[14px] text-[#333] mb-2 pl-5">&#x2022; Group(G): Comments targeting any group of people of common characteristics, religion, gender, etc</p>		
+						<p class="text-[14px] text-[#333] mb-2 pl-5">&#x2022; Untargeted(U): Comments containing unacceptably strong language or profanities that are not targeted. </p>		
+					    <!-- <p>For more details please visit <a target="_blank" href="https://hasocfire.github.io/hasoc/2024/task2.html" class="text-white p-1 px-2 ml-1 border-b-2 border-[#078186] italic bg-[#078186] rounded-md">Task 2</a></p> -->
+					
+					</div>
+				</div>
+				<div class="h-full w-full md:w-[95%] rounded-xl border border-gray-200 shadow-lg overflow-hidden mt-4">
+					<p class="bg-[#f2f2f2] p-[15px] text-xl text-[#078186] font-bold">Contact us</p>
+					<div class="px-[15px]">
+						<p class="text-[14px] text-[#333] mb-2">Subscribe to our <a target="_blank" href="https://groups.google.com/g/hasoc" class="text-[#078186] border-b-2 border-[#078186] italic">mailing list</a> for the latest announcements and discussions.</p>
+						<p class="text-[14px] text-[#333] mb-2">For any queries write to us at hasoc@googlegroups.com</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<footer class="fixed bottom-0 left-0 w-full -z-50 bg-[#eeeeee] flex justify-center items-center p-5">
+			<p class="text-[14px] text-[#333333]">Copyright © HASOC 2024</p>
+		</footer>
+	</body>
+</html>
