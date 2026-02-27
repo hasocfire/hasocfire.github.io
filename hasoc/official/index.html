@@ -1,0 +1,1408 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HASOC - Hate Speech and Offensive Content Identification</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        
+        :root {
+            --primary: #1e293b;
+            --secondary: #2563eb;
+            --accent: #3b82f6;
+            --bg: #f1f5f9;
+            --bg-secondary: #e2e8f0;
+            --text: #334155;
+            --border: #cbd5e1;
+            --card-bg: #ffffff;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --shadow-xl: 0 20px 40px rgba(0,0,0,0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--bg);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            --primary: #f1f5f9;
+            --secondary: #60a5fa;
+            --accent: #3b82f6;
+            --bg: #0f172a;
+            --bg-secondary: #1e293b;
+            --text: #e2e8f0;
+            --border: #334155;
+            --card-bg: #1e293b;
+        }
+
+        body.dark-mode header {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .hero {
+            background: 
+                linear-gradient(135deg, rgba(67, 56, 202, 0.85) 0%, rgba(124, 58, 237, 0.85) 50%, rgba(168, 85, 247, 0.85) 100%),
+                url('hero-background.jpg') center/cover no-repeat;
+        }
+
+        body.dark-mode .hero.no-image {
+            background: linear-gradient(135deg, #4338ca 0%, #7c3aed 50%, #a855f7 100%);
+        }
+
+        body.dark-mode footer {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        body.dark-mode .edition-image {
+            background: linear-gradient(135deg, #4338ca 0%, #7c3aed 50%, #a855f7 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.50);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 0.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Announcement Banner - Infinite Scroll */
+        .announcement-banner {
+            background: linear-gradient(90deg, #f0f9ff 0%, #e0e7ff 50%, #fce7f3 100%);
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.dark-mode .announcement-banner {
+            background: linear-gradient(90deg, #312e81 0%, #312e81 50%, #1e293b 100%);
+            border-bottom: 1px solid #334155;
+        }
+
+        .announcement-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .announcement-scroll {
+            display: flex;
+            gap: 1.5rem;
+            animation: infiniteScroll 25s linear infinite;
+            width: fit-content;
+        }
+
+        @keyframes infiniteScroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .announcement-card {
+            background: white;
+            border-radius: 12px;
+            padding: 0.85rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            min-width: 350px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            flex-shrink: 0;
+        }
+
+        body.dark-mode .announcement-card {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .announcement-badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .announcement-badge svg {
+            width: 22px;
+            height: 22px;
+            stroke: white;
+            fill: none;
+        }
+
+        .announcement-badge.success {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .announcement-content {
+            flex: 1;
+        }
+
+        .announcement-title {
+            font-weight: 600;
+            color: var(--text);
+            font-size: 0.9rem;
+            margin-bottom: 0.15rem;
+        }
+
+        .announcement-desc {
+            font-size: 0.8rem;
+            color: var(--text);
+            opacity: 0.7;
+        }
+
+        .announcement-tag {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+        }
+
+        .announcement-tag a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        /* Dark Mode Toggle */
+        .theme-toggle {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0.6rem 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-color: var(--secondary);
+        }
+
+        .theme-toggle svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover svg {
+            transform: rotate(20deg);
+        }
+
+        .logo {
+            height: 60px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 100%;
+            width: auto;
+            transition: transform 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .logo:hover img {
+            transform: scale(1.05);
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--secondary);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: 
+                linear-gradient(135deg, rgba(102, 126, 234, 0.85) 0%, rgba(118, 75, 162, 0.85) 50%, rgba(240, 147, 251, 0.85) 100%),
+                url('hero-background.jpg') center/cover no-repeat;
+            padding: 6rem 0 8rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* If no background image is used, it will fall back to gradient */
+        .hero.no-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+                linear-gradient(180deg, rgba(0,0,0,0.1) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 3.5rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            font-weight: 400;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero .subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            font-weight: 400;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.15);
+        }
+
+        .year-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 12px;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            letter-spacing: 6px;
+            animation: fadeInUp 0.8s ease-out both;
+            box-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            font-family: 'DM Serif Display', serif;
+        }
+
+        .year-badge:hover {
+            transform: translateY(-2px) scale(1.02);
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 
+                0 6px 20px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            letter-spacing: 8px;
+        }
+
+        /* Main Content */
+        main {
+            padding: 4rem 0;
+        }
+
+        section {
+            margin-bottom: 6rem;
+            animation: fadeInUp 0.8s ease-out both;
+        }
+
+        section:nth-child(2) { animation-delay: 0.1s; }
+        section:nth-child(3) { animation-delay: 0.2s; }
+        section:nth-child(4) { animation-delay: 0.3s; }
+
+        .section-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 0;
+            font-weight: 400;
+            letter-spacing: -0.5px;
+        }
+
+        .section-title::after {
+            display: none;
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--accent);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card h3 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .card p {
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* Edition Cards */
+        .edition-card {
+            display: block;
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .edition-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(59, 130, 246, 0.05));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+        }
+
+        .edition-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--accent);
+        }
+
+        .edition-card:hover::before {
+            opacity: 1;
+        }
+
+        .edition-image {
+            height: 220px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .edition-card:hover .edition-image {
+            transform: scale(1.05);
+        }
+
+        .edition-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                linear-gradient(135deg, transparent 0%, rgba(0,0,0,0.1) 100%);
+        }
+
+        .edition-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.3), rgba(59, 130, 246, 0.3));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .edition-card:hover .edition-image::after {
+            opacity: 1;
+        }
+
+        .edition-year {
+            font-family: 'DM Serif Display', serif;
+            font-size: 4.5rem;
+            color: white;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
+            opacity: 0.95;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: all 0.4s ease;
+        }
+
+        .edition-card:hover .edition-year {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        .edition-content {
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+            background: white;
+        }
+
+        .edition-content h3 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        body.dark-mode .edition-content h3 {
+            --primary: #1e293b;
+            color: var(--primary);
+        }
+
+        .edition-card:hover .edition-content h3 {
+            color: var(--secondary);
+        }
+
+        .edition-content p {
+            color: var(--text);
+            font-size: 0.9rem;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        body.dark-mode .edition-content p {
+            color: gray;
+            opacity: 1;
+        }
+
+        .edition-card:hover .edition-content p {
+            opacity: 0.9;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            margin-top: 4rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-card {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+            padding: 3rem;
+            border-radius: 16px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+
+        .contact-card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: white;
+        }
+
+        .contact-card h3 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .contact-card p {
+            font-size: 1rem;
+            line-height: 1.7;
+            opacity: 0.95;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-card a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .contact-card a:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-info-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .contact-info-card h3 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .email-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .email-item:hover {
+            transform: translateX(8px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .email-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .email-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: white;
+        }
+
+        .email-item a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .email-item:hover a {
+            color: var(--secondary);
+        }
+
+        /* Responsive Design - All Devices */
+        
+        /* Large Desktop (1440px and above) */
+        @media (min-width: 1440px) {
+            .container {
+                max-width: 1400px;
+            }
+            
+            .hero h1 {
+                font-size: 4rem;
+            }
+            
+            .section-title {
+                font-size: 3.5rem;
+            }
+        }
+
+        /* Desktop (1024px - 1439px) */
+        @media (max-width: 1439px) and (min-width: 1024px) {
+            .container {
+                max-width: 1100px;
+            }
+        }
+
+        /* Tablet Landscape (768px - 1023px) */
+        @media (max-width: 1023px) and (min-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .edition-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .announcement-card {
+                min-width: 350px;
+            }
+
+            .announcement-banner {
+                padding: 0.9rem 0;
+            }
+        }
+
+        /* Tablet Portrait & Mobile Landscape (640px - 767px) */
+        @media (max-width: 767px) and (min-width: 640px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            .hero {
+                padding: 4rem 0 5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.15rem;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .edition-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .announcement-card {
+                min-width: 320px;
+            }
+
+            .announcement-banner {
+                padding: 0.8rem 0;
+            }
+
+            .announcement-card {
+                padding: 0.9rem 1.4rem;
+            }
+
+            .header-right {
+                gap: 1.5rem;
+            }
+
+            nav {
+                gap: 1.5rem;
+            }
+        }
+
+        /* Mobile (up to 639px) */
+        @media (max-width: 639px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            header {
+                padding: 1rem 0;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .logo {
+                height: 45px;
+            }
+
+            .header-right {
+                gap: 1rem;
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            nav {
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav a {
+                font-size: 0.85rem;
+            }
+
+            .theme-toggle {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            /* Announcement Cards */
+            .announcement-banner {
+                padding: 1rem 0;
+            }
+
+            .announcement-card {
+                min-width: 300px;
+                padding: 1rem 1.25rem;
+            }
+
+            .announcement-badge {
+                width: 42px;
+                height: 42px;
+            }
+
+            .announcement-title {
+                font-size: 0.85rem;
+            }
+
+            .announcement-desc {
+                font-size: 0.75rem;
+            }
+
+            .announcement-tag {
+                padding: 0.3rem 0.7rem;
+                font-size: 0.7rem;
+            }
+
+            /* Hero */
+            .hero {
+                padding: 3rem 0 4rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+                line-height: 1.3;
+            }
+
+            .hero .subtitle {
+                font-size: 1rem;
+            }
+
+            .year-badge {
+                padding: 0.6rem 1.5rem;
+                font-size: 0.9rem;
+                letter-spacing: 4px;
+            }
+
+            /* Sections */
+            section {
+                margin-bottom: 3rem;
+                padding: 2rem 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+            }
+
+            /* Edition Cards */
+            .edition-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .edition-card {
+                margin: 0;
+            }
+
+            .edition-image {
+                height: 180px;
+            }
+
+            .edition-year {
+                font-size: 3rem;
+            }
+
+            .edition-content {
+                padding: 1.5rem;
+            }
+
+            .edition-content h3 {
+                font-size: 1.2rem;
+            }
+
+            /* Contact */
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .contact-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .contact-card h3 {
+                font-size: 1.5rem;
+            }
+
+            .email-item {
+                padding: 1rem;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            /* Footer */
+            footer {
+                padding: 3rem 0 1.5rem;
+                margin-top: 4rem;
+            }
+
+            .copyright {
+                padding-top: 2rem;
+                margin-top: 2rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Extra Small Mobile (up to 374px) */
+        @media (max-width: 374px) {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .announcement-card {
+                min-width: 280px;
+                padding: 1rem;
+            }
+
+            .announcement-badge {
+                width: 36px;
+                height: 36px;
+            }
+
+            .announcement-badge svg {
+                width: 18px;
+                height: 18px;
+            }
+
+            .announcement-title {
+                font-size: 0.8rem;
+            }
+
+            .announcement-desc {
+                font-size: 0.7rem;
+            }
+
+            .announcement-tag {
+                font-size: 0.65rem;
+                padding: 0.25rem 0.6rem;
+            }
+
+            nav {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .logo {
+                height: 40px;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg);
+            padding: 4rem 0 2rem;
+            margin-top: 6rem;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="Hasoc2025.jpg" alt="HASOC Logo">
+                </div>
+                <div class="header-right">
+                    <nav>
+                        <a href="#about">About</a>
+                        <a href="#previous">Previous Editions</a>
+                        <a href="#contact">Contact</a>
+                    </nav>
+                    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+                        <svg class="sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        <svg class="moon-icon" style="display: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Announcement Banner - Infinite Scroll -->
+    <div class="announcement-banner">
+        <div class="announcement-wrapper">
+            <div class="announcement-scroll">
+                <!-- Card 1: Coming Soon -->
+                <div class="announcement-card">
+                    <div class="announcement-badge">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                        </svg>
+                    </div>
+                    <div class="announcement-content">
+                        <div class="announcement-title">🎉 HASOC 2026 Coming Soon!</div>
+                        <div class="announcement-desc">Stay tuned for the next edition</div>
+                    </div>
+                    <div class="announcement-tag">New</div>
+                </div>
+
+                <!-- Card 2: Mailing List -->
+                <div class="announcement-card">
+                    <div class="announcement-badge success">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <div class="announcement-content">
+                        <div class="announcement-title">Join Our Mailing List</div>
+                        <div class="announcement-desc">Get latest updates and announcements</div>
+                    </div>
+                    <div class="announcement-tag"><a target = "__blank" href = "https://groups.google.com/g/hasoc">Join Now</a></div>
+                </div>
+
+                <!-- Duplicate for seamless infinite loop -->
+                <div class="announcement-card">
+                    <div class="announcement-badge">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                        </svg>
+                    </div>
+                    <div class="announcement-content">
+                        <div class="announcement-title">🎉 HASOC 2025 Coming Soon!</div>
+                        <div class="announcement-desc">Stay tuned for the next edition</div>
+                    </div>
+                    <div class="announcement-tag">New</div>
+                </div>
+
+                <div class="announcement-card">
+                    <div class="announcement-badge success">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <div class="announcement-content">
+                        <div class="announcement-title">Join Our Mailing List</div>
+                        <div class="announcement-desc">Get latest updates and announcements</div>
+                    </div>
+                    <div class="announcement-tag"><a target = "__blank" href = "https://groups.google.com/g/hasoc">Join Now</a></div>
+                </div>
+
+                <!-- Duplicate for seamless infinite loop -->
+                <div class="announcement-card">
+                    <div class="announcement-badge">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                        </svg>
+                    </div>
+                    <div class="announcement-content">
+                        <div class="announcement-title">🎉 HASOC 2025 Coming Soon!</div>
+                        <div class="announcement-desc">Stay tuned for the next edition</div>
+                    </div>
+                    <div class="announcement-tag">New</div>
+                </div>
+
+                <div class="announcement-card">
+                    <div class="announcement-badge success">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <div class="announcement-content">
+                        <div class="announcement-title">Join Our Mailing List</div>
+                        <div class="announcement-desc">Get latest updates and announcements</div>
+                    </div>
+                    <div class="announcement-tag"><a target = "__blank" href = "https://groups.google.com/g/hasoc">Join Now</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 
+    TO ADD YOUR OWN BACKGROUND IMAGE TO THE HERO SECTION:
+    1. Place your image file (e.g., 'hero-background.jpg') in the same folder as this HTML file
+    2. The image will automatically show with a purple gradient overlay
+    3. To change the image, replace 'hero-background.jpg' in the CSS with your image filename
+    4. If you don't want a background image, add class="no-image" to the hero section below
+    -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="year-badge">HASOC</div>
+                <h1>Hate Speech and Offensive<br>Content Identification</h1>
+                <p class="subtitle">Advancing research in automated detection and analysis of hate speech and offensive content across social media platforms</p>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        <section id="about">
+            <h2 class="section-title">About HASOC</h2>
+            <p>
+                Social networking platforms such as Twitter and Facebook have become widely popular due to their ease of use and broad accessibility, offering individuals a powerful space to express their thoughts. Despite the many advantages of social media, a significant amount of harmful and offensive content—including hate speech—circulates online, posing serious societal challenges.
+            </p>
+            <p style="margin-top: 1.5rem;">
+                The task of hate speech detection increasingly necessitates the analysis of multimodal data, as harmful online content often exploits the combination of text and images to convey hateful messages in subtle or coded forms. HASOC aims to develop automated systems capable of detecting and flagging potentially harmful or suspicious posts, contributing to safer and more inclusive digital environments.
+            </p>
+        </section>
+
+        <section id="previous">
+            <h2 class="section-title">Previous Editions</h2>
+            <div class="card-grid">
+                <a target="_blank" href="https://hasocfire.github.io/hasoc/2025/index.html" class="edition-card">
+                    <div class="edition-image">
+                        <div class="edition-year">2025</div>
+                    </div>
+                    <div class="edition-content">
+                        <h3>HASOC 2025</h3>
+                        <p>Hate Speech and Offensive Content Identification</p>
+                    </div>
+                </a>
+                <a target="_blank" href="https://hasocfire.github.io/hasoc/2024/index.html" class="edition-card">
+                    <div class="edition-image">
+                        <div class="edition-year">2024</div>
+                    </div>
+                    <div class="edition-content">
+                        <h3>HASOC 2024</h3>
+                        <p>Hate Speech and Offensive Content Identification</p>
+                    </div>
+                </a>
+                <a target="_blank" href="https://hasocfire.github.io/hasoc/2023/index.html" class="edition-card">
+                    <div class="edition-image">
+                        <div class="edition-year">2023</div>
+                    </div>
+                    <div class="edition-content">
+                        <h3>HASOC 2023</h3>
+                        <p>Hate Speech and Offensive Content Identification</p>
+                    </div>
+                </a>
+                <a target="_blank" href="https://hasocfire.github.io/hasoc/2022/index.html" class="edition-card">
+                    <div class="edition-image">
+                        <div class="edition-year">2022</div>
+                    </div>
+                    <div class="edition-content">
+                        <h3>HASOC 2022</h3>
+                        <p>Hate Speech and Offensive Content Identification</p>
+                    </div>
+                </a>
+                <a target="_blank" href="https://hasocfire.github.io/hasoc/2021/index.html" class="edition-card">
+                    <div class="edition-image">
+                        <div class="edition-year">2021</div>
+                    </div>
+                    <div class="edition-content">
+                        <h3>HASOC 2021</h3>
+                        <p>Hate Speech and Offensive Content Identification</p>
+                    </div>
+                </a>
+                <a target="_blank" href="https://hasocfire.github.io/hasoc/2020/index.html" class="edition-card">
+                    <div class="edition-image">
+                        <div class="edition-year">2020</div>
+                    </div>
+                    <div class="edition-content">
+                        <h3>HASOC 2020</h3>
+                        <p>Hate Speech and Offensive Content Identification</p>
+                    </div>
+                </a>
+                <a target="_blank" href="https://hasocfire.github.io/hasoc/2019/index.html" class="edition-card">
+                    <div class="edition-image">
+                        <div class="edition-year">2019</div>
+                    </div>
+                    <div class="edition-content">
+                        <h3>HASOC 2019</h3>
+                        <p>Hate Speech and Offensive Content Identification</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <div class="container">
+            <section class="contact-section">
+                <h2 class="section-title">Contact Us</h2>
+                
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <div class="contact-card-content">
+                            <div class="contact-icon">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                            </div>
+                            <h3>Join Our Community</h3>
+                            <p>Join to our mailing list for the latest announcements and discussions.</p>
+                            <a href="https://groups.google.com/g/hasoc" target="_blank">
+                                Join Now
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-card">
+                        <h3>Get in Touch</h3>
+                        <p style="color: var(--text-light); margin-bottom: 1.5rem;">For any queries, write to us at:</p>
+                        
+                        <div class="email-item">
+                            <div class="email-icon">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <a href="mailto:hasocfire@gmail.com"><span class="__cf_email__" data-cfemail="f59d94869a96939c8790b59298949c99db969a98">hasocfire@gmail.com</span></a>
+                        </div>
+
+                        <div class="email-item">
+                            <div class="email-icon">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <a href="mailto:ghosh.koyel8@gmail.com"><span class="__cf_email__" data-cfemail="0c6b64637f64226763756960344c6b616d6560226f6361">ghosh.koyel8@gmail.com</span></a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="copyright">
+                &copy; 2026 HASOC. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Dark mode toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const sunIcon = document.querySelector('.sun-icon');
+            const moonIcon = document.querySelector('.moon-icon');
+            
+            body.classList.toggle('dark-mode');
+            
+            // Toggle icons
+            if (body.classList.contains('dark-mode')) {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Check for saved theme preference or default to light mode
+        // window.addEventListener('DOMContentLoaded', () => {
+        //     const savedTheme = localStorage.getItem('theme');
+        //     co
+
+        </script>
+</body>
+</html>
