@@ -1,0 +1,2170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HASOC-2026 | Hate Speech and Offensive Content Identification for Memes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0e0e0e;
+    --paper: #f5f2ec;
+    --cream: #ede9df;
+    --accent: #c84b2f;
+    --accent2: #2a4a8a;
+    --muted: #7a7265;
+    --border: #d4cfc5;
+    --line: 1px solid var(--border);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── GRAIN OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.5;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    padding: 0 clamp(1rem, 5vw, 4rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+    transition: background 0.4s ease, border-color 0.4s ease,
+                backdrop-filter 0.4s ease, box-shadow 0.4s ease, height 0.3s ease;
+  }
+  nav.scrolled {
+    background: rgba(245, 242, 236, 0.88);
+    backdrop-filter: blur(18px) saturate(1.4);
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+    border-bottom-color: var(--border);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    height: 58px;
+  }
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: clamp(1rem, 2.5vw, 2rem);
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+    white-space: nowrap;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -3px; left: 0; right: 0;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::after,
+  .nav-links a.active::after { transform: scaleX(1); }
+  .nav-links a.active { color: var(--ink); }
+
+  .nav-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    background: transparent;
+    border: var(--line);
+    padding: 4px 10px;
+    border-radius: 2px;
+    transition: background 0.3s;
+    white-space: nowrap;
+  }
+  nav.scrolled .nav-year { background: var(--cream); }
+
+  /* ─── HAMBURGER ─── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 8px;
+    background: none;
+    border: none;
+    z-index: 101;
+  }
+  .hamburger span {
+    width: 22px; height: 1.5px;
+    background: var(--ink);
+    transition: transform 0.3s, opacity 0.3s, width 0.3s;
+    display: block;
+    transform-origin: center;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    padding: 120px clamp(1.5rem, 5vw, 4rem) 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 45%;
+    height: 100%;
+    background: var(--cream);
+    z-index: 0;
+    clip-path: polygon(8% 0, 100% 0, 100% 100%, 0% 100%);
+  }
+
+  .hero-content { position: relative; z-index: 1; }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.2s forwards;
+  }
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.35s forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-year {
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(5rem, 10vw, 9rem);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--border);
+    letter-spacing: -0.04em;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.45s forwards;
+  }
+
+  .hero-subtitle {
+    font-size: 14.5px;
+    color: var(--muted);
+    max-width: 480px;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.55s forwards;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.65s forwards;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 12px 24px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-primary svg { transition: transform 0.2s; }
+  .btn-primary:hover svg { transform: translateX(3px); }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--ink);
+    padding: 12px 24px;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    border: var(--line);
+    transition: border-color 0.2s, color 0.2s, transform 0.15s;
+  }
+  .btn-ghost:hover { border-color: var(--ink); transform: translateY(-1px); }
+
+  .hero-visual {
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    animation: fadeIn 1s 0.6s forwards;
+  }
+
+  .hero-card {
+    background: white;
+    border: var(--line);
+    padding: 2rem;
+    position: relative;
+  }
+  .hero-card::before {
+    content: 'HASOC 2026';
+    position: absolute;
+    top: -12px; left: 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    background: white;
+    padding: 0 8px;
+    color: var(--accent);
+  }
+
+  .lang-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+  .lang-item {
+    background: white;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: background 0.2s;
+    cursor: default;
+  }
+  .lang-item:hover { background: var(--paper); }
+  .lang-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+  }
+  .lang-script {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .stat-row {
+    display: flex;
+    gap: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: var(--line);
+  }
+  .stat { flex: 1; }
+  .stat-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── TICKER ─── */
+  .ticker {
+    border-top: var(--line);
+    border-bottom: var(--line);
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 10px 0;
+    background: var(--cream);
+  }
+  .ticker-inner {
+    display: inline-flex;
+    animation: ticker 30s linear infinite;
+    gap: 0;
+  }
+  .ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 0 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .ticker-item .dot {
+    width: 4px; height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ─── SECTIONS ─── */
+  section {
+    padding: 6rem clamp(1.5rem, 5vw, 4rem);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 3.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: var(--line);
+  }
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+  .section-title em { font-style: italic; color: var(--accent); }
+
+  /* ─── OVERVIEW ─── */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .overview-text p {
+    color: var(--muted);
+    font-size: 14.5px;
+    line-height: 1.9;
+    margin-bottom: 1.2rem;
+  }
+  .overview-text p:first-child {
+    font-size: 16px;
+    color: var(--ink);
+    line-height: 1.8;
+  }
+
+  .overview-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+    position: sticky;
+    top: 80px;
+  }
+  .sidebar-item {
+    background: var(--paper);
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: background 0.2s;
+  }
+  .sidebar-item:hover { background: var(--cream); }
+  .sidebar-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .sidebar-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  /* ─── MODAL / POPUP SYSTEM ─── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1rem, 4vw, 2.5rem);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .modal-overlay.open {
+    pointer-events: all;
+    opacity: 1;
+  }
+  .modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(14,14,14,0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .modal-box {
+    position: relative;
+    z-index: 1;
+    background: var(--paper);
+    width: 100%;
+    max-width: 680px;
+    max-height: 88vh;
+    overflow-y: auto;
+    border: var(--line);
+    box-shadow: 0 32px 80px rgba(0,0,0,0.22), 0 0 0 1px rgba(0,0,0,0.04);
+    transform: translateY(28px) scale(0.97);
+    transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), opacity 0.3s ease;
+    opacity: 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .modal-overlay.open .modal-box {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+
+  /* Modal header band */
+  .modal-header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--paper);
+    border-bottom: var(--line);
+    padding: 1.4rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .modal-header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .modal-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(200,75,47,0.08);
+    padding: 3px 10px;
+    border: 1px solid rgba(200,75,47,0.18);
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .modal-header-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .modal-close {
+    width: 36px; height: 36px;
+    border: var(--line);
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s, transform 0.2s;
+    color: var(--muted);
+    border-radius: 2px;
+  }
+  .modal-close:hover { background: var(--cream); color: var(--ink); transform: rotate(90deg); }
+
+  .modal-body {
+    padding: 2.2rem 2rem 2.5rem;
+  }
+
+  /* Dark-themed modal (for tasks section) */
+  .modal-box.dark {
+    background: #111;
+    border-color: rgba(255,255,255,0.1);
+  }
+  .modal-box.dark .modal-header {
+    background: #111;
+    border-bottom-color: rgba(255,255,255,0.1);
+  }
+  .modal-box.dark .modal-header-title { color: #f5f2ec; }
+  .modal-box.dark .modal-close {
+    border-color: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.5);
+  }
+  .modal-box.dark .modal-close:hover { background: rgba(255,255,255,0.07); color: #f5f2ec; }
+
+  /* ── Modal content helpers ── */
+  .modal-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+    margin-top: 1.8rem;
+  }
+  .modal-section-label:first-child { margin-top: 0; }
+  .modal-heading {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .modal-heading em { font-style: italic; color: var(--accent); }
+  .modal-box.dark .modal-heading { color: #f5f2ec; }
+  .modal-text {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.85;
+    margin-bottom: 1rem;
+  }
+  .modal-box.dark .modal-text { color: rgba(255,255,255,0.55); }
+
+  .modal-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 1.8rem 0;
+  }
+  .modal-box.dark .modal-divider { background: rgba(255,255,255,0.1); }
+
+  /* Info grid inside modal */
+  .modal-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    margin: 1.2rem 0;
+    border: var(--line);
+  }
+  .modal-box.dark .modal-info-grid { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.08); }
+  .modal-info-cell {
+    background: var(--paper);
+    padding: 1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .modal-box.dark .modal-info-cell { background: #111; }
+  .modal-info-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .modal-box.dark .modal-info-label { color: rgba(255,255,255,0.3); }
+  .modal-info-value {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .modal-box.dark .modal-info-value { color: #f5f2ec; }
+
+  /* Tag chips inside modal */
+  .modal-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 1rem 0;
+  }
+  .modal-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    padding: 5px 12px;
+    border: var(--line);
+    color: var(--muted);
+    border-radius: 2px;
+    background: var(--cream);
+  }
+  .modal-chip.accent {
+    border-color: rgba(200,75,47,0.3);
+    color: var(--accent);
+    background: rgba(200,75,47,0.06);
+  }
+  .modal-box.dark .modal-chip {
+    border-color: rgba(255,255,255,0.14);
+    color: rgba(255,255,255,0.5);
+    background: transparent;
+  }
+  .modal-box.dark .modal-chip.accent {
+    border-color: rgba(200,75,47,0.4);
+    color: #e8906a;
+    background: rgba(200,75,47,0.08);
+  }
+
+  /* Timeline inside date modal */
+  .modal-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: var(--line);
+    overflow: hidden;
+  }
+  .modal-timeline-item {
+    display: flex;
+    gap: 0;
+    border-bottom: var(--line);
+    transition: background 0.18s;
+  }
+  .modal-timeline-item:last-child { border-bottom: none; }
+  .modal-timeline-item:hover { background: var(--cream); }
+  .modal-timeline-item.past { opacity: 0.45; }
+  .modal-timeline-item.now {
+    background: rgba(200,75,47,0.05);
+    border-color: rgba(200,75,47,0.2);
+  }
+  .modal-tl-date {
+    min-width: 120px;
+    padding: 1rem 1.2rem;
+    border-right: var(--line);
+    font-family: 'DM Mono', monospace;
+    font-size: 11.5px;
+    color: var(--accent2);
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .modal-tl-status {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .modal-timeline-item.now .modal-tl-status { color: var(--accent); }
+  .modal-tl-content {
+    padding: 1rem 1.4rem;
+    flex: 1;
+  }
+  .modal-tl-label {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+  .modal-tl-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* Organizer modal — profile layout */
+  .modal-profile {
+    display: flex;
+    gap: 1.8rem;
+    align-items: flex-start;
+    margin-bottom: 1.8rem;
+  }
+  .modal-profile-photo {
+    width: 96px; height: 96px;
+    flex-shrink: 0;
+    background: var(--cream);
+    border: var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .modal-profile-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .modal-profile-photo img.loaded { opacity: 1; }
+  .modal-profile-initials {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--ink);
+    opacity: 0.2;
+  }
+  .modal-profile-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .modal-profile-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .modal-profile-role {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .modal-profile-inst {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent2);
+    letter-spacing: 0.06em;
+    margin-top: 4px;
+  }
+
+  /* Click-to-open cue on cards */
+  .has-popup { cursor: pointer; }
+  .popup-cue {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-top: auto;
+    padding-top: 1.2rem;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.25s, transform 0.25s;
+  }
+  .has-popup:hover .popup-cue { opacity: 1; transform: translateY(0); }
+  .popup-cue-dark {
+    color: rgba(200,75,47,0.7);
+  }
+  .popup-cue svg { flex-shrink: 0; }
+
+  /* Date card clickable */
+  .date-item.has-popup { cursor: pointer; }
+
+  /* ─── TASKS ─── */
+  .tasks-bg { background: var(--ink); color: var(--paper); }
+  .tasks-bg .section-num { color: var(--accent); }
+  .tasks-bg .section-title { color: var(--paper); }
+  .tasks-bg .section-header { border-color: rgba(255,255,255,0.1); }
+
+  .tasks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: rgba(255,255,255,0.08);
+  }
+  .task-card {
+    background: var(--ink);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+    cursor: default;
+  }
+  .task-card:hover { background: #1a1a1a; }
+  .task-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .task-card:hover::after { transform: scaleX(1); }
+
+  .task-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+  }
+  .task-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    color: var(--paper);
+    margin-bottom: 0.8rem;
+    line-height: 1.3;
+  }
+  .task-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+  .task-langs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.5);
+    transition: all 0.2s;
+  }
+  .task-card:hover .tag {
+    border-color: rgba(200,75,47,0.4);
+    color: #e8906a;
+  }
+
+  /* ─── DATES ─── */
+  .dates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1px;
+    background: var(--border);
+  }
+  .date-item {
+    background: var(--paper);
+    padding: 1.8rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    transition: background 0.2s;
+    overflow: hidden;
+  }
+  .date-item.past { opacity: 0.5; }
+  .date-item.upcoming { background: var(--cream); }
+  .date-item.upcoming::before {
+    content: 'UPCOMING';
+    position: absolute;
+    top: 12px; right: 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    background: white;
+    padding: 2px 8px;
+    border: 1px solid var(--border);
+  }
+  .date-item:hover:not(.past) { background: white; }
+  .date-label {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1rem;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .date-value {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--accent2);
+    letter-spacing: 0.06em;
+  }
+  .date-note {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* ─── ORGANIZERS ─── */
+  .organizers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1px;
+    background: var(--border);
+  }
+  .organizer-card {
+    background: var(--paper);
+    display: flex;
+    flex-direction: column;
+    transition: background 0.25s;
+    overflow: hidden;
+  }
+  .organizer-card:hover { background: white; }
+
+  /* Photo wrapper — fixed aspect ratio, fills card width */
+  .organizer-photo {
+    width: 100%;
+    aspect-ratio: 4 / 4;
+    position: relative;
+    overflow: hidden;
+    background: var(--cream);
+    flex-shrink: 0;
+  }
+
+  /* The real <img> — replace src with your photo path to activate */
+  .organizer-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    transition: transform 0.4s ease;
+    /* Hidden by default; shown when src is a real file */
+    opacity: 0;
+  }
+  /* Once image loads, fade it in */
+  .organizer-photo img.loaded {
+    opacity: 1;
+    transition: opacity 0.3s ease, transform 0.4s ease;
+  }
+  .organizer-card:hover .organizer-photo img { transform: scale(1.04); }
+
+  /* Fallback initials — shown while no real image is set */
+  .organizer-photo .photo-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .organizer-photo .photo-initials {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.2rem;
+    color: var(--ink);
+    opacity: 0.25;
+    line-height: 1;
+  }
+  .organizer-photo .photo-hint {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0.6;
+    text-align: center;
+    padding: 0 1rem;
+  }
+
+  /* Thin accent line at bottom of photo on hover */
+  .organizer-photo::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+  }
+  .organizer-card:hover .organizer-photo::after { transform: scaleX(1); }
+
+  /* ─── ORGANIZER CARD HOVER LIFT + ZOOM ─── */
+  .organizer-card {
+    transition: background 0.25s, box-shadow 0.3s, transform 0.3s;
+  }
+  .organizer-card:hover {
+    background: white;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+    transform: scale(1.03);
+    z-index: 2;
+  }
+  .organizer-card:hover .organizer-photo img {
+    transform: scale(1.08);
+  }
+
+  /* Text info below photo */
+  .organizer-info {
+    padding: 1.2rem 1.4rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .organizer-name-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 2px;
+  }
+  .organizer-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.3;
+    flex: 1;
+    min-width: 0;
+  }
+  .organizer-role {
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .organizer-inst {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent2);
+    letter-spacing: 0.06em;
+    margin-top: 4px;
+  }
+
+  /* ─── CALL TO PARTICIPATE ─── */
+  .cta-section {
+    background: var(--cream);
+    border-top: var(--line);
+    border-bottom: var(--line);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .cta-left {
+    padding: 5rem clamp(1.5rem, 5vw, 4rem);
+    border-right: var(--line);
+  }
+  .cta-right {
+    padding: 5rem clamp(1.5rem, 5vw, 4rem);
+  }
+  .cta-heading {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+  .cta-heading em { font-style: italic; color: var(--accent); }
+  .cta-text {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .step {
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+  }
+  .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    padding-top: 2px;
+    flex-shrink: 0;
+    width: 20px;
+  }
+  .step-text {
+    font-size: 13.5px;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  .step-text strong { color: var(--ink); font-weight: 500; }
+
+  /* ─── ARCHIVE ─── */
+  .archive-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 0;
+    border-bottom: var(--line);
+    text-decoration: none;
+    color: var(--ink);
+    transition: padding-left 0.2s;
+  }
+  .archive-row:hover { padding-left: 0.5rem; color: var(--accent); }
+  .archive-year { font-family: 'DM Serif Display', serif; font-size: 1.4rem; }
+  .archive-meta {
+    display: flex;
+    gap: 2rem;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.06em;
+  }
+  .archive-arrow { font-size: 1.1rem; transition: transform 0.2s; }
+  .archive-row:hover .archive-arrow { transform: translateX(4px); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3rem clamp(1.5rem, 5vw, 4rem);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3rem;
+    border-top: var(--line);
+  }
+  .footer-brand {
+    font-family: 'DM Mono', monospace;
+    font-size: 16px;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.8rem;
+  }
+  .footer-brand span { color: var(--accent); }
+  .footer-desc {
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.7;
+  }
+  .footer-heading {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 1rem;
+  }
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .footer-links a {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--paper); }
+  .footer-bottom {
+    background: var(--ink);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 1.2rem clamp(1.5rem, 5vw, 4rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-copy {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.06em;
+  }
+
+  /* ─── LINKEDIN ICON ─── */
+  .organizer-linkedin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px; height: 28px;
+    border: var(--line);
+    color: var(--muted);
+    text-decoration: none;
+    margin-top: 8px;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+    border-radius: 2px;
+  }
+  .organizer-linkedin:hover {
+    background: #0a66c2;
+    color: white;
+    border-color: #0a66c2;
+    transform: translateY(-2px);
+  }
+
+  /* ─── DATE ITEM HOVER EFFECT ─── */
+  .date-item {
+    transition: background 0.2s, box-shadow 0.25s, transform 0.25s;
+  }
+  .date-item:hover:not(.past) {
+    background: white;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    transform: translateY(-3px);
+    z-index: 2;
+  }
+
+  /* ─── STUDENT COORDINATOR SECTION ─── */
+  .student-coord-section {
+    background: #0e0e0e;
+    color: var(--paper);
+  }
+  .student-coord-section .section-num { color: var(--accent); }
+  .student-coord-section .section-title { color: var(--paper); }
+  .student-coord-section .section-header { border-color: rgba(255,255,255,0.08); }
+
+  .student-coord-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1px;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .student-coord-card {
+    background: #0e0e0e;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: background 0.25s, box-shadow 0.3s, transform 0.3s;
+  }
+  .student-coord-card:hover {
+    background: #1a1a1a;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    transform: scale(1.03);
+    z-index: 2;
+  }
+
+  /* Full-width photo — same aspect ratio as organizer */
+  .student-coord-photo {
+    width: 100%;
+    aspect-ratio: 4 / 4;
+    position: relative;
+    overflow: hidden;
+    background: #1a1a1a;
+    flex-shrink: 0;
+  }
+  .student-coord-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.4s ease;
+  }
+  .student-coord-photo img.loaded { opacity: 1; }
+  .student-coord-card:hover .student-coord-photo img { transform: scale(1.06); }
+
+  /* Fallback initials placeholder */
+  .student-coord-photo .sc-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .student-coord-photo .sc-initials {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.2rem;
+    color: rgba(255,255,255,0.15);
+    line-height: 1;
+  }
+
+  /* Accent line sweep on photo bottom */
+  .student-coord-photo::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+  }
+  .student-coord-card:hover .student-coord-photo::after { transform: scaleX(1); }
+
+  /* Info block below photo */
+  .student-coord-info {
+    padding: 1.2rem 1.4rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .student-coord-name-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 2px;
+  }
+  .student-coord-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--paper);
+    line-height: 1.3;
+    flex: 1;
+    min-width: 0;
+  }
+  .student-coord-role {
+    font-size: 11.5px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.4;
+  }
+  .student-coord-linkedin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px; height: 28px;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.35);
+    text-decoration: none;
+    flex-shrink: 0;
+    border-radius: 2px;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .student-coord-linkedin:hover {
+    background: #0a66c2;
+    color: white;
+    border-color: #0a66c2;
+  }
+
+  @media (max-width: 900px) { .student-coord-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 680px) { .student-coord-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 420px) { .student-coord-grid { grid-template-columns: 1fr; } }
+
+  /* ─── DATES TIMELINE ─── */
+  .dates-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+  }
+  .dtl-row {
+    background: var(--paper);
+    display: grid;
+    grid-template-columns: 48px 1fr 180px 1fr;
+    align-items: center;
+    gap: 0;
+    padding: 0;
+    transition: background 0.2s, box-shadow 0.25s, transform 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .dtl-row::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.35s ease;
+  }
+  .dtl-row:hover { background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transform: scale(1.01); z-index: 2; }
+  .dtl-row:hover::after { transform: scaleY(1); }
+  .dtl-row.upcoming { background: var(--cream); }
+  .dtl-row.upcoming .dtl-num { color: var(--accent); }
+  .dtl-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    padding: 1.4rem 1.2rem;
+    border-right: var(--line);
+    text-align: center;
+  }
+  .dtl-label {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1rem;
+    color: var(--ink);
+    padding: 1.4rem 1.5rem;
+    line-height: 1.3;
+  }
+  .dtl-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 12.5px;
+    color: var(--accent2);
+    letter-spacing: 0.06em;
+    padding: 1.4rem 1.5rem;
+    border-left: var(--line);
+    border-right: var(--line);
+    white-space: nowrap;
+  }
+  .dtl-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    padding: 1.4rem 1.5rem;
+    line-height: 1.5;
+  }
+  @media (max-width: 900px) {
+    .dtl-row { grid-template-columns: 40px 1fr 1fr; }
+    .dtl-note { grid-column: 2 / -1; padding-top: 0.3rem; }
+    .dtl-date { border-left: none; }
+  }
+  @media (max-width: 600px) {
+    .dtl-row { grid-template-columns: 40px 1fr; }
+    .dtl-date { grid-column: 2; border-left: none; border-right: none; padding-top: 0; }
+    .dtl-note { grid-column: 2; padding-top: 0; padding-bottom: 1rem; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ─── KEYFRAMES ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ─── MOBILE MENU DRAWER ─── */
+  .mobile-menu {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--paper);
+    z-index: 98;
+    display: flex;
+    flex-direction: column;
+    padding: 90px clamp(1.5rem, 6vw, 3rem) 3rem;
+    gap: 0;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.77,0,0.18,1);
+    overflow-y: auto;
+  }
+  .mobile-menu.open { transform: translateX(0); }
+  .mobile-menu a {
+    color: var(--ink);
+    text-decoration: none;
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 7vw, 2.5rem);
+    padding: 0.6rem 0;
+    border-bottom: var(--line);
+    letter-spacing: -0.01em;
+    transition: color 0.2s, padding-left 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .mobile-menu a::after {
+    content: '→';
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    color: var(--muted);
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--accent); padding-left: 0.5rem; }
+  .mobile-menu a:hover::after { opacity: 1; transform: translateX(4px); }
+  .mobile-menu-footer {
+    margin-top: auto;
+    padding-top: 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* ─── RESPONSIVE — 1200px: tighten nav gap ─── */
+  @media (max-width: 1200px) {
+    .nav-links { gap: 1.2rem; }
+    .nav-year { display: none; }
+  }
+
+  /* ─── RESPONSIVE — 1024px: collapse hero visual ─── */
+  @media (max-width: 1024px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      min-height: auto;
+      padding-top: 110px;
+      padding-bottom: 60px;
+    }
+    .hero::after { display: none; }
+    .hero-visual { display: none; }
+    .hero-subtitle { max-width: 100%; }
+    .overview-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .overview-sidebar { position: static; }
+    .tasks-grid { grid-template-columns: 1fr 1fr; }
+    .cta-section { grid-template-columns: 1fr; }
+    .cta-left { border-right: none; border-bottom: var(--line); }
+    footer { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  }
+
+  /* ─── RESPONSIVE — 900px: switch to hamburger ─── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    section { padding: 4rem clamp(1.2rem, 5vw, 2.5rem); }
+    .section-header { margin-bottom: 2.5rem; }
+    .dates-grid { grid-template-columns: 1fr 1fr; }
+    .organizers-grid { grid-template-columns: repeat(3, 1fr); }
+    .archive-meta { display: none; }
+    footer { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ─── RESPONSIVE — 680px: single column layouts ─── */
+  @media (max-width: 680px) {
+    .hero { padding-top: 96px; padding-bottom: 48px; }
+    .hero-title { font-size: clamp(2.4rem, 9vw, 3.5rem); }
+    .hero-year { font-size: clamp(4rem, 18vw, 6rem); margin-bottom: 1.5rem; }
+    .hero-actions { flex-direction: column; }
+    .hero-actions .btn-primary,
+    .hero-actions .btn-ghost { width: 100%; justify-content: center; }
+
+    .tasks-grid { grid-template-columns: 1fr; }
+
+    .dates-grid { grid-template-columns: 1fr; }
+
+    .organizers-grid { grid-template-columns: 1fr 1fr; }
+
+    .section-header { flex-direction: column; gap: 0.3rem; align-items: flex-start; }
+
+    .cta-left, .cta-right { padding: 3rem clamp(1.2rem, 5vw, 2rem); }
+
+    footer { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+
+    .archive-row { flex-wrap: wrap; gap: 4px; }
+    .archive-year { font-size: 1.2rem; }
+  }
+
+  /* ─── RESPONSIVE — 420px: small phones ─── */
+  @media (max-width: 420px) {
+    .organizers-grid { grid-template-columns: 1fr; }
+    .hero-tag { font-size: 10px; }
+    .btn-primary, .btn-ghost { padding: 11px 18px; font-size: 12.5px; }
+    .ticker-item { font-size: 10px; gap: 1.2rem; padding: 0 1.2rem; }
+    .stat-row { gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">HA<span>S</span>OC</a>
+  <ul class="nav-links">
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#dates">Dates</a></li>
+    <li><a href="#participation">Participate</a></li>
+    <li><a href="#organizers">Organizers</a></li>
+    <li><a href="#student-coordinator">Student Co-ord</a></li>
+    <li><a href="#archive">Archive</a></li>
+  </ul>
+  <span class="nav-year">FIRE@2026</span>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#overview" onclick="toggleMenu()">Overview</a>
+  <a href="#dates" onclick="toggleMenu()">Dates</a>
+  <a href="#participation" onclick="toggleMenu()">Participate</a>
+  <a href="#organizers" onclick="toggleMenu()">Organizers</a>
+  <a href="#student-coordinator" onclick="toggleMenu()">Student Co-ord</a>
+  <a href="#archive" onclick="toggleMenu()">Archive</a>
+  <div class="mobile-menu-footer">HASOC 2026 · FIRE Workshop</div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-tag">Forum for Information Retrieval Evaluation</div>
+    <h1 class="hero-title">Hate Speech &amp;<br><em>Offensive</em><br>Content ID</h1>
+    <div class="hero-year">2026</div>
+    <!-- LANG-COMMENTED: Original text included "Assamese, Bodo, Tamil, and Telugu" — Assamese & Bodo removed below -->
+    <p class="hero-subtitle">Multimodal hate speech detection in memes across <!-- Assamese, Bodo, -->Tamil, and Telugu — advancing NLP research for South Asian languages.</p>
+    <div class="hero-actions">
+      <a href="#participation" class="btn-primary">
+        Register Now
+        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+      <a href="#overview" class="btn-ghost">Learn More</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-card">
+      <div class="lang-grid">
+        <!-- LANG-COMMENTED: Assamese lang-item — uncomment to restore
+        <div class="lang-item">
+          <div class="lang-name">অসমীয়া</div>
+          <div class="lang-script">Assamese · Assamese Script</div>
+        </div>
+        -->
+        <!-- LANG-COMMENTED: Bodo lang-item — uncomment to restore
+        <div class="lang-item">
+          <div class="lang-name">बड़ो</div>
+          <div class="lang-script">Bodo · Devanagari Script</div>
+        </div>
+        -->
+        <div class="lang-item">
+          <div class="lang-name">தமிழ்</div>
+          <div class="lang-script">Tamil · Tamil Script</div>
+        </div>
+        <div class="lang-item">
+          <div class="lang-name">తెలుగు</div>
+          <div class="lang-script">Telugu · Telugu Script</div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-num">2</div>
+          <div class="stat-label">Languages</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">5</div>
+          <div class="stat-label">Subtasks</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">500+</div>
+          <div class="stat-label">Memes</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item"><span class="dot"></span> HASOC 2026 &nbsp;·&nbsp; Hate Speech Detection</span>
+    <span class="ticker-item"><span class="dot"></span> FIRE 2026 &nbsp;·&nbsp; Multimodal NLP</span>
+    <!-- LANG-COMMENTED: Ticker item with Assamese & Bodo — uncomment to restore
+    <span class="ticker-item"><span class="dot"></span> Assamese &nbsp;·&nbsp; Bodo &nbsp;·&nbsp; Tamil &nbsp;·&nbsp; Telugu</span>
+    -->
+    <span class="ticker-item"><span class="dot"></span> Tamil &nbsp;·&nbsp; Telugu</span>
+    <span class="ticker-item"><span class="dot"></span> Meme Analysis &nbsp;·&nbsp; Offensive Content Identification</span>
+    <span class="ticker-item"><span class="dot"></span> Workshop at FIRE 2026 &nbsp;·&nbsp; Call for Participation Open</span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-item"><span class="dot"></span> HASOC 2026 &nbsp;·&nbsp; Hate Speech Detection</span>
+    <span class="ticker-item"><span class="dot"></span> FIRE 2026 &nbsp;·&nbsp; Multimodal NLP</span>
+    <!-- LANG-COMMENTED: Ticker item with Assamese & Bodo (loop duplicate) — uncomment to restore
+    <span class="ticker-item"><span class="dot"></span> Assamese &nbsp;·&nbsp; Bodo &nbsp;·&nbsp; Tamil &nbsp;·&nbsp; Telugu</span>
+    -->
+    <span class="ticker-item"><span class="dot"></span> Tamil &nbsp;·&nbsp; Telugu</span>
+    <span class="ticker-item"><span class="dot"></span> Meme Analysis &nbsp;·&nbsp; Offensive Content Identification</span>
+    <span class="ticker-item"><span class="dot"></span> Workshop at FIRE 2026 &nbsp;·&nbsp; Call for Participation Open</span>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Task <em>Overview</em></h2>
+  </div>
+  <div class="overview-grid">
+    <div class="overview-text reveal">
+      <!-- LANG-COMMENTED: Original included "Assamese, Bodo, Tamil, and Telugu" — Assamese & Bodo removed below -->
+      <p>The HASOC-meme 2.0 shared task focuses on identifying hate speech and offensive content in multimodal memes — combining visual and textual signals — across <!-- four --> two South Asian languages: <!-- Assamese, Bodo, -->Tamil, and Telugu.</p>
+      <p>Social media platforms have become a battleground for misinformation and hateful content. Memes, due to their inherently multimodal nature, present a unique challenge: text alone may appear benign, images may seem neutral, yet together they can convey deeply offensive or hateful messages. Research has shown hateful memes can be surprisingly persuasive, often going viral and resonating with a wide audience.</p>
+      <p>This task is part of FIRE 2026 (Forum for Information Retrieval Evaluation) and invites researchers to develop automated systems capable of detecting and classifying hate speech in memes, pushing the frontier of multilingual and multimodal NLP. Each meme entry also includes a context paragraph to aid analysis.</p>
+      <p>Participants address five subtasks: abuse detection, target community identification, vulgarity detection, sarcasm detection, and sentiment classification. Accepted system description papers will be published in FIRE 2026 proceedings.</p>
+    </div>
+    <div class="overview-sidebar reveal reveal-delay-2">
+      <div class="sidebar-item">
+        <span class="sidebar-label">Venue</span>
+        <span class="sidebar-value">FIRE 2026 Workshop</span>
+      </div>
+      <div class="sidebar-item">
+        <span class="sidebar-label">Task Type</span>
+        <span class="sidebar-value">Multimodal Classification</span>
+      </div>
+      <div class="sidebar-item">
+        <span class="sidebar-label">Modality</span>
+        <span class="sidebar-value">Text + Image (Memes)</span>
+      </div>
+      <div class="sidebar-item">
+        <span class="sidebar-label">Languages</span>
+        <!-- LANG-COMMENTED: Original value was "Assamese · Bodo · Tamil · Telugu" -->
+        <span class="sidebar-value"><!-- Assamese · Bodo · -->Tamil · Telugu</span>
+      </div>
+      <div class="sidebar-item">
+        <span class="sidebar-label">Evaluation Metric</span>
+        <span class="sidebar-value">Macro F1, Accuracy</span>
+      </div>
+      <div class="sidebar-item">
+        <span class="sidebar-label">Proceedings</span>
+        <span class="sidebar-value">FIRE 2026 Working Notes</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DATES -->
+<section id="dates">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Important <em>Dates</em></h2>
+  </div>
+  <div class="dates-timeline">
+    <div class="dtl-row reveal">
+      <div class="dtl-num">01</div>
+      <div class="dtl-label">Training Data Release</div>
+      <div class="dtl-date">25 June 2026</div>
+      <div class="dtl-note">Annotated training datasets made available to participants</div>
+    </div>
+    <div class="dtl-row reveal reveal-delay-1">
+      <div class="dtl-num">02</div>
+      <div class="dtl-label">Test Data Release</div>
+      <div class="dtl-date">25 June 2026</div>
+      <div class="dtl-note">Blind test sets released for all language tracks</div>
+    </div>
+    <div class="dtl-row upcoming reveal reveal-delay-2">
+      <div class="dtl-num">03</div>
+      <div class="dtl-label">Run Submission Deadline</div>
+      <div class="dtl-date">30 June 2026</div>
+      <div class="dtl-note">Participant system outputs due</div>
+    </div>
+    <div class="dtl-row reveal reveal-delay-3">
+      <div class="dtl-num">04</div>
+      <div class="dtl-label">Results Declared</div>
+      <div class="dtl-date">15 July 2026</div>
+      <div class="dtl-note">Official rankings and evaluations published</div>
+    </div>
+    <div class="dtl-row reveal">
+      <div class="dtl-num">05</div>
+      <div class="dtl-label">Working Notes Paper Due</div>
+      <div class="dtl-date">30 August 2026</div>
+      <div class="dtl-note">System description papers submitted for proceedings</div>
+    </div>
+    <div class="dtl-row reveal reveal-delay-1">
+      <div class="dtl-num">06</div>
+      <div class="dtl-label">FIRE Conference</div>
+      <div class="dtl-date">30 Septemberr 2026</div>
+      <div class="dtl-note">Presentations, proceedings publication, and award ceremony</div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTICIPATE -->
+<section id="participation" class="cta-section" style="padding:0;">
+  <div class="cta-left reveal">
+    <h2 class="cta-heading">Ready to<br><em>Participate?</em></h2>
+    <p class="cta-text">Join researchers from around the world in advancing hate speech detection for South Asian languages. Registration is free and open to all academic and industrial researchers.</p>
+    <a href="#" class="btn-primary" style="margin-right:1rem;">
+      Register via FIRE
+      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+    </a>
+    <a href="#" class="btn-ghost" style="margin-top:0.8rem;display:inline-flex;">Download Guidelines</a>
+  </div>
+  <div class="cta-right reveal reveal-delay-2">
+    <h3 style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2rem;">How to Participate</h3>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">01</span>
+        <span class="step-text"><strong>Register</strong> on the FIRE 2026 shared task portal and select HASOC-meme tracks.</span>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <span class="step-text"><strong>Download</strong> the released training datasets for your chosen language tracks.</span>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <span class="step-text"><strong>Develop</strong> your system using any architecture — classical ML, deep learning, or LLM-based.</span>
+      </div>
+      <div class="step">
+        <span class="step-num">04</span>
+        <span class="step-text"><strong>Submit</strong> system outputs on blind test data by the deadline.</span>
+      </div>
+      <div class="step">
+        <span class="step-num">05</span>
+        <span class="step-text"><strong>Publish</strong> a system description paper in FIRE 2026 Working Notes (CEUR-WS).</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORGANIZERS -->
+<section id="organizers">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Task <em>Organizers</em></h2>
+  </div>
+  <div class="organizers-grid">
+
+    <!-- ORGANIZER 1 — Thomas Mandl -->
+    <div class="organizer-card reveal reveal-delay-2">
+      <div class="organizer-photo">
+        <img src="images\thomas.jpeg" alt="Thomas Mandl" class="org-img">
+        <div class="photo-placeholder">
+          <span class="photo-initials">TM</span>
+          <span class="photo-hint">Replace src with<br>thomas-mandl.jpg</span>
+        </div>
+      </div>
+      <div class="organizer-info">
+        <div class="organizer-name-row">
+          <div class="organizer-name">Thomas Mandl</div>
+          <a href="https://www.linkedin.com/in/thomas-mandl-91593b9/" target="_blank" class="organizer-linkedin" title="LinkedIn">
+            <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+        <!-- <div class="organizer-role">Task Co-coordinator</div> -->
+        <div class="organizer-inst">University of Hildesheim, Germany</div>
+      </div>
+    </div>    
+
+    <!-- ORGANIZER 2 — Koyel Ghosh -->
+    <div class="organizer-card reveal">
+      <div class="organizer-photo">
+        <img src="images\koyel.jpg" alt="Koyel Ghosh" class="org-img">
+        <div class="photo-placeholder">
+          <span class="photo-initials">KG</span>
+          <span class="photo-hint">Replace src with<br>koyel-ghosh.jpg</span>
+        </div>
+      </div>
+      <div class="organizer-info">
+        <div class="organizer-name-row">
+          <div class="organizer-name">Koyel Ghosh</div>
+          <a href="https://www.linkedin.com/in/dr-koyel-ghosh-18333076/" target="_blank" class="organizer-linkedin" title="LinkedIn">
+            <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+        <!-- <div class="organizer-role">Task Co-coordinator</div> -->
+        <div class="organizer-inst">University of Hildesheim, Germany</div>
+        <div class="organizer-inst">SRM IST, Chennai</div>
+      </div>
+    </div>
+
+    <!-- ORGANIZER 3 — Utathya Aich -->
+    <div class="organizer-card reveal reveal-delay-1">
+      <div class="organizer-photo">
+        <img src="images\utathya.jpeg" alt="Utathya Aich" class="org-img">
+        <div class="photo-placeholder">
+          <span class="photo-initials">UA</span>
+          <span class="photo-hint">Replace src with<br>utathya.jpeg</span>
+        </div>
+      </div>
+      <div class="organizer-info">
+        <div class="organizer-name-row">
+          <div class="organizer-name">Utathya Aich</div>
+          <a href="https://www.linkedin.com/in/utathyaaich/" target="_blank" class="organizer-linkedin" title="LinkedIn">
+            <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+        <!-- <div class="organizer-role">Task Co-coordinator</div> -->
+        <div class="organizer-inst">CNH Industrial</div>
+      </div>
+    </div>
+
+    <!-- ORGANIZER 4 — Bhaskar Pal -->
+    <div class="organizer-card reveal reveal-delay-1">
+      <div class="organizer-photo">
+        <img src="images\bhaskar.png" alt="Bhaskar Pal" class="org-img">
+        <div class="photo-placeholder">
+          <span class="photo-initials">BP</span>
+          <span class="photo-hint">Replace src with<br>bhaskar-pal.jpg</span>
+        </div>
+      </div>
+      <div class="organizer-info">
+        <div class="organizer-name-row">
+          <div class="organizer-name">Bhaskar Pal</div>
+          <a href="https://www.linkedin.com/in/bhaskar-pal-2k02/" target="_blank" class="organizer-linkedin" title="LinkedIn">
+            <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+        <!-- <div class="organizer-role">Task Co-coordinator</div> -->
+        <div class="organizer-inst">Indian Statistical Institute, Kolkata</div>
+      </div>
+    </div>
+
+
+
+  </div>
+</section>
+
+<!-- STUDENT COORDINATOR -->
+<section id="student-coordinator" class="student-coord-section">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Student <em>Co-ordinators</em></h2>
+  </div>
+  <div class="student-coord-grid">
+
+    <div class="student-coord-card reveal">
+      <div class="student-coord-photo">
+        <img src="images\gorla.jpeg" alt="Gorla Ganesh Reddy" class="sc-img">
+        <div class="sc-placeholder">
+          <span class="sc-initials">GGR</span>
+        </div>
+      </div>
+      <div class="student-coord-info">
+        <div class="student-coord-name-row">
+          <div class="student-coord-name">Gorla Ganesh Reddy</div>
+          <!-- <a href="https://www.linkedin.com/search/results/all/?keywords=Gorla+Ganesh+Reddy" target="_blank" rel="noopener noreferrer" class="student-coord-linkedin" title="LinkedIn"> -->
+            <!-- <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> -->
+          </a>
+        </div>
+        <div class="student-coord-role">Student Co-ordinator</div>
+      </div>
+    </div>
+
+        <div class="student-coord-card reveal">
+      <div class="student-coord-photo">
+        <img src="images\gare.jpeg" alt="Gorla Ganesh Reddy" class="sc-img">
+        <div class="sc-placeholder">
+          <span class="sc-initials">GB</span>
+        </div>
+      </div>
+      <div class="student-coord-info">
+        <div class="student-coord-name-row">
+          <div class="student-coord-name">Gare Bhavitha</div>
+          <!-- <a href="https://www.linkedin.com/search/results/all/?keywords=Gorla+Ganesh+Reddy" target="_blank" rel="noopener noreferrer" class="student-coord-linkedin" title="LinkedIn"> -->
+            <!-- <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> -->
+          </a>
+        </div>
+        <div class="student-coord-role">Student Co-ordinator</div>
+      </div>
+    </div>
+
+    <!-- Add more student coordinators below following the same pattern -->
+
+  </div>
+</section>
+
+<!-- ARCHIVE -->
+<section id="archive" style="background:var(--cream);">
+  <div class="section-header reveal">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Previous <em>Editions</em></h2>
+  </div>
+  <div>
+    <a href="https://hasocfire.github.io/hasoc/2025/" target="_blank" class="archive-row reveal">
+      <span class="archive-year">HASOC 2025</span>
+      <span class="archive-meta"><span>FIRE 2025</span><span>Meme Detection</span><span>4 Languages</span></span>
+      <span class="archive-arrow">→</span>
+    </a>
+    <a href="https://hasocfire.github.io/hasoc/2024/" target="_blank" class="archive-row reveal">
+      <span class="archive-year">HASOC 2024</span>
+      <span class="archive-meta"><span>FIRE 2024</span><span>Text Classification</span><span>2 Languages</span></span>
+      <span class="archive-arrow">→</span>
+    </a>
+    <a href="https://hasocfire.github.io/hasoc/2023/" target="_blank" class="archive-row reveal reveal-delay-1">
+      <span class="archive-year">HASOC 2023</span>
+      <span class="archive-meta"><span>FIRE 2023</span><span>Text Classification</span><span>3 Languages</span></span>
+      <span class="archive-arrow">→</span>
+    </a>
+    <a href="https://hasocfire.github.io/hasoc/2022/" target="_blank" class="archive-row reveal reveal-delay-2">
+      <span class="archive-year">HASOC 2022</span>
+      <span class="archive-meta"><span>FIRE 2022</span><span>Hate Speech</span><span>3 Languages</span></span>
+      <span class="archive-arrow">→</span>
+    </a>
+    <a href="https://hasocfire.github.io/hasoc/2021/" target="_blank" class="archive-row reveal reveal-delay-3">
+      <span class="archive-year">HASOC 2021</span>
+      <span class="archive-meta"><span>FIRE 2021</span><span>Offensive Language</span></span>
+      <span class="archive-arrow">→</span>
+    </a>
+    <a href="https://hasocfire.github.io/hasoc/2020/" target="_blank" class="archive-row reveal">
+      <span class="archive-year">HASOC 2020</span>
+      <span class="archive-meta"><span>FIRE 2020</span><span>Offensive Language</span></span>
+      <span class="archive-arrow">→</span>
+    </a>
+    <a href="https://hasocfire.github.io/hasoc/2019/" target="_blank" class="archive-row reveal reveal-delay-1">
+      <span class="archive-year">HASOC 2019</span>
+      <span class="archive-meta"><span>FIRE 2019</span><span>Inaugural Edition</span></span>
+      <span class="archive-arrow">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">HA<span>S</span>OC</div>
+    <!-- LANG-COMMENTED: Original footer included "Assamese, Bodo, Tamil and Telugu" — Assamese & Bodo removed below -->
+    <p class="footer-desc">HASOC-meme 2.0: Hate Speech and Offensive Content Identification for Memes in <!-- Assamese, Bodo, -->Tamil and Telugu. A shared task at FIRE since 2019.</p>
+  </div>
+  <div>
+    <div class="footer-heading">Navigation</div>
+    <ul class="footer-links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#dates">Important Dates</a></li>
+      <li><a href="#participation">How to Participate</a></li>
+      <li><a href="#organizers">Organizers</a></li>
+      <li><a href="#student-coordinator">Student Co-ordinator</a></li>
+      <li><a href="#archive">Previous Editions</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="footer-heading">Resources</div>
+    <ul class="footer-links">
+      <li><a href="#">Register (FIRE Portal)</a></li>
+      <li><a href="#">Dataset Access</a></li>
+      <li><a href="#">Task Guidelines (PDF)</a></li>
+      <li><a href="#">Evaluation Script</a></li>
+      <li><a href="#">FIRE 2026 Homepage</a></li>
+      <li><a href="#">Contact Organizers</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span class="footer-copy">© HASOC 2026 · FIRE Workshop · All rights reserved</span>
+  <span class="footer-copy">Designed for academic excellence</span>
+</div>
+
+<script>
+  // ── Navbar: transparent → frosted on scroll ──
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 30);
+  }, { passive: true });
+
+  // ── Reveal on scroll ──
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => revealObserver.observe(el));
+
+  // ── Mobile menu: slide-in drawer ──
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  let menuOpen = false;
+
+  function toggleMenu() {
+    menuOpen = !menuOpen;
+    hamburger.classList.toggle('open', menuOpen);
+    mobileMenu.classList.toggle('open', menuOpen);
+    hamburger.setAttribute('aria-expanded', menuOpen);
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+  }
+  mobileMenu.addEventListener('click', (e) => { if (e.target === mobileMenu) toggleMenu(); });
+
+  // ── Active nav link highlight on scroll ──
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const activeSectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { threshold: 0.35 });
+  sections.forEach(s => activeSectionObserver.observe(s));
+
+  // ── MODAL SYSTEM ──
+  function openModal(id) {
+    const overlay = document.getElementById(id);
+    if (!overlay) return;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    // Handle modal profile images
+    overlay.querySelectorAll('.org-modal-img').forEach(img => {
+      const initials = img.nextElementSibling;
+      if (img.complete && img.naturalWidth > 0) {
+        img.classList.add('loaded');
+        if (initials) initials.style.display = 'none';
+      } else {
+        img.addEventListener('load', () => {
+          img.classList.add('loaded');
+          if (initials) initials.style.display = 'none';
+        });
+        img.addEventListener('error', () => { img.style.display = 'none'; });
+      }
+    });
+  }
+
+  function closeModal(id) {
+    const overlay = document.getElementById(id);
+    if (!overlay) return;
+    overlay.classList.remove('open');
+    if (!menuOpen) document.body.style.overflow = '';
+  }
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+      if (!menuOpen) document.body.style.overflow = '';
+    }
+  });
+
+  // ── Organizer card photo loader ──
+  document.querySelectorAll('.org-img').forEach(img => {
+    const placeholder = img.closest('.organizer-photo').querySelector('.photo-placeholder');
+    const showPhoto = () => {
+      img.classList.add('loaded');
+      if (placeholder) placeholder.style.display = 'none';
+    };
+    if (img.complete && img.naturalWidth > 0) showPhoto();
+    else {
+      img.addEventListener('load', showPhoto);
+      img.addEventListener('error', () => { img.style.display = 'none'; });
+    }
+  });
+  // ── Student coordinator photo loader ──
+  document.querySelectorAll('.sc-img').forEach(img => {
+    const placeholder = img.closest('.student-coord-photo').querySelector('.sc-placeholder');
+    const showPhoto = () => {
+      img.classList.add('loaded');
+      if (placeholder) placeholder.style.display = 'none';
+    };
+    if (img.complete && img.naturalWidth > 0) showPhoto();
+    else {
+      img.addEventListener('load', showPhoto);
+      img.addEventListener('error', () => { img.style.display = 'none'; });
+    }
+  });
+</script>
+</body>
+</html>
