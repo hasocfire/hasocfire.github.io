@@ -1441,10 +1441,127 @@
     .dtl-note { grid-column: 2; padding-top: 0; padding-bottom: 1rem; }
   }
 
-  .reveal {
+  /* ─── SUBTASKS SECTION ─── */
+  #subtasks {
+    position: relative;
+    background: #0e0e0e;
+    border-top: var(--line);
+    border-bottom: var(--line);
+    overflow: hidden;
+  }
+  #subtasks-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  #subtasks .section-header {
+    border-bottom-color: rgba(255,255,255,0.1);
+    position: relative;
+    z-index: 1;
+  }
+  #subtasks .section-num { color: var(--accent); }
+  #subtasks .section-title { color: #f5f2ec; }
+  #subtasks .section-title em { color: var(--accent); }
+  .subtasks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .subtask-card {
+    background: rgba(245,242,236,0.07);
+    backdrop-filter: blur(20px) saturate(1.6);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6);
+    border: 1px solid rgba(245,242,236,0.13);
+    border-radius: 4px;
+    padding: 1.6rem 1.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    position: relative;
+    overflow: hidden;
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transform: translateY(22px) scale(0.97);
+    transition: border-color 0.32s, background 0.32s, transform 0.32s cubic-bezier(0.22,1,0.36,1), box-shadow 0.32s;
+    cursor: default;
+  }
+  .subtask-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 12%; right: 12%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(245,242,236,0.3), transparent);
+    opacity: 0;
+    transition: opacity 0.35s;
+  }
+  .subtask-card.st-visible {
+    animation: stCardIn 0.58s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  @keyframes stCardIn {
+    from { opacity: 0; transform: translateY(22px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .subtask-card:hover {
+    background: rgba(245,242,236,0.12);
+    border-color: rgba(200,75,47,0.5);
+    box-shadow: 0 8px 36px rgba(0,0,0,0.4), 0 0 0 1px rgba(200,75,47,0.12), inset 0 1px 0 rgba(255,255,255,0.09);
+    transform: translateY(-4px) scale(1.015);
+  }
+  .subtask-card:hover::before { opacity: 1; }
+  .subtask-icon {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: rgba(200,75,47,0.14);
+    border: 1px solid rgba(200,75,47,0.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.15rem;
+    transition: background 0.3s, border-color 0.3s;
+    flex-shrink: 0;
+  }
+  .subtask-card:hover .subtask-icon {
+    background: rgba(200,75,47,0.26);
+    border-color: rgba(200,75,47,0.6);
+  }
+  .subtask-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1rem;
+    color: #f5f2ec;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+  .subtask-labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 2px;
+  }
+  .subtask-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: rgba(245,242,236,0.45);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 3px 9px;
+    border-radius: 2px;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    white-space: nowrap;
+  }
+  .subtask-card:hover .subtask-chip {
+    color: rgba(200,75,47,0.88);
+    border-color: rgba(200,75,47,0.28);
+    background: rgba(200,75,47,0.08);
+  }
+  @media (max-width: 900px) {
+    .subtasks-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  }
+  @media (max-width: 560px) {
+    .subtasks-grid { grid-template-columns: 1fr; gap: 10px; }
   }
   .reveal.visible {
     opacity: 1;
@@ -1924,7 +2041,7 @@
           <div class="stat-label">Languages</div>
         </div>
         <div class="stat">
-          <div class="stat-num">5</div>
+          <div class="stat-num">6</div>
           <div class="stat-label">Subtasks</div>
         </div>
         <div class="stat">
@@ -1970,7 +2087,7 @@
   <div class="overview-grid">
     <div class="overview-text reveal">
       <!-- LANG-COMMENTED: Original included "Assamese, Bodo, Tamil, and Telugu" — Assamese & Bodo removed below -->
-      <p>The HASOC-meme 2.0 shared task focuses on identifying hate speech and offensive content in multimodal memes — combining visual and textual signals — across <!-- four --> two South Asian languages: <!-- Assamese, Bodo, -->Tamil, and Telugu.</p>
+      <p>This shared task focuses on the automatic identification of hate speech, offensive content and other harmful attributes in memes. The task covers Tamil and Telugu languages and aims to advance research on multilingual, multimodal content understanding.</p>
       <p>Social media platforms have become a battleground for misinformation and hateful content. Memes, due to their inherently multimodal nature, present a unique challenge: text alone may appear benign, images may seem neutral, yet together they can convey deeply offensive or hateful messages. Research has shown hateful memes can be surprisingly persuasive, often going viral and resonating with a wide audience.</p>
       <p>This task is part of FIRE 2026 (Forum for Information Retrieval Evaluation) and invites researchers to develop automated systems capable of detecting and classifying hate speech in memes, pushing the frontier of multilingual and multimodal NLP. Each meme entry also includes a context paragraph to aid analysis.</p>
       <p>Participants address five subtasks: abuse detection, target community identification, vulgarity detection, sarcasm detection, and sentiment classification. Accepted system description papers will be published in FIRE 2026 proceedings.</p>
@@ -2005,6 +2122,83 @@
   </div>
 </section>
 
+<!-- SUBTASKS INCLUDE -->
+<section id="subtasks">
+  <canvas id="subtasks-canvas"></canvas>
+  <div class="section-header reveal">
+    <span class="section-num">01<span style="font-size:9px;vertical-align:super;letter-spacing:0.05em">B</span></span>
+    <h2 class="section-title">Subtasks <em>Include</em></h2>
+  </div>
+  <div class="subtasks-grid">
+    <div class="subtask-card">
+      <div class="subtask-icon">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+      <div class="subtask-name">Sentiment Detection</div>
+      <div class="subtask-labels">
+        <span class="subtask-chip">Positive</span>
+        <span class="subtask-chip">Neutral</span>
+        <span class="subtask-chip">Negative</span>
+      </div>
+    </div>
+    <div class="subtask-card">
+      <div class="subtask-icon">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+      </div>
+      <div class="subtask-name">Sarcasm Detection</div>
+      <div class="subtask-labels">
+        <span class="subtask-chip">Sarcastic</span>
+        <span class="subtask-chip">Non-Sarcastic</span>
+      </div>
+    </div>
+    <div class="subtask-card">
+      <div class="subtask-icon">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+      </div>
+      <div class="subtask-name">Vulgarity Detection</div>
+      <div class="subtask-labels">
+        <span class="subtask-chip">Vulgar</span>
+        <span class="subtask-chip">Not Vulgar</span>
+      </div>
+    </div>
+    <div class="subtask-card">
+      <div class="subtask-icon">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+      </div>
+      <div class="subtask-name">Abuse Detection</div>
+      <div class="subtask-labels">
+        <span class="subtask-chip">Abusive</span>
+        <span class="subtask-chip">Non-abusive</span>
+      </div>
+    </div>
+    <div class="subtask-card">
+      <div class="subtask-icon">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      </div>
+      <div class="subtask-name">Target Identification</div>
+      <div class="subtask-labels">
+        <span class="subtask-chip">Person</span>
+        <span class="subtask-chip">Group</span>
+        <span class="subtask-chip">Organization</span>
+        <span class="subtask-chip">Other</span>
+        <span class="subtask-chip">None</span>
+      </div>
+    </div>
+    <div class="subtask-card">
+      <div class="subtask-icon">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+      </div>
+      <div class="subtask-name">Multi-label Classification</div>
+      <div class="subtask-labels">
+        <span class="subtask-chip">Abuse</span>
+        <span class="subtask-chip">Sarcasm</span>
+        <span class="subtask-chip">Vulgarity</span>
+        <span class="subtask-chip">Target</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- DATES -->
 <section id="dates">
   <div class="section-header reveal">
@@ -2014,39 +2208,39 @@
   <div class="dates-timeline">
     <div class="dtl-row reveal">
       <div class="dtl-num">01</div>
-      <div class="dtl-label">Training Data Release</div>
-      <div class="dtl-date">25 June 2026</div>
-      <div class="dtl-note">Annotated training datasets made available to participants</div>
+      <div class="dtl-label">Registration Opens</div>
+      <div class="dtl-date">15 June 2026</div>
+      <div class="dtl-note">Participant registration opens via the FIRE portal</div>
     </div>
     <div class="dtl-row reveal reveal-delay-1">
       <div class="dtl-num">02</div>
+      <div class="dtl-label">Training Data Release</div>
+      <div class="dtl-date">17 June 2026</div>
+      <div class="dtl-note">Annotated training datasets made available to participants</div>
+    </div>
+    <div class="dtl-row reveal reveal-delay-2">
+      <div class="dtl-num">03</div>
       <div class="dtl-label">Test Data Release</div>
-      <div class="dtl-date">25 June 2026</div>
+      <div class="dtl-date">30 June 2026</div>
       <div class="dtl-note">Blind test sets released for all language tracks</div>
     </div>
-    <div class="dtl-row upcoming reveal reveal-delay-2">
-      <div class="dtl-num">03</div>
-      <div class="dtl-label">Run Submission Deadline</div>
-      <div class="dtl-date">30 June 2026</div>
-      <div class="dtl-note">Participant system outputs due</div>
-    </div>
-    <div class="dtl-row reveal reveal-delay-3">
+    <div class="dtl-row upcoming reveal reveal-delay-3">
       <div class="dtl-num">04</div>
-      <div class="dtl-label">Results Declared</div>
-      <div class="dtl-date">15 July 2026</div>
-      <div class="dtl-note">Official rankings and evaluations published</div>
+      <div class="dtl-label">Run Submission Deadline</div>
+      <div class="dtl-date">10 July 2026</div>
+      <div class="dtl-note">Participant system outputs due</div>
     </div>
     <div class="dtl-row reveal">
       <div class="dtl-num">05</div>
-      <div class="dtl-label">Working Notes Paper Due</div>
-      <div class="dtl-date">30 August 2026</div>
-      <div class="dtl-note">System description papers submitted for proceedings</div>
+      <div class="dtl-label">Results Declaration</div>
+      <div class="dtl-date">15 July 2026</div>
+      <div class="dtl-note">Official rankings and evaluations published</div>
     </div>
     <div class="dtl-row reveal reveal-delay-1">
       <div class="dtl-num">06</div>
-      <div class="dtl-label">FIRE Conference</div>
-      <div class="dtl-date">30 Septemberr 2026</div>
-      <div class="dtl-note">Presentations, proceedings publication, and award ceremony</div>
+      <div class="dtl-label">Paper Submission Deadline</div>
+      <div class="dtl-date">TBD</div>
+      <div class="dtl-note">System description papers submitted for proceedings</div>
     </div>
   </div>
 </section>
@@ -2365,6 +2559,96 @@
     });
   }, { threshold: 0.08 });
   reveals.forEach(el => revealObserver.observe(el));
+
+  // ── Subtask cards staggered reveal ──
+  const subtaskCards = document.querySelectorAll('.subtask-card');
+  const subtaskObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const idx = Array.from(subtaskCards).indexOf(entry.target);
+        setTimeout(() => {
+          entry.target.classList.add('st-visible');
+        }, idx * 90);
+        subtaskObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  subtaskCards.forEach(el => subtaskObserver.observe(el));
+
+  // ── Subtasks canvas: slow drifting orbs ──
+  (function() {
+    const canvas = document.getElementById('subtasks-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H, orbs = [], raf;
+
+    function resize() {
+      const sec = document.getElementById('subtasks');
+      W = canvas.width  = sec.offsetWidth;
+      H = canvas.height = sec.offsetHeight;
+    }
+
+    function makeOrb() {
+      const palette = [
+        [200, 75, 47],   // accent red
+        [42, 74, 138],   // accent2 blue
+        [120, 80, 40],   // warm amber
+      ];
+      const c = palette[Math.floor(Math.random() * palette.length)];
+      return {
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: 80 + Math.random() * 140,
+        vx: (Math.random() - 0.5) * 0.28,
+        vy: (Math.random() - 0.5) * 0.22,
+        alpha: 0.06 + Math.random() * 0.1,
+        r0: c[0], g0: c[1], b0: c[2],
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.003 + Math.random() * 0.004,
+      };
+    }
+
+    function init() {
+      resize();
+      orbs = Array.from({ length: 7 }, makeOrb);
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      const t = performance.now() * 0.001;
+      orbs.forEach(o => {
+        o.x += o.vx;
+        o.y += o.vy;
+        if (o.x < -o.r) o.x = W + o.r;
+        if (o.x > W + o.r) o.x = -o.r;
+        if (o.y < -o.r) o.y = H + o.r;
+        if (o.y > H + o.r) o.y = -o.r;
+        const pulse = o.alpha + Math.sin(t * o.speed * 60 + o.phase) * 0.025;
+        const grad = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
+        grad.addColorStop(0, `rgba(${o.r0},${o.g0},${o.b0},${pulse})`);
+        grad.addColorStop(1, `rgba(${o.r0},${o.g0},${o.b0},0)`);
+        ctx.beginPath();
+        ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2);
+        ctx.fillStyle = grad;
+        ctx.fill();
+      });
+      raf = requestAnimationFrame(draw);
+    }
+
+    // Only run animation when section is in view (perf)
+    const secEl = document.getElementById('subtasks');
+    const canvasObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { if (!raf) draw(); }
+        else { cancelAnimationFrame(raf); raf = null; }
+      });
+    }, { threshold: 0 });
+    canvasObserver.observe(secEl);
+
+    window.addEventListener('resize', () => { resize(); }, { passive: true });
+    init();
+    draw();
+  })();
 
   // ── Mobile menu: slide-in drawer ──
   const hamburger = document.getElementById('hamburger');
