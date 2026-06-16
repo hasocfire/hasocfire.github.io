@@ -417,6 +417,44 @@
             letter-spacing: 8px;
         }
 
+        /* Hero CTA Button */
+        .hero-actions {
+            margin-top: 0.5rem;
+        }
+
+        .hero-register-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: #ffffff;
+            color: #4338ca;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.95rem 2.1rem;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .hero-register-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: #4338ca;
+            transition: transform 0.3s ease;
+        }
+
+        .hero-register-btn:hover {
+            transform: translateY(-3px);
+            background: #f8fafc;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .hero-register-btn:hover svg {
+            transform: translateX(3px);
+        }
+
         /* Main Content */
         main {
             padding: 4rem 0;
@@ -1333,6 +1371,143 @@
             transform: translateX(3px);
         }
 
+        /* Registration Section */
+        .registration-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            border-radius: 16px;
+            padding: 3.5rem 3rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .registration-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -15%;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .registration-card::after {
+            content: '';
+            position: absolute;
+            bottom: -35%;
+            left: -10%;
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .registration-text {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+        }
+
+        .registration-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 50px;
+            padding: 0.45rem 1.1rem;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 1.2rem;
+            backdrop-filter: blur(8px);
+        }
+
+        .registration-text h3 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.2rem;
+            color: white;
+            font-weight: 400;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            margin-bottom: 0.8rem;
+        }
+
+        .registration-text p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .registration-action {
+            position: relative;
+            z-index: 1;
+            flex-shrink: 0;
+        }
+
+        .registration-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: #ffffff;
+            color: #4338ca;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 1rem 2.2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .registration-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: #4338ca;
+            transition: transform 0.3s ease;
+        }
+
+        .registration-btn:hover {
+            transform: translateY(-3px);
+            background: #f8fafc;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .registration-btn:hover svg {
+            transform: translateX(3px);
+        }
+
+        @media (max-width: 767px) {
+            .registration-card {
+                padding: 2.5rem 1.75rem;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .registration-text h3 {
+                font-size: 1.7rem;
+            }
+
+            .registration-action {
+                width: 100%;
+            }
+
+            .registration-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
         /* Responsive */
         @media (max-width: 767px) {
             .tasks-grid {
@@ -1393,6 +1568,7 @@
                     <nav>
                         <a href="#about">About</a>
                         <a href="#latest">Latest Edition</a>
+                        <a href="#register">Register</a>
                         <a href="#previous">Previous Editions</a>
                         <a href="#contact">Contact</a>
                     </nav>
@@ -1415,16 +1591,16 @@
             <div class="announcement-scroll">
                 <!-- Card 1: Coming Soon -->
                 <div class="announcement-card">
-                    <div class="announcement-badge">
+                    <div class="announcement-badge success">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
                     </div>
                     <div class="announcement-content">
-                        <div class="announcement-title">🎉 HASOC 2026 Coming Soon!</div>
-                        <div class="announcement-desc">Stay tuned for the next edition</div>
+                        <div class="announcement-title">🚀 HASOC 2026 is Live!</div>
+                        <div class="announcement-desc">Shared tasks are now open for registration</div>
                     </div>
-                    <div class="announcement-tag">New</div>
+                    <div class="announcement-tag">Live</div>
                 </div>
 
                 <!-- Card 2: Mailing List -->
@@ -1443,16 +1619,16 @@
 
                 <!-- Duplicate for seamless infinite loop -->
                 <div class="announcement-card">
-                    <div class="announcement-badge">
+                    <div class="announcement-badge success">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
                     </div>
                     <div class="announcement-content">
-                        <div class="announcement-title">🎉 HASOC 2026 Coming Soon!</div>
-                        <div class="announcement-desc">Stay tuned for the next edition</div>
+                        <div class="announcement-title">🚀 HASOC 2026 is Live!</div>
+                        <div class="announcement-desc">Shared tasks are now open for registration</div>
                     </div>
-                    <div class="announcement-tag">New</div>
+                    <div class="announcement-tag">Live</div>
                 </div>
 
                 <div class="announcement-card">
@@ -1470,16 +1646,16 @@
 
                 <!-- Duplicate for seamless infinite loop -->
                 <div class="announcement-card">
-                    <div class="announcement-badge">
+                    <div class="announcement-badge success">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
                     </div>
                     <div class="announcement-content">
-                        <div class="announcement-title">🎉 HASOC 2026 Coming Soon!</div>
-                        <div class="announcement-desc">Stay tuned for the next edition</div>
+                        <div class="announcement-title">🚀 HASOC 2026 is Live!</div>
+                        <div class="announcement-desc">Shared tasks are now open for registration</div>
                     </div>
-                    <div class="announcement-tag">New</div>
+                    <div class="announcement-tag">Live</div>
                 </div>
 
                 <div class="announcement-card">
@@ -1511,6 +1687,14 @@
                 <div class="year-badge">HASOC</div>
                 <h1>Hate Speech and Offensive<br>Content Identification</h1>
                 <p class="subtitle">Advancing research in automated detection and analysis of hate speech and offensive content across social media platforms</p>
+                <div class="hero-actions">
+                    <a class="hero-register-btn" href="https://docs.google.com/forms/d/e/1FAIpQLScmpJmBagFmDo41EECIJ-V9v5ckNZ7LEg1Pw2RRDBREaYDrXA/viewform?usp=publish-editor" target="_blank">
+                        Register Now
+                        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                            <path d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        </svg>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -1525,6 +1709,27 @@
                 The task of hate speech detection increasingly necessitates the analysis of multimodal data, as harmful online content often exploits the combination of text and images to convey hateful messages in subtle or coded forms. HASOC aims to develop automated systems capable of detecting and flagging potentially harmful or suspicious posts, contributing to safer and more inclusive digital environments.
             </p>
         </section>
+
+        <!-- ══════════════ REGISTRATION ══════════════ -->
+        <section id="register">
+            <h2 class="section-title">Registration</h2>
+            <div class="registration-card">
+                <div class="registration-text">
+                    <div class="registration-pill">Open Now</div>
+                    <h3>Register for HASOC 2026</h3>
+                    <p>Secure your spot in this year's shared tasks. Fill out the registration form to join the competition and receive updates, dataset access, and key dates directly.</p>
+                </div>
+                <div class="registration-action">
+                    <a class="registration-btn" href="https://docs.google.com/forms/d/e/1FAIpQLScmpJmBagFmDo41EECIJ-V9v5ckNZ7LEg1Pw2RRDBREaYDrXA/viewform?usp=publish-editor" target="_blank">
+                        Register Yourself
+                        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                            <path d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <!-- ════════════════════════════════════════════ -->
 
         <!-- ══════════════ LATEST EDITION ══════════════ -->
         <section id="latest">
@@ -1742,11 +1947,6 @@
                 localStorage.setItem('theme', 'light');
             }
         }
-
-        // Check for saved theme preference or default to light mode
-        // window.addEventListener('DOMContentLoaded', () => {
-        //     const savedTheme = localStorage.getItem('theme');
-        //     co
 
         </script>
 </body>
