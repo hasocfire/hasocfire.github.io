@@ -1955,6 +1955,137 @@
     .wa-panel { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
     .wa-qr-frame { width: 80px; height: 80px; }
   }
+
+  /* ─── DATASETS SECTION ─── */
+  .datasets-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+    border: var(--line);
+  }
+  .dataset-row {
+    background: var(--paper);
+    display: grid;
+    grid-template-columns: 1.1fr 1.4fr 1.4fr;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s, box-shadow 0.25s;
+  }
+  .dataset-row::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.35s ease;
+  }
+  .dataset-row:hover { background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.08); z-index: 2; }
+  .dataset-row:hover::after { transform: scaleY(1); }
+
+  .dataset-task {
+    padding: 1.6rem 1.6rem;
+    border-right: var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .dataset-lang-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .dataset-lang-native {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent2);
+    letter-spacing: 0.04em;
+  }
+  .dataset-task-chip {
+    align-self: flex-start;
+    margin-top: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: var(--line);
+    background: var(--cream);
+    padding: 3px 9px;
+    border-radius: 2px;
+  }
+
+  .dataset-col {
+    padding: 1.6rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    border-right: var(--line);
+  }
+  .dataset-col:last-child { border-right: none; }
+  .dataset-col-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+  .dataset-btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .dataset-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    width: 100%;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    background: transparent;
+    border: var(--line);
+    padding: 8px 14px;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.15s;
+  }
+  .dataset-btn svg { flex-shrink: 0; transition: transform 0.2s; }
+  .dataset-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(200,75,47,0.06);
+    transform: translateY(-1px);
+  }
+  .dataset-btn:hover svg { transform: translateY(1px); }
+  .dataset-btn.filled {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .dataset-btn.filled:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  @media (max-width: 900px) {
+    .dataset-row { grid-template-columns: 1fr; }
+    .dataset-task { border-right: none; border-bottom: var(--line); }
+    .dataset-col { border-right: none; border-bottom: var(--line); }
+    .dataset-col:last-child { border-bottom: none; }
+  }
+  @media (max-width: 480px) {
+    .dataset-btn { font-size: 11.5px; padding: 7px 11px; }
+  }
 </style>
 </head>
 <body>
@@ -1968,6 +2099,7 @@
     <li><a href="#participation">Participate</a></li>
     <li><a href="#organizers">Organizers</a></li>
     <li><a href="#student-coordinator">Student Co-ord</a></li>
+    <li><a href="#datasets">Datasets</a></li>
     <li><a href="#archive">Archive</a></li>
   </ul>
   <span class="nav-year">FIRE@2026</span>
@@ -1982,6 +2114,7 @@
   <a href="#participation" onclick="toggleMenu()">Participate</a>
   <a href="#organizers" onclick="toggleMenu()">Organizers</a>
   <a href="#student-coordinator" onclick="toggleMenu()">Student Co-ord</a>
+  <a href="#datasets" onclick="toggleMenu()">Datasets</a>
   <a href="#archive" onclick="toggleMenu()">Archive</a>
   <a href="https://chat.whatsapp.com/Kqnf5fOOuC9JcYVWtTr4EV" target="_blank" rel="noopener noreferrer" onclick="toggleMenu()" style="color:#25D366;">
     Join WhatsApp
@@ -2460,10 +2593,75 @@
   </div>
 </section>
 
+<!-- DATASETS -->
+<section id="datasets">
+  <div class="section-header reveal">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Task <em>Datasets</em></h2>
+  </div>
+  <div class="datasets-grid">
+
+    <!-- TAMIL -->
+    <div class="dataset-row reveal">
+      <div class="dataset-task">
+        <span class="dataset-lang-name">Tamil</span>
+        <span class="dataset-lang-native">தமிழ்</span>
+        <span class="dataset-task-chip">HASOC-meme 2.0</span>
+      </div>
+      <div class="dataset-col">
+        <span class="dataset-col-label">Training Data</span>
+        <div class="dataset-btn-group">
+          <a href="#" class="dataset-btn filled" target="_blank" rel="noopener noreferrer">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/></svg>
+            Click Here for Download
+          </a>
+        </div>
+      </div>
+      <div class="dataset-col">
+        <span class="dataset-col-label">Test Data</span>
+        <div class="dataset-btn-group">
+          <a href="#" class="dataset-btn filled" target="_blank" rel="noopener noreferrer">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/></svg>
+            Click Here for Download
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- TELUGU -->
+    <div class="dataset-row reveal reveal-delay-1">
+      <div class="dataset-task">
+        <span class="dataset-lang-name">Telugu</span>
+        <span class="dataset-lang-native">తెలుగు</span>
+        <span class="dataset-task-chip">HASOC-meme 2.0</span>
+      </div>
+      <div class="dataset-col">
+        <span class="dataset-col-label">Training Data</span>
+        <div class="dataset-btn-group">
+          <a href="#" class="dataset-btn filled" target="_blank" rel="noopener noreferrer">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/></svg>
+            Click Here for Download
+          </a>
+        </div>
+      </div>
+      <div class="dataset-col">
+        <span class="dataset-col-label">Test Data</span>
+        <div class="dataset-btn-group">
+          <a href="#" class="dataset-btn filled" target="_blank" rel="noopener noreferrer">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/></svg>
+            Click Here for Download
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- ARCHIVE -->
 <section id="archive" style="background:var(--cream);">
   <div class="section-header reveal">
-    <span class="section-num">05</span>
+    <span class="section-num">06</span>
     <h2 class="section-title">Previous <em>Editions</em></h2>
   </div>
   <div>
@@ -2520,6 +2718,7 @@
       <li><a href="#participation">How to Participate</a></li>
       <li><a href="#organizers">Organizers</a></li>
       <li><a href="#student-coordinator">Student Co-ordinator</a></li>
+      <li><a href="#datasets">Datasets</a></li>
       <li><a href="#archive">Previous Editions</a></li>
     </ul>
   </div>
